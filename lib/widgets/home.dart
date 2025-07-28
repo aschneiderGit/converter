@@ -7,10 +7,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.grey,
-        title: Text(AppLocalizations.of(context)!.appBar),
-      ),
+      appBar: AppBar(title: Text(AppLocalizations.of(context)!.appBar)),
       body: Stack(
         children: [
           Container(color: Colors.red, height: 100, width: 100),

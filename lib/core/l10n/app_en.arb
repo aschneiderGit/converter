@@ -1,4 +1,5 @@
 {
+    "@@locale": "en",
     "titleApp": "Converter",
     "appBar": "Start to convert here !"
 }

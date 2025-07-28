@@ -1,3 +1,4 @@
+import 'package:converter/core/theme/main_theme.dart';
 import 'package:converter/widgets/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -25,9 +26,7 @@ class Converter extends StatelessWidget {
         Locale('en'), // English
         Locale('fr'), // Spanish
       ],
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
+      theme: mainTheme,
       home: Home(),
     );
   }
