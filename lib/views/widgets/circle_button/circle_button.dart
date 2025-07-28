@@ -2,27 +2,42 @@ import 'package:converter/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class CircleButton extends StatelessWidget {
+  final VoidCallback? handleOnTap;
   final String label;
-  const CircleButton({super.key, required this.label});
+  final double fontSize;
+  final String? fontFamily;
+  final String? fontPackage;
+  final bool secondary;
+
+  const CircleButton({
+    super.key,
+    required this.label,
+    required this.fontSize,
+    this.handleOnTap,
+    this.fontFamily,
+    this.fontPackage,
+    this.secondary = false,
+  });
 
   @override
   Widget build(BuildContext context) {
+    String text;
     return GestureDetector(
-      onTap: () {
-        print('Button pressed!');
-      },
+      onTap: handleOnTap,
       child: Container(
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: AppColors.primary,
+          color: secondary ? AppColors.secondary : AppColors.primary,
         ),
         child: Center(
           child: Text(
             label,
             style: TextStyle(
-              color: AppColors.onPrimary,
-              fontSize: 24.0,
+              color: secondary ? AppColors.onSecondary : AppColors.onPrimary,
+              fontSize: fontSize,
               fontWeight: FontWeight.bold,
+              fontFamily: fontFamily,
+              package: fontPackage,
             ),
           ),
         ),

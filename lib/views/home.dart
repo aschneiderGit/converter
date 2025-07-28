@@ -14,7 +14,7 @@ class Home extends StatelessWidget {
       body: Column(
         children: [
           Expanded(
-            flex: 1,
+            flex: 2,
             child: Container(
               height: double.infinity,
               width: double.infinity,
