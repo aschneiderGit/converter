@@ -1,3 +1,4 @@
+import 'package:converter/core/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
@@ -8,7 +9,7 @@ class Home extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.grey,
-        title: Text("Start to convert here !"),
+        title: Text(AppLocalizations.of(context)!.appBar),
       ),
       body: Stack(
         children: [

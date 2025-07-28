@@ -1,6 +1,7 @@
 import 'package:converter/widgets/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'core/l10n/app_localizations.dart';
 
 void main() {
   runApp(const Converter());
@@ -15,6 +16,7 @@ class Converter extends StatelessWidget {
     return MaterialApp(
       title: 'Converter',
       localizationsDelegates: [
+        AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
