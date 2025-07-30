@@ -2,6 +2,7 @@ import 'package:converter/core/theme/main_theme.dart';
 import 'package:converter/views/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+
 import 'core/l10n/app_localizations.dart';
 
 void main() {

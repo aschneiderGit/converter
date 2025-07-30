@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 
 ThemeData mainTheme = ThemeData(
   appBarTheme: AppBarTheme(
-    backgroundColor: AppColors.surface,
+    backgroundColor: AppColors.secondaryVariant,
     titleTextStyle: TextStyle(
       color: AppColors.onSurface,
       fontSize: 20,
       fontWeight: FontWeight.bold,
     ),
   ),
+  textTheme: TextTheme(),
   brightness: Brightness.light,
 );
