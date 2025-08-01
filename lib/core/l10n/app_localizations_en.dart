@@ -13,4 +13,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get appBar => 'Start to convert here !';
+
+  @override
+  String get updateTime => 'Last updated the :';
 }

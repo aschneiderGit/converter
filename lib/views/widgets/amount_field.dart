@@ -9,7 +9,7 @@ class AmountField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      style: Theme.of(context).textStyle.copyWith(fontSize: 22),
+      style: Theme.of(context).textStyle.copyWith(fontSize: 30),
       keyboardType: TextInputType.none,
       inputFormatters: <TextInputFormatter>[
         FilteringTextInputFormatter.digitsOnly,

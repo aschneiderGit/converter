@@ -1,4 +1,6 @@
+import 'package:converter/core/l10n/app_localizations.dart';
 import 'package:converter/core/theme/app_colors.dart';
+import 'package:converter/core/theme/app_text_style.dart';
 import 'package:converter/views/widgets/amount_field.dart';
 import 'package:converter/views/widgets/circle_button/icon_button.dart';
 import 'package:converter/views/widgets/currency_dropdown.dart';
@@ -10,9 +12,9 @@ class TopDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Flexible(
-      flex: 1,
+      flex: 2,
       child: Container(
-        padding: const EdgeInsets.only(left: 24.0, top: 12, right: 12),
+        padding: const EdgeInsets.only(left: 12.0, top: 24, right: 12),
         color: Theme.of(context).primary,
         child: Column(
           children: [
@@ -21,15 +23,37 @@ class TopDisplay extends StatelessWidget {
                 Flexible(
                   flex: 4,
                   child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [currencyAmmountRow(), currencyAmmountRow()],
+                    children: [
+                      currencyAmmountRow(),
+                      SizedBox(height: 12),
+                      currencyAmmountRow(),
+                    ],
                   ),
                 ),
-                SizedBox(width: 12),
-                reverseButton(),
+                SizedBox(width: 16),
+                Flexible(
+                  flex: 1,
+                  child: Container(
+                    margin: const EdgeInsets.only(top: 32.0),
+                    child: iconButton(
+                      icon: Icons.cached,
+                      secondary: true,
+                      fontSize: 55,
+                    ),
+                  ),
+                ),
               ],
             ),
-            Expanded(child: Container(color: Colors.redAccent)),
+            Container(
+              margin: EdgeInsets.only(top: 32),
+              height: 60,
+              child: Center(
+                child: Text(
+                  AppLocalizations.of(context)!.updateTime,
+                  style: Theme.of(context).textStyle.copyWith(fontSize: 14),
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -41,20 +65,8 @@ class TopDisplay extends StatelessWidget {
       children: [
         Flexible(flex: 3, child: AmountField()),
         SizedBox(width: 24),
-        Flexible(child: SizedBox(height: 65, child: CurrencyDropdown())),
+        Flexible(child: SizedBox(height: 77, child: CurrencyDropdown())),
       ],
-    );
-  }
-}
-
-class reverseButton extends StatelessWidget {
-  const reverseButton({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Flexible(
-      flex: 1,
-      child: SizedBox(child: iconButton(icon: Icons.cached, secondary: true)),
     );
   }
 }

@@ -3,16 +3,17 @@ import 'package:flutter/material.dart';
 
 CircleButton iconButton({
   required IconData icon,
-  VoidCallback? handleOnTap,
+  VoidCallback? handleOnPressed,
+  double fontSize = 40,
   bool secondary = false,
 }) {
   String text = String.fromCharCode(icon.codePoint);
 
   return CircleButton(
     label: text,
-    handleOnTap: handleOnTap,
+    handleOnPressed: handleOnPressed,
     secondary: secondary,
-    fontSize: 40,
+    fontSize: fontSize,
     fontFamily: icon.fontFamily,
     fontPackage: icon.fontPackage,
   );

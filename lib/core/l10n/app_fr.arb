@@ -1,5 +1,6 @@
 {
     "@@locale": "fr",
     "titleApp": "Convertisseur",
-    "appBar": "Commencez à convertir ici !"
+    "appBar": "Commencez à convertir ici !",
+    "updateTime": "Donnée mise à jour le: "
 }

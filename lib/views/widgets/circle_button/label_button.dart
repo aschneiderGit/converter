@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 
 CircleButton labelButton({
   required String label,
-  VoidCallback? handleOnTap,
+  VoidCallback? handleOnPressed,
+  double fontSize = 32,
   bool secondary = false,
 }) {
   return CircleButton(
     label: label,
-    handleOnTap: handleOnTap,
+    handleOnPressed: handleOnPressed,
     secondary: secondary,
-    fontSize: 32,
+    fontSize: fontSize,
   );
 }

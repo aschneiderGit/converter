@@ -109,6 +109,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Start to convert here !'**
   String get appBar;
+
+  /// No description provided for @updateTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Last updated the :'**
+  String get updateTime;
 }
 
 class _AppLocalizationsDelegate

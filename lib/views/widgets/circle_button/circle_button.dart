@@ -2,7 +2,7 @@ import 'package:converter/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class CircleButton extends StatelessWidget {
-  final VoidCallback? handleOnTap;
+  final VoidCallback? handleOnPressed;
   final String label;
   final double fontSize;
   final String? fontFamily;
@@ -13,7 +13,7 @@ class CircleButton extends StatelessWidget {
     super.key,
     required this.label,
     required this.fontSize,
-    this.handleOnTap,
+    this.handleOnPressed,
     this.fontFamily,
     this.fontPackage,
     this.secondary = false,
@@ -21,28 +21,30 @@ class CircleButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: handleOnTap,
-      child: Container(
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: secondary
-              ? Theme.of(context).secondary
-              : Theme.of(context).primary,
+    return ElevatedButton(
+      onPressed: handleOnPressed,
+      style: ButtonStyle(
+        shape: WidgetStateProperty.all(CircleBorder()),
+        backgroundColor: WidgetStateProperty.all(
+          secondary ? Theme.of(context).secondary : Theme.of(context).primary,
         ),
-        child: Center(
-          child: Text(
-            label,
-            style: TextStyle(
-              color: secondary
-                  ? Theme.of(context).onSecondary
-                  : Theme.of(context).onPrimary,
-              fontSize: fontSize,
-              fontWeight: FontWeight.bold,
-              fontFamily: fontFamily,
-              package: fontPackage,
-            ),
-          ),
+        padding: WidgetStateProperty.all(const EdgeInsets.all(10)),
+        overlayColor: WidgetStateProperty.all(
+          secondary
+              ? Theme.of(context).secondaryVariant
+              : Theme.of(context).primaryVariant,
+        ),
+      ),
+      child: Text(
+        label,
+        style: TextStyle(
+          color: secondary
+              ? Theme.of(context).onSecondary
+              : Theme.of(context).onPrimary,
+          fontSize: fontSize,
+          fontWeight: FontWeight.bold,
+          fontFamily: fontFamily,
+          package: fontPackage,
         ),
       ),
     );
