@@ -1,6 +1,7 @@
 import 'package:converter/core/l10n/app_localizations.dart';
 import 'package:converter/core/theme/app_colors.dart';
 import 'package:converter/views/widgets/keyboard.dart';
+import 'package:converter/views/widgets/top_display.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
@@ -9,21 +10,9 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: Theme.of(context).background,
       appBar: AppBar(title: Text(AppLocalizations.of(context)!.appBar)),
-      body: Column(
-        children: [
-          Expanded(
-            flex: 2,
-            child: Container(
-              height: double.infinity,
-              width: double.infinity,
-              color: const Color.fromARGB(255, 228, 222, 247),
-            ),
-          ),
-          Keyboard(),
-        ],
-      ),
+      body: Column(children: [TopDisplay(), Keyboard()]),
     );
   }
 }

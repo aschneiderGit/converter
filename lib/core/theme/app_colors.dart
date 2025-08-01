@@ -12,6 +12,7 @@ class AppColors {
   static const Color onPrimary = Color(0xFFFFFFFF);
   static const Color onSecondary = Color(0xFFFFFFFF);
   static const Color onBackground = Color(0xFF000000);
+  static const Color onBackgroundVariant = Color(0xFFFFFFFF);
   static const Color onSurface = Color(0xFFFFFFFF);
   static const Color onError = Color(0xFFFFFFFF);
 }
@@ -28,6 +29,7 @@ extension ThemeDataExtension on ThemeData {
   Color get onPrimary => AppColors.onPrimary;
   Color get onSecondary => AppColors.onSecondary;
   Color get onBackground => AppColors.onBackground;
+  Color get onBackgroundVariant => AppColors.onBackgroundVariant;
   Color get onSurface => AppColors.onSurface;
   Color get onError => AppColors.onError;
 }

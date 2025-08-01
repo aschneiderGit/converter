@@ -26,13 +26,17 @@ class CircleButton extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: secondary ? AppColors.secondary : AppColors.primary,
+          color: secondary
+              ? Theme.of(context).secondary
+              : Theme.of(context).primary,
         ),
         child: Center(
           child: Text(
             label,
             style: TextStyle(
-              color: secondary ? AppColors.onSecondary : AppColors.onPrimary,
+              color: secondary
+                  ? Theme.of(context).onSecondary
+                  : Theme.of(context).onPrimary,
               fontSize: fontSize,
               fontWeight: FontWeight.bold,
               fontFamily: fontFamily,

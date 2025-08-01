@@ -1,7 +1,9 @@
 import 'package:converter/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
-ThemeData mainTheme = ThemeData(
+ThemeData mainTheme = ThemeData().copyWith(
+  primaryColor: AppColors.primary,
+  textSelectionTheme: TextSelectionThemeData(cursorColor: AppColors.onPrimary),
   appBarTheme: AppBarTheme(
     backgroundColor: AppColors.secondaryVariant,
     titleTextStyle: TextStyle(
