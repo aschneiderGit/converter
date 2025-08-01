@@ -4,7 +4,7 @@ import 'package:converter/views/widgets/circle_button/label_button.dart';
 import 'package:flutter/material.dart';
 
 class Keyboard extends StatelessWidget {
-  const Keyboard({super.key});
+  const Keyboard({super.key, TextEditingController? activeController});
 
   @override
   Widget build(BuildContext context) {
@@ -18,10 +18,7 @@ class Keyboard extends StatelessWidget {
             Flexible(flex: 7, child: numberButtonGrid()),
             Flexible(
               flex: 2,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 8, top: 16),
-                child: actionButtonGrid(),
-              ),
+              child: Padding(padding: const EdgeInsets.only(left: 8, top: 16), child: actionButtonGrid()),
             ),
           ],
         ),
@@ -35,12 +32,7 @@ class Keyboard extends StatelessWidget {
       labelButton(label: 'AC'),
       iconButton(icon: Icons.settings, secondary: true),
     ];
-    return GridView.count(
-      crossAxisCount: 1,
-      crossAxisSpacing: 8,
-      mainAxisSpacing: 8,
-      children: [...actionColumn],
-    );
+    return GridView.count(crossAxisCount: 1, crossAxisSpacing: 8, mainAxisSpacing: 8, children: [...actionColumn]);
   }
 
   GridView numberButtonGrid() {
@@ -48,11 +40,7 @@ class Keyboard extends StatelessWidget {
       int i = index + 1;
       return labelButton(label: i.toString());
     });
-    List<CircleButton> lastRow = [
-      labelButton(label: '00'),
-      labelButton(label: '0'),
-      labelButton(label: '.'),
-    ];
+    List<CircleButton> lastRow = [labelButton(label: '00'), labelButton(label: '0'), labelButton(label: '.')];
     return GridView.count(
       crossAxisCount: 3,
       crossAxisSpacing: 8,

@@ -17,9 +17,7 @@ class _CurrencyDropdownState extends State<CurrencyDropdown> {
     return Container(
       padding: EdgeInsets.only(top: 16),
       decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(color: Theme.of(context).secondary, width: 2),
-        ),
+        border: Border(bottom: BorderSide(color: Theme.of(context).secondary, width: 2)),
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(

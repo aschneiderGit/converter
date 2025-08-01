@@ -1,12 +1,19 @@
 import 'package:converter/core/theme/main_theme.dart';
+import 'package:converter/providers/amount_provider.dart';
 import 'package:converter/views/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:provider/provider.dart';
 
 import 'core/l10n/app_localizations.dart';
 
 void main() {
-  runApp(const Converter());
+  runApp(
+    MultiProvider(
+      providers: [ChangeNotifierProvider(create: (_) => AmountProvider())],
+      child: Converter(),
+    ),
+  );
 }
 
 class Converter extends StatelessWidget {

@@ -23,11 +23,7 @@ class TopDisplay extends StatelessWidget {
                 Flexible(
                   flex: 4,
                   child: Column(
-                    children: [
-                      currencyAmmountRow(),
-                      SizedBox(height: 12),
-                      currencyAmmountRow(),
-                    ],
+                    children: [currencyAmmountRow('top'), SizedBox(height: 12), currencyAmmountRow('bottom')],
                   ),
                 ),
                 SizedBox(width: 16),
@@ -35,11 +31,7 @@ class TopDisplay extends StatelessWidget {
                   flex: 1,
                   child: Container(
                     margin: const EdgeInsets.only(top: 32.0),
-                    child: iconButton(
-                      icon: Icons.cached,
-                      secondary: true,
-                      fontSize: 55,
-                    ),
+                    child: iconButton(icon: Icons.cached, secondary: true, fontSize: 55),
                   ),
                 ),
               ],
@@ -60,10 +52,10 @@ class TopDisplay extends StatelessWidget {
     );
   }
 
-  Row currencyAmmountRow() {
+  Row currencyAmmountRow(String position) {
     return Row(
       children: [
-        Flexible(flex: 3, child: AmountField()),
+        Flexible(flex: 3, child: AmountField(position: position)),
         SizedBox(width: 24),
         Flexible(child: SizedBox(height: 77, child: CurrencyDropdown())),
       ],
