@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 enum FieldType { top, bottom }
 
 class AmountProvider extends ChangeNotifier {
-  final Map<FieldType, String> _amounts = {FieldType.top: '', FieldType.bottom: ''};
+  Map<FieldType, String> _amounts = {FieldType.top: '', FieldType.bottom: ''};
   FieldType _selectedField = FieldType.top;
 
   String? get topAmount => _amounts[FieldType.top];
@@ -29,6 +29,15 @@ class AmountProvider extends ChangeNotifier {
 
   void changeSelectedField(FieldType newPosition) {
     _selectedField = newPosition;
+    notifyListeners();
+  }
+
+  void toggleAmount() {
+    Map<FieldType, String> newAmounts = {
+      FieldType.top: _amounts[FieldType.bottom] ?? '',
+      FieldType.bottom: _amounts[FieldType.top] ?? '',
+    };
+    _amounts = newAmounts;
     notifyListeners();
   }
 }

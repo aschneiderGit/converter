@@ -6,6 +6,7 @@ import 'package:converter/views/widgets/amount_field.dart';
 import 'package:converter/views/widgets/circle_button/icon_button.dart';
 import 'package:converter/views/widgets/currency_dropdown.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class TopDisplay extends StatelessWidget {
   const TopDisplay({super.key});
@@ -36,7 +37,12 @@ class TopDisplay extends StatelessWidget {
                   flex: 1,
                   child: Container(
                     margin: const EdgeInsets.only(top: 32.0),
-                    child: iconButton(icon: Icons.cached, secondary: true, fontSize: 55),
+                    child: iconButton(
+                      icon: Icons.cached,
+                      secondary: true,
+                      fontSize: 55,
+                      handleOnPressed: () => context.read<AmountProvider>().toggleAmount(),
+                    ),
                   ),
                 ),
               ],
