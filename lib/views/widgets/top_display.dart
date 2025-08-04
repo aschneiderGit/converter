@@ -1,6 +1,7 @@
 import 'package:converter/core/l10n/app_localizations.dart';
 import 'package:converter/core/theme/app_colors.dart';
 import 'package:converter/core/theme/app_text_style.dart';
+import 'package:converter/providers/amount_provider.dart';
 import 'package:converter/views/widgets/amount_field.dart';
 import 'package:converter/views/widgets/circle_button/icon_button.dart';
 import 'package:converter/views/widgets/currency_dropdown.dart';
@@ -23,7 +24,11 @@ class TopDisplay extends StatelessWidget {
                 Flexible(
                   flex: 4,
                   child: Column(
-                    children: [currencyAmmountRow('top'), SizedBox(height: 12), currencyAmmountRow('bottom')],
+                    children: [
+                      currencyAmmountRow(FieldType.top),
+                      SizedBox(height: 12),
+                      currencyAmmountRow(FieldType.bottom),
+                    ],
                   ),
                 ),
                 SizedBox(width: 16),
@@ -52,7 +57,7 @@ class TopDisplay extends StatelessWidget {
     );
   }
 
-  Row currencyAmmountRow(String position) {
+  Row currencyAmmountRow(FieldType position) {
     return Row(
       children: [
         Flexible(flex: 3, child: AmountField(position: position)),

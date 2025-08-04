@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class AmountField extends StatefulWidget {
-  final String position;
+  final FieldType position;
   const AmountField({super.key, required this.position});
 
   @override
@@ -15,22 +15,32 @@ class AmountField extends StatefulWidget {
 
 class _AmountFieldState extends State<AmountField> {
   TextEditingController controller = TextEditingController();
+  FocusNode focusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
-    print(context.read<AmountProvider>().bottomAmount);
-    controller = TextEditingController(
-      text: widget.position == 'top'
-          ? context.read<AmountProvider>().topAmount
-          : context.read<AmountProvider>().bottomAmount,
-    );
+    focusNode.addListener(() {
+      if (widget.position != context.read<AmountProvider>().selectedField) {
+        context.read<AmountProvider>().changeSelectedField(widget.position);
+      }
+    });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Now access the provider to set the initial text
+    controller.text = widget.position == FieldType.top
+        ? context.watch<AmountProvider>().topAmount ?? ''
+        : context.watch<AmountProvider>().bottomAmount ?? '';
   }
 
   @override
   Widget build(BuildContext context) {
     return TextField(
       controller: controller,
+      focusNode: focusNode,
       style: Theme.of(context).textStyle.copyWith(fontSize: 30),
       keyboardType: TextInputType.none,
       inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],

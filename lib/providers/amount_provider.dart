@@ -1,13 +1,23 @@
 import 'package:flutter/material.dart';
 
-class AmountProvider with ChangeNotifier {
-  final Map<String, String> _amount = {'top': '123', 'bottom': '456'};
+enum FieldType { top, bottom }
 
-  String? get topAmount => _amount['top'];
-  String? get bottomAmount => _amount['bottom'];
+class AmountProvider extends ChangeNotifier {
+  final Map<FieldType, String> _amounts = {FieldType.top: '', FieldType.bottom: ''};
+  FieldType _selectedField = FieldType.top;
 
-  void writeAmount(String position, String newValue) {
-    _amount[position] = newValue;
+  String? get topAmount => _amounts[FieldType.top];
+  String? get bottomAmount => _amounts[FieldType.bottom];
+  FieldType get selectedField => _selectedField;
+
+  void addNumber(String number) {
+    final currentValue = _amounts[_selectedField] ?? '';
+    _amounts[_selectedField] = currentValue + number;
+    notifyListeners();
+  }
+
+  void changeSelectedField(FieldType newPosition) {
+    _selectedField = newPosition;
     notifyListeners();
   }
 }
