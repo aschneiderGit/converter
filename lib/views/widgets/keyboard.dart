@@ -42,16 +42,13 @@ class Keyboard extends StatelessWidget {
       context.read<AmountProvider>().addNumber(number);
     }
 
-    List<CircleButton> numberButtons = List.generate(9, (index) {
-      String i = (index + 1).toString();
-      return labelButton(label: i, handleOnPressed: () => handleOnPressedNumber(i));
-    });
-    List<CircleButton> lastRow = [labelButton(label: '00'), labelButton(label: '0'), labelButton(label: '.')];
-    return GridView.count(
-      crossAxisCount: 3,
-      crossAxisSpacing: 8,
-      mainAxisSpacing: 16,
-      children: [...numberButtons, ...lastRow],
+    Iterable<String> buttonsLabels = Iterable.generate(9, (index) {
+      return (index + 1).toString();
+    }).followedBy(['00', '0', '.']);
+    // return labelButton(label: i, handleOnPressed: () => handleOnPressedNumber(i));
+    Iterable<CircleButton> numberButtons = buttonsLabels.map(
+      (label) => labelButton(label: label, handleOnPressed: () => handleOnPressedNumber(label)),
     );
+    return GridView.count(crossAxisCount: 3, crossAxisSpacing: 8, mainAxisSpacing: 16, children: [...numberButtons]);
   }
 }
