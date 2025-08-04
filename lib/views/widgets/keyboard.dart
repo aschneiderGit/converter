@@ -20,7 +20,7 @@ class Keyboard extends StatelessWidget {
             Flexible(flex: 7, child: numberButtonGrid(context)),
             Flexible(
               flex: 2,
-              child: Padding(padding: const EdgeInsets.only(left: 8, top: 16), child: actionButtonGrid()),
+              child: Padding(padding: const EdgeInsets.only(left: 8, top: 16), child: actionButtonGrid(context)),
             ),
           ],
         ),
@@ -28,10 +28,14 @@ class Keyboard extends StatelessWidget {
     );
   }
 
-  GridView actionButtonGrid() {
+  GridView actionButtonGrid(BuildContext context) {
     List<CircleButton> actionColumn = [
-      iconButton(icon: Icons.arrow_back, secondary: true),
-      labelButton(label: 'AC'),
+      iconButton(
+        icon: Icons.arrow_back,
+        secondary: true,
+        handleOnPressed: () => context.read<AmountProvider>().removeLastNumber(),
+      ),
+      labelButton(label: 'AC', handleOnPressed: () => context.read<AmountProvider>().eraseAmount()),
       iconButton(icon: Icons.settings, secondary: true),
     ];
     return GridView.count(crossAxisCount: 1, crossAxisSpacing: 8, mainAxisSpacing: 8, children: [...actionColumn]);

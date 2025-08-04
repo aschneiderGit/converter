@@ -16,6 +16,17 @@ class AmountProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void removeLastNumber() {
+    final currentValue = _amounts[_selectedField] ?? '';
+    if (currentValue.isNotEmpty) _amounts[_selectedField] = currentValue.substring(0, currentValue.length - 1);
+    notifyListeners();
+  }
+
+  void eraseAmount() {
+    _amounts[_selectedField] = '';
+    notifyListeners();
+  }
+
   void changeSelectedField(FieldType newPosition) {
     _selectedField = newPosition;
     notifyListeners();
