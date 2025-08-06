@@ -49,7 +49,6 @@ class Keyboard extends StatelessWidget {
     Iterable<String> buttonsLabels = Iterable.generate(9, (index) {
       return (index + 1).toString();
     }).followedBy(['00', '0', '.']);
-    // return labelButton(label: i, handleOnPressed: () => handleOnPressedNumber(i));
     Iterable<CircleButton> numberButtons = buttonsLabels.map(
       (label) => labelButton(label: label, handleOnPressed: () => handleOnPressedNumber(label)),
     );

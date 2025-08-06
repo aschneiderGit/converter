@@ -1,4 +1,5 @@
 import 'package:converter/core/theme/main_theme.dart';
+import 'package:converter/data/databases/database_helper.dart';
 import 'package:converter/providers/amount_provider.dart';
 import 'package:converter/views/home.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,11 @@ import 'package:provider/provider.dart';
 
 import 'core/l10n/app_localizations.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await DatabaseHelper.instance.initDb();
+  await DatabaseHelper.instance.initializeCurrency();
+
   runApp(
     MultiProvider(
       providers: [ChangeNotifierProvider(create: (_) => AmountProvider())],
