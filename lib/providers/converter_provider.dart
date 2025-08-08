@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 enum FieldType { top, bottom }
 
-class AmountProvider extends ChangeNotifier {
+class ConverterProvider extends ChangeNotifier {
   Map<FieldType, String> _amounts = {FieldType.top: '', FieldType.bottom: ''};
   FieldType _selectedField = FieldType.top;
 

@@ -1,4 +1,4 @@
-import 'package:converter/providers/amount_provider.dart';
+import 'package:converter/providers/converter_provider.dart';
 import 'package:converter/views/widgets/circle_button/circle_button.dart';
 import 'package:converter/views/widgets/circle_button/icon_button.dart';
 import 'package:converter/views/widgets/circle_button/label_button.dart';
@@ -33,9 +33,9 @@ class Keyboard extends StatelessWidget {
       iconButton(
         icon: Icons.arrow_back,
         secondary: true,
-        handleOnPressed: () => context.read<AmountProvider>().removeLastNumber(),
+        handleOnPressed: () => context.read<ConverterProvider>().removeLastNumber(),
       ),
-      labelButton(label: 'AC', handleOnPressed: () => context.read<AmountProvider>().eraseAmount()),
+      labelButton(label: 'AC', handleOnPressed: () => context.read<ConverterProvider>().eraseAmount()),
       iconButton(icon: Icons.settings, secondary: true),
     ];
     return GridView.count(crossAxisCount: 1, crossAxisSpacing: 8, mainAxisSpacing: 8, children: [...actionColumn]);
@@ -43,7 +43,7 @@ class Keyboard extends StatelessWidget {
 
   GridView numberButtonGrid(BuildContext context) {
     void handleOnPressedNumber(String number) {
-      context.read<AmountProvider>().addNumber(number);
+      context.read<ConverterProvider>().addNumber(number);
     }
 
     Iterable<String> buttonsLabels = Iterable.generate(9, (index) {

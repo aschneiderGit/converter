@@ -1,7 +1,7 @@
 import 'package:converter/core/l10n/app_localizations.dart';
 import 'package:converter/core/theme/app_colors.dart';
 import 'package:converter/core/theme/app_text_style.dart';
-import 'package:converter/providers/amount_provider.dart';
+import 'package:converter/providers/converter_provider.dart';
 import 'package:converter/views/widgets/amount_field.dart';
 import 'package:converter/views/widgets/circle_button/icon_button.dart';
 import 'package:converter/views/widgets/currency_dropdown.dart';
@@ -41,7 +41,7 @@ class TopDisplay extends StatelessWidget {
                       icon: Icons.cached,
                       secondary: true,
                       fontSize: 55,
-                      handleOnPressed: () => context.read<AmountProvider>().toggleAmount(),
+                      handleOnPressed: () => context.read<ConverterProvider>().toggleAmount(),
                     ),
                   ),
                 ),

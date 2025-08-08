@@ -1,6 +1,6 @@
 import 'package:converter/core/theme/app_colors.dart';
 import 'package:converter/core/theme/app_text_style.dart';
-import 'package:converter/providers/amount_provider.dart';
+import 'package:converter/providers/converter_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -21,8 +21,8 @@ class _AmountFieldState extends State<AmountField> {
   void initState() {
     super.initState();
     focusNode.addListener(() {
-      if (widget.position != context.read<AmountProvider>().selectedField) {
-        context.read<AmountProvider>().changeSelectedField(widget.position);
+      if (widget.position != context.read<ConverterProvider>().selectedField) {
+        context.read<ConverterProvider>().changeSelectedField(widget.position);
       }
     });
   }
@@ -32,8 +32,8 @@ class _AmountFieldState extends State<AmountField> {
     super.didChangeDependencies();
     // Now access the provider to set the initial text
     controller.text = widget.position == FieldType.top
-        ? context.watch<AmountProvider>().topAmount ?? ''
-        : context.watch<AmountProvider>().bottomAmount ?? '';
+        ? context.watch<ConverterProvider>().topAmount ?? ''
+        : context.watch<ConverterProvider>().bottomAmount ?? '';
   }
 
   @override

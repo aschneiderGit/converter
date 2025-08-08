@@ -1,6 +1,6 @@
 import 'package:converter/core/theme/app_colors.dart';
 import 'package:converter/core/theme/app_text_style.dart';
-import 'package:converter/data/databases/database_helper.dart';
+import 'package:converter/data/databases/currency_helper.dart';
 import 'package:converter/data/models/currency.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +22,7 @@ class _CurrencyDropdownState extends State<CurrencyDropdown> {
   }
 
   Future<void> _fetchCurrencies() async {
-    final currenciesMaps = await DatabaseHelper.instance.getAllCurrency();
+    final currenciesMaps = await CurrencyHelper().getAllCurrency();
 
     setState(() {
       currencies = currenciesMaps;

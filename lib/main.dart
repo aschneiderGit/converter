@@ -1,9 +1,9 @@
 import 'package:converter/core/theme/main_theme.dart';
+import 'package:converter/data/databases/currency_helper.dart';
 import 'package:converter/data/databases/database_helper.dart';
-import 'package:converter/providers/amount_provider.dart';
+import 'package:converter/providers/converter_provider.dart';
 import 'package:converter/views/home.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
@@ -12,12 +12,11 @@ import 'core/l10n/app_localizations.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await DatabaseHelper.instance.initDb();
-  await DatabaseHelper.instance.initializeCurrency();
-  await DatabaseHelper.instance.initializeRate();
+  await CurrencyHelper().initializeCurrency();
 
   runApp(
     MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => AmountProvider())],
+      providers: [ChangeNotifierProvider(create: (_) => ConverterProvider())],
       child: Converter(),
     ),
   );
@@ -29,7 +28,7 @@ class Converter extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    debugPaintSizeEnabled = true;
+    //debugPaintSizeEnabled = true;
     return MaterialApp(
       title: 'Converter',
       localizationsDelegates: [
