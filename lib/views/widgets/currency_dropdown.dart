@@ -23,7 +23,7 @@ class _CurrencyDropdownState extends State<CurrencyDropdown> {
 
   Future<void> _fetchCurrencies() async {
     final currenciesMaps = await DatabaseHelper.instance.getAllCurrency();
-    print(currenciesMaps);
+
     setState(() {
       currencies = currenciesMaps;
       currencySelected = currencies.first;

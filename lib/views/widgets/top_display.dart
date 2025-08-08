@@ -66,9 +66,9 @@ class TopDisplay extends StatelessWidget {
   Row currencyAmmountRow(FieldType position) {
     return Row(
       children: [
-        Flexible(flex: 3, child: AmountField(position: position)),
+        Flexible(flex: 7, child: AmountField(position: position)),
         SizedBox(width: 24),
-        Flexible(child: SizedBox(height: 77, child: CurrencyDropdown())),
+        Flexible(flex: 3, child: SizedBox(height: 77, child: CurrencyDropdown())),
       ],
     );
   }

@@ -3,6 +3,7 @@ import 'package:converter/data/databases/database_helper.dart';
 import 'package:converter/providers/amount_provider.dart';
 import 'package:converter/views/home.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
@@ -12,6 +13,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await DatabaseHelper.instance.initDb();
   await DatabaseHelper.instance.initializeCurrency();
+  await DatabaseHelper.instance.initializeRate();
 
   runApp(
     MultiProvider(
@@ -27,7 +29,7 @@ class Converter extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    //debugPaintSizeEnabled = true;
+    debugPaintSizeEnabled = true;
     return MaterialApp(
       title: 'Converter',
       localizationsDelegates: [
