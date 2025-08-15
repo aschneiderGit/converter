@@ -9,10 +9,10 @@ class CurrencyHelper {
     List<Currency> allCurrencies = await getAllCurrency();
     if (allCurrencies.isEmpty) {
       List<Currency> currencyToAdd = [
-        Currency(code: 'EUR', name: 'Euros', countryId: 1, rate: 0.5),
-        Currency(code: 'USD', name: 'American Dollars', countryId: 2, rate: 1),
-        Currency(code: 'HKD', name: 'Hong Kong Dollars', countryId: 3, rate: 4),
-        Currency(code: 'CHF', name: 'Swiss Franc', countryId: 4, rate: 0.25),
+        Currency(code: 'EUR', name: 'Euros', rate: 0.5, countryId: 1),
+        Currency(code: 'USD', name: 'American Dollars', rate: 1, countryId: 2),
+        Currency(code: 'HKD', name: 'Hong Kong Dollars', rate: 4, countryId: 3),
+        Currency(code: 'CHF', name: 'Swiss Franc', rate: 0.25, countryId: 4),
       ];
       Database db = await _dbHelper.db;
 
