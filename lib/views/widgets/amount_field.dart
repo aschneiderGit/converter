@@ -7,37 +7,33 @@ import 'package:provider/provider.dart';
 
 class AmountField extends StatefulWidget {
   final FieldType position;
-  const AmountField({super.key, required this.position});
+  final String value;
+  const AmountField({super.key, required this.position, required this.value});
 
   @override
   State<AmountField> createState() => _AmountFieldState();
 }
 
 class _AmountFieldState extends State<AmountField> {
-  TextEditingController controller = TextEditingController();
+  late TextEditingController controller;
   FocusNode focusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
-    focusNode.addListener(() {
-      if (widget.position != context.read<ConverterProvider>().selectedField) {
-        context.read<ConverterProvider>().changeSelectedField(widget.position);
-      }
-    });
+    controller = TextEditingController(text: widget.value);
+    focusNode.addListener(_focusListener);
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    // Now access the provider to set the initial text
-    controller.text = widget.position == FieldType.top
-        ? context.watch<ConverterProvider>().topAmount ?? ''
-        : context.watch<ConverterProvider>().bottomAmount ?? '';
+  void _focusListener() {
+    if (widget.position != context.read<ConverterProvider>().selectedField) {
+      context.read<ConverterProvider>().changeSelectedField(widget.position);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    controller.text = widget.value;
     return TextField(
       controller: controller,
       focusNode: focusNode,
@@ -56,6 +52,7 @@ class _AmountFieldState extends State<AmountField> {
   @override
   void dispose() {
     controller.dispose();
+    focusNode.removeListener(_focusListener);
     super.dispose();
   }
 }

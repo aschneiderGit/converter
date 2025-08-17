@@ -1,6 +1,7 @@
 import 'package:converter/core/l10n/app_localizations.dart';
 import 'package:converter/core/theme/app_colors.dart';
 import 'package:converter/core/theme/app_text_style.dart';
+import 'package:converter/data/models/amount.dart';
 import 'package:converter/providers/converter_provider.dart';
 import 'package:converter/views/widgets/amount_field.dart';
 import 'package:converter/views/widgets/circle_button/icon_button.dart';
@@ -8,8 +9,28 @@ import 'package:converter/views/widgets/currency_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class TopDisplay extends StatelessWidget {
+class TopDisplay extends StatefulWidget {
   const TopDisplay({super.key});
+
+  @override
+  State<TopDisplay> createState() => _TopDisplayState();
+}
+
+class _TopDisplayState extends State<TopDisplay> {
+  Map<FieldType, Amount?> amounts = {};
+  @override
+  void initState() {
+    super.initState();
+    amounts = context.read<ConverterProvider>().amounts;
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    setState(() {
+      amounts = context.watch<ConverterProvider>().amounts;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,9 +87,15 @@ class TopDisplay extends StatelessWidget {
   Row currencyAmmountRow(FieldType position) {
     return Row(
       children: [
-        Flexible(flex: 7, child: AmountField(position: position)),
+        Flexible(
+          flex: 7,
+          child: AmountField(position: position, value: amounts[position]?.value ?? ''),
+        ),
         SizedBox(width: 24),
-        Flexible(flex: 3, child: SizedBox(height: 77, child: CurrencyDropdown())),
+        Flexible(
+          flex: 3,
+          child: SizedBox(height: 77, child: CurrencyDropdown(defaultCurrency: amounts[position]?.currency)),
+        ),
       ],
     );
   }
