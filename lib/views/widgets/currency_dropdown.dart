@@ -5,15 +5,15 @@ import 'package:converter/data/models/currency.dart';
 import 'package:flutter/material.dart';
 
 class CurrencyDropdown extends StatefulWidget {
-  final Currency? defaultCurrency = null;
-  const CurrencyDropdown({super.key, Currency? defaultCurrency});
+  final Currency? defaultCurrency;
+  const CurrencyDropdown({super.key, this.defaultCurrency});
 
   @override
   State<CurrencyDropdown> createState() => _CurrencyDropdownState();
 }
 
 class _CurrencyDropdownState extends State<CurrencyDropdown> {
-  List<Currency> currencies = [];
+  Map<String, Currency> currencies = {};
   Currency? currencySelected;
 
   @override
@@ -23,12 +23,16 @@ class _CurrencyDropdownState extends State<CurrencyDropdown> {
   }
 
   Future<void> _fetchCurrencies() async {
-    final currenciesMaps = await CurrencyHelper().getAllCurrency();
+    currencies = await CurrencyHelper().getAllCurrency();
+    currencySelected = currencies[widget.defaultCurrency?.code] ?? currencies.values.first;
+  }
 
-    setState(() {
-      currencies = currenciesMaps;
-      currencySelected = widget.defaultCurrency ?? currencies.first;
-    });
+  @override
+  void didUpdateWidget(covariant CurrencyDropdown oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.defaultCurrency != widget.defaultCurrency) {
+      currencySelected = currencies[widget.defaultCurrency?.code];
+    }
   }
 
   @override
@@ -49,7 +53,7 @@ class _CurrencyDropdownState extends State<CurrencyDropdown> {
               currencySelected = value!;
             });
           },
-          items: currencies.map<DropdownMenuItem<Currency>>((Currency value) {
+          items: currencies.values.map<DropdownMenuItem<Currency>>((Currency value) {
             return DropdownMenuItem<Currency>(value: value, child: Text(value.code));
           }).toList(),
         ),

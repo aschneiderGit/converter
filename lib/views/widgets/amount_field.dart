@@ -32,8 +32,16 @@ class _AmountFieldState extends State<AmountField> {
   }
 
   @override
+  void didUpdateWidget(covariant AmountField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.value != widget.value) {
+      controller.text = widget.value;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    controller.text = widget.value;
+    //controller.text = widget.value; can be just this line to replace all the didUpdateWidget
     return TextField(
       controller: controller,
       focusNode: focusNode,

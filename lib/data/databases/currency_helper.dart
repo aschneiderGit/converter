@@ -6,7 +6,7 @@ class CurrencyHelper {
   final DatabaseHelper _dbHelper = DatabaseHelper();
 
   Future<void> initializeCurrency() async {
-    List<Currency> allCurrencies = await getAllCurrency();
+    Map<String, Currency> allCurrencies = await getAllCurrency();
     if (allCurrencies.isEmpty) {
       List<Currency> currencyToAdd = [
         Currency(code: 'EUR', name: 'Euros', rate: 0.5, countryId: 1),
@@ -26,20 +26,14 @@ class CurrencyHelper {
     }
   }
 
-  Future<List<Currency>> getAllCurrency() async {
+  Future<Map<String, Currency>> getAllCurrency() async {
     try {
       Database db = await _dbHelper.db;
       final List<Map<String, dynamic>> maps = await db.query(tableCurrencies);
 
-      return List.generate(maps.length, (i) {
-        return Currency(
-          id: maps[i]['id'],
-          code: maps[i]['code'],
-          name: maps[i]['name'],
-          rate: maps[i]['rate'],
-          countryId: maps[i]['countryId'],
-        );
-      });
+      final Map<String, Currency> currencies = {for (var row in maps) row['code']: Currency.fromMap(row)};
+
+      return currencies;
     } catch (e) {
       throw 'Error when getting all currencies :\n $e';
     }

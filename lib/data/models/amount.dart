@@ -12,6 +12,10 @@ class Amount {
     value = newValue;
   }
 
+  set setCurrency(Currency newCurrency) {
+    currency = newCurrency;
+  }
+
   Amount convert(Currency toCurrency) {
     return Amount(value: (valueAsDouble * (currency.rate / toCurrency.rate)).toString(), currency: toCurrency);
   }

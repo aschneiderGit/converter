@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 enum FieldType { top, bottom }
 
 class ConverterProvider extends ChangeNotifier {
-  List<Currency> _allCurrencies = [];
+  Map<String, Currency> _allCurrencies = {};
   Map<FieldType, Amount?> _amounts = {FieldType.top: null, FieldType.bottom: null};
   FieldType _selectedField = FieldType.top;
 
@@ -48,11 +48,10 @@ class ConverterProvider extends ChangeNotifier {
   }
 
   void toggleAmount() {
-    Map<FieldType, Amount?> newAmounts = {
-      FieldType.top: _amounts[FieldType.bottom],
-      FieldType.bottom: _amounts[FieldType.top],
-    };
-    _amounts = newAmounts;
+    var currencyTop = _amounts[FieldType.top]?.currency;
+    var currencyBot = _amounts[FieldType.bottom]?.currency;
+    _amounts[FieldType.bottom]?.currency = currencyTop!;
+    _amounts[FieldType.top]?.currency = currencyBot!;
     notifyListeners();
   }
 
@@ -70,8 +69,8 @@ class ConverterProvider extends ChangeNotifier {
 
   void initializeAmount() {
     _amounts = {
-      FieldType.top: Amount(currency: _allCurrencies.first),
-      FieldType.bottom: Amount(currency: _allCurrencies.last),
+      FieldType.top: Amount(currency: _allCurrencies.values.first),
+      FieldType.bottom: Amount(currency: _allCurrencies.values.last),
     };
   }
 }
