@@ -24,8 +24,12 @@ class ConverterProvider extends ChangeNotifier {
   }
 
   void addNumber(String number) {
-    final String currentValue = _amounts[_selectedField]?.value ?? '';
-    _amounts[_selectedField]?.value = currentValue + number;
+    final String currentValue = amounts[_selectedField]?.value ?? '';
+    if (number == '.' && currentValue.contains('.')) {
+      amounts[_selectedField]?.value = currentValue;
+    } else {
+      amounts[_selectedField]?.value = currentValue + number;
+    }
     convert();
     notifyListeners();
   }
