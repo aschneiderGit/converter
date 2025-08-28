@@ -35,8 +35,7 @@ class DatabaseHelper {
       id INTEGER PRIMARY KEY,
       code TEXT NOT NULL UNIQUE,
       name TEXT NOT NULL,
-      rate REAL NOT NULL,
-      countryId INTEGER
+      rate REAL NOT NULL
     )
   ''');
       print("Converter tables created.");

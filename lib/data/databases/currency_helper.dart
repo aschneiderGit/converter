@@ -1,28 +1,43 @@
+import 'package:converter/core/constants/currencies.dart';
 import 'package:converter/data/databases/database_helper.dart';
 import 'package:converter/data/models/currency.dart';
+import 'package:converter/data/services/exchange_rate.dart';
 import 'package:sqflite/sqflite.dart';
 
 class CurrencyHelper {
   final DatabaseHelper _dbHelper = DatabaseHelper();
 
   Future<void> initializeCurrency() async {
+    Map<String, dynamic> latestRate = await ExchangeRateService().getLastestRate();
     Map<String, Currency> allCurrencies = await getAllCurrency();
-    if (allCurrencies.isEmpty) {
-      List<Currency> currencyToAdd = [
-        Currency(code: 'EUR', name: 'Euros', rate: 0.5, countryId: 1),
-        Currency(code: 'USD', name: 'American Dollars', rate: 1, countryId: 2),
-        Currency(code: 'HKD', name: 'Hong Kong Dollars', rate: 4, countryId: 3),
-        Currency(code: 'CHF', name: 'Swiss Franc', rate: 0.25, countryId: 4),
-      ];
-      Database db = await _dbHelper.db;
-
-      try {
-        for (Currency currency in currencyToAdd) {
-          await db.insert(tableCurrencies, currency.toMap());
-        }
-      } catch (e) {
-        throw ('Exception details:\n $e');
+    List<Currency> currencyToAdd = [];
+    List<Currency> currencyToUpdate = [];
+    for (String code in latestRate.keys) {
+      if (allCurrencies[code] == null) {
+        print(code);
+        currencyToAdd.add(
+          Currency(code: code, name: initCurrencies[code]!["name"]!, rate: latestRate[code].toDouble()),
+        );
+      } else if (allCurrencies[code]?.rate != latestRate[code]) {
+        Currency? dbCurrency = allCurrencies[code];
+        dbCurrency?.rate = latestRate[code].toDouble();
+        currencyToUpdate.add(dbCurrency!);
       }
+    }
+
+    Database db = await _dbHelper.db;
+
+    try {
+      for (Currency currency in currencyToAdd) {
+        await db.insert(tableCurrencies, currency.toMap());
+        print("add ${currency.code}in the db");
+      }
+      for (Currency currency in currencyToUpdate) {
+        await db.update(tableCurrencies, currency.toMap(), where: 'id = ?', whereArgs: [currency.id]);
+        print("update the rate of ${currency.code}in the db");
+      }
+    } catch (e) {
+      throw ('Exception details:\n $e');
     }
   }
 
@@ -50,13 +65,7 @@ class CurrencyHelper {
       if (currencies.isNotEmpty) {
         if (currencies.length == 1) {
           Map<String, dynamic> currency = currencies.first;
-          return Currency(
-            id: currency['id'],
-            name: currency['name'],
-            code: currency['code'],
-            rate: currency['rate'],
-            countryId: currency['countryId'],
-          );
+          return Currency(id: currency['id'], name: currency['name'], code: currency['code'], rate: currency['rate']);
         } else {
           throw ('should only got one CUrrency per code ');
         }
