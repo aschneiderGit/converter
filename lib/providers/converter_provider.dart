@@ -31,7 +31,6 @@ class ConverterProvider extends ChangeNotifier {
       amounts[_selectedField]?.value = currentValue + number;
     }
     convert();
-    notifyListeners();
   }
 
   void removeLastNumber() {
@@ -40,18 +39,23 @@ class ConverterProvider extends ChangeNotifier {
       _amounts[_selectedField]?.value = (currentValue.substring(0, currentValue.length - 1));
     }
     convert();
-    notifyListeners();
   }
 
   void eraseAmount() {
     _amounts[_selectedField]?.value = '';
     convert();
-    notifyListeners();
   }
 
   void changeSelectedField(FieldType newPosition) {
     _selectedField = newPosition;
     notifyListeners();
+  }
+
+  void changeCurrency(FieldType position, Currency? value) {
+    _amounts[position]?.currency = value!;
+    // _amounts[FieldType.top]?.value = _amounts[FieldType.top]!.value;
+    //_amounts[FieldType.bottom]?.value = _amounts[FieldType.bottom]!.value;
+    convert();
   }
 
   void toggleAmount() {
@@ -60,7 +64,6 @@ class ConverterProvider extends ChangeNotifier {
     _amounts[FieldType.bottom]?.currency = currencyTop!;
     _amounts[FieldType.top]?.currency = currencyBot!;
     convert();
-    notifyListeners();
   }
 
   void convert() {
@@ -68,11 +71,11 @@ class ConverterProvider extends ChangeNotifier {
     final target = _selectedField == FieldType.top ? FieldType.bottom : FieldType.top;
 
     amounts[target] = amounts[source]?.convert(amounts[target]!.currency);
+    notifyListeners();
   }
 
   Future<void> fetchCurrencies() async {
     try {
-      notifyListeners();
       final data = await CurrencyHelper().getAllCurrency();
       _allCurrencies = data;
     } catch (e) {
@@ -87,5 +90,6 @@ class ConverterProvider extends ChangeNotifier {
       FieldType.top: Amount(currency: _allCurrencies.values.first),
       FieldType.bottom: Amount(currency: _allCurrencies.values.last),
     };
+    notifyListeners();
   }
 }

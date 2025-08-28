@@ -47,9 +47,6 @@ class _AmountFieldState extends State<AmountField> {
     return TextField(
       controller: controller,
       focusNode: focusNode,
-      onChanged: (value) {
-        print(value);
-      },
       style: Theme.of(context).textStyle.copyWith(fontSize: 30),
       keyboardType: TextInputType.none,
       inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],

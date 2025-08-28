@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 
 class CurrencyDropdown extends StatefulWidget {
   final Currency? defaultCurrency;
-  const CurrencyDropdown({super.key, this.defaultCurrency});
+  final Function(Currency?) currencyChanged;
+  const CurrencyDropdown({super.key, this.defaultCurrency, required this.currencyChanged});
 
   @override
   State<CurrencyDropdown> createState() => _CurrencyDropdownState();
@@ -52,6 +53,7 @@ class _CurrencyDropdownState extends State<CurrencyDropdown> {
             setState(() {
               currencySelected = value!;
             });
+            widget.currencyChanged(value);
           },
           items: currencies.values.map<DropdownMenuItem<Currency>>((Currency value) {
             return DropdownMenuItem<Currency>(value: value, child: Text(value.code));
