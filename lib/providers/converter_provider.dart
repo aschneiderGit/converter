@@ -26,6 +26,7 @@ class ConverterProvider extends ChangeNotifier {
   void addNumber(String number) {
     final String currentValue = _amounts[_selectedField]?.value ?? '';
     _amounts[_selectedField]?.value = currentValue + number;
+    convert();
     notifyListeners();
   }
 
@@ -34,11 +35,13 @@ class ConverterProvider extends ChangeNotifier {
     if (currentValue.isNotEmpty) {
       _amounts[_selectedField]?.value = (currentValue.substring(0, currentValue.length - 1));
     }
+    convert();
     notifyListeners();
   }
 
   void eraseAmount() {
     _amounts[_selectedField]?.value = '';
+    convert();
     notifyListeners();
   }
 
@@ -52,7 +55,15 @@ class ConverterProvider extends ChangeNotifier {
     var currencyBot = _amounts[FieldType.bottom]?.currency;
     _amounts[FieldType.bottom]?.currency = currencyTop!;
     _amounts[FieldType.top]?.currency = currencyBot!;
+    convert();
     notifyListeners();
+  }
+
+  void convert() {
+    final source = _selectedField == FieldType.top ? FieldType.top : FieldType.bottom;
+    final target = _selectedField == FieldType.top ? FieldType.bottom : FieldType.top;
+
+    amounts[target] = amounts[source]?.convert(amounts[target]!.currency);
   }
 
   Future<void> fetchCurrencies() async {

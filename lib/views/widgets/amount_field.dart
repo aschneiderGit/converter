@@ -16,6 +16,7 @@ class AmountField extends StatefulWidget {
 
 class _AmountFieldState extends State<AmountField> {
   late TextEditingController controller;
+  String prev = "";
   FocusNode focusNode = FocusNode();
 
   @override
@@ -35,6 +36,7 @@ class _AmountFieldState extends State<AmountField> {
   void didUpdateWidget(covariant AmountField oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.value != widget.value) {
+      prev = controller.text;
       controller.text = widget.value;
     }
   }
@@ -45,6 +47,9 @@ class _AmountFieldState extends State<AmountField> {
     return TextField(
       controller: controller,
       focusNode: focusNode,
+      onChanged: (value) {
+        print(value);
+      },
       style: Theme.of(context).textStyle.copyWith(fontSize: 30),
       keyboardType: TextInputType.none,
       inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],

@@ -6,7 +6,7 @@ class Amount {
 
   Amount({this.value = '', required this.currency});
 
-  double get valueAsDouble => value as double;
+  double get valueAsDouble => double.tryParse(value) ?? 0.0;
 
   set setValue(String newValue) {
     value = newValue;
