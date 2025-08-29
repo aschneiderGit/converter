@@ -1,4 +1,5 @@
 import 'package:converter/data/databases/currency_helper.dart';
+import 'package:converter/data/databases/database_helper.dart';
 import 'package:converter/data/models/amount.dart';
 import 'package:converter/data/models/currency.dart';
 import 'package:flutter/material.dart';
@@ -13,14 +14,30 @@ class ConverterProvider extends ChangeNotifier {
   Amount? get topAmount => _amounts[FieldType.top];
   Amount? get bottomAmount => _amounts[FieldType.bottom];
   Map<FieldType, Amount?> get amounts => _amounts;
+
+  DateTime? dataTime;
   FieldType get selectedField => _selectedField;
+
+  bool _isLoading = true;
+  bool get isLoading => _isLoading;
 
   ConverterProvider() {
     _init();
   }
+
   Future<void> _init() async {
+    await CurrencyHelper().initializeCurrency();
     await fetchCurrencies();
     initializeAmount();
+    await loadData();
+
+    _isLoading = false;
+    notifyListeners();
+  }
+
+  Future<void> loadData() async {
+    dataTime = await DatabaseHelper().getDataTime();
+    notifyListeners();
   }
 
   void addNumber(String number) {

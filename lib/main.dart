@@ -1,5 +1,4 @@
 import 'package:converter/core/theme/main_theme.dart';
-import 'package:converter/data/databases/currency_helper.dart';
 import 'package:converter/data/databases/database_helper.dart';
 import 'package:converter/providers/converter_provider.dart';
 import 'package:converter/views/home.dart';
@@ -12,7 +11,6 @@ import 'core/l10n/app_localizations.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await DatabaseHelper.instance.initDb();
-  await CurrencyHelper().initializeCurrency();
 
   runApp(
     MultiProvider(

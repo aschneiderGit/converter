@@ -8,13 +8,14 @@ class CurrencyHelper {
   final DatabaseHelper _dbHelper = DatabaseHelper();
 
   Future<void> initializeCurrency() async {
-    Map<String, dynamic> latestRate = await ExchangeRateService().getLastestRate();
+    Map<String, dynamic> data = await ExchangeRateService().getLastestRate();
+    Map<String, dynamic> latestRate = data["rates"];
+    int dataTime = data["data_time"];
     Map<String, Currency> allCurrencies = await getAllCurrency();
     List<Currency> currencyToAdd = [];
     List<Currency> currencyToUpdate = [];
     for (String code in latestRate.keys) {
       if (allCurrencies[code] == null) {
-        print(code);
         currencyToAdd.add(
           Currency(code: code, name: initCurrencies[code]!["name"]!, rate: latestRate[code].toDouble()),
         );
@@ -30,12 +31,15 @@ class CurrencyHelper {
     try {
       for (Currency currency in currencyToAdd) {
         await db.insert(tableCurrencies, currency.toMap());
-        print("add ${currency.code}in the db");
+        print("add ${currency.code} in the db");
       }
+      print("total currencies add ${currencyToAdd.length} ");
       for (Currency currency in currencyToUpdate) {
         await db.update(tableCurrencies, currency.toMap(), where: 'id = ?', whereArgs: [currency.id]);
-        print("update the rate of ${currency.code}in the db");
+        print("update the rate of ${currency.code} in the db");
       }
+      print("total currencies update ${currencyToUpdate.length} ");
+      await db.update(tableSettings, {"data_time": dataTime});
     } catch (e) {
       throw ('Exception details:\n $e');
     }

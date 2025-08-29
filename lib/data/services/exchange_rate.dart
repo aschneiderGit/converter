@@ -11,7 +11,7 @@ class ExchangeRateService {
 
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body) as Map<String, dynamic>;
-      return data["rates"];
+      return {"rates": data["rates"], "data_time": data["time_last_update_unix"]};
     } else {
       throw Exception("Failed to load rates: {response.statusCode}");
     }
