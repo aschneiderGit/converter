@@ -10,31 +10,21 @@ import 'package:converter/views/widgets/currency_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class TopDisplay extends StatefulWidget {
+class TopDisplay extends StatelessWidget {
   const TopDisplay({super.key});
 
   @override
-  State<TopDisplay> createState() => _TopDisplayState();
-}
-
-class _TopDisplayState extends State<TopDisplay> {
-  Map<FieldType, Amount?> amounts = {};
-  @override
-  void initState() {
-    super.initState();
-    amounts = context.read<ConverterProvider>().amounts;
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    setState(() {
-      amounts = context.watch<ConverterProvider>().amounts;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final providerWatch = context.watch<ConverterProvider>();
+    final providerRead = context.read<ConverterProvider>();
+
+    if (providerWatch.isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    final amounts = providerWatch.amounts;
+    final dataTime = providerWatch.dataTime;
+
     return Flexible(
       flex: 2,
       child: Container(
@@ -48,13 +38,13 @@ class _TopDisplayState extends State<TopDisplay> {
                   flex: 4,
                   child: Column(
                     children: [
-                      currencyAmmountRow(FieldType.top),
-                      SizedBox(height: 12),
-                      currencyAmmountRow(FieldType.bottom),
+                      _currencyAmountRow(context, FieldType.top, amounts),
+                      const SizedBox(height: 12),
+                      _currencyAmountRow(context, FieldType.bottom, amounts),
                     ],
                   ),
                 ),
-                SizedBox(width: 16),
+                const SizedBox(width: 16),
                 Flexible(
                   flex: 1,
                   child: Container(
@@ -63,18 +53,18 @@ class _TopDisplayState extends State<TopDisplay> {
                       icon: Icons.cached,
                       secondary: true,
                       fontSize: 55,
-                      handleOnPressed: () => context.read<ConverterProvider>().toggleAmount(),
+                      handleOnPressed: providerRead.toggleAmount,
                     ),
                   ),
                 ),
               ],
             ),
             Container(
-              margin: EdgeInsets.only(top: 32),
+              margin: const EdgeInsets.only(top: 32),
               height: 60,
               child: Center(
                 child: Text(
-                  AppLocalizations.of(context)!.updateTime,
+                  "${AppLocalizations.of(context)!.updateTime} ${dataTime.toString()}",
                   style: Theme.of(context).textStyle.copyWith(fontSize: 14),
                 ),
               ),
@@ -85,18 +75,15 @@ class _TopDisplayState extends State<TopDisplay> {
     );
   }
 
-  Row currencyAmmountRow(FieldType position) {
-    changeCurrency(Currency? value) {
+  Row _currencyAmountRow(BuildContext context, FieldType position, Map<FieldType, Amount?> amounts) {
+    void changeCurrency(Currency? value) {
       context.read<ConverterProvider>().changeCurrency(position, value);
     }
 
     return Row(
       children: [
-        Flexible(
-          flex: 7,
-          child: AmountField(position: position, value: amounts[position]?.value ?? ''),
-        ),
-        SizedBox(width: 24),
+        Flexible(flex: 7, child: AmountField(position: position)),
+        const SizedBox(width: 24),
         Flexible(
           flex: 3,
           child: SizedBox(

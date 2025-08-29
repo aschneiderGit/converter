@@ -5,45 +5,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-class AmountField extends StatefulWidget {
+class AmountField extends StatelessWidget {
   final FieldType position;
-  final String value;
-  const AmountField({super.key, required this.position, required this.value});
 
-  @override
-  State<AmountField> createState() => _AmountFieldState();
-}
-
-class _AmountFieldState extends State<AmountField> {
-  late TextEditingController controller;
-  String prev = "";
-  FocusNode focusNode = FocusNode();
-
-  @override
-  void initState() {
-    super.initState();
-    controller = TextEditingController(text: widget.value);
-    focusNode.addListener(_focusListener);
-  }
-
-  void _focusListener() {
-    if (widget.position != context.read<ConverterProvider>().selectedField) {
-      context.read<ConverterProvider>().changeSelectedField(widget.position);
-    }
-  }
-
-  @override
-  void didUpdateWidget(covariant AmountField oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.value != widget.value) {
-      prev = controller.text;
-      controller.text = widget.value;
-    }
-  }
+  const AmountField({super.key, required this.position});
 
   @override
   Widget build(BuildContext context) {
-    //controller.text = widget.value; can be just this line to replace all the didUpdateWidget
+    final provider = context.watch<ConverterProvider>();
+
+    // Value bound directly from provider
+    final value = provider.amounts[position]?.value ?? '';
+
+    // Create controller each build (stateless)
+    final controller = TextEditingController(text: value);
+
+    final focusNode = FocusNode();
+    focusNode.addListener(() {
+      if (focusNode.hasFocus && position != context.read<ConverterProvider>().selectedField) {
+        context.read<ConverterProvider>().changeSelectedField(position);
+      }
+    });
+
     return TextField(
       controller: controller,
       focusNode: focusNode,
@@ -57,12 +40,5 @@ class _AmountFieldState extends State<AmountField> {
         labelStyle: Theme.of(context).textStyle,
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    focusNode.removeListener(_focusListener);
-    super.dispose();
   }
 }
