@@ -14,6 +14,7 @@ class ConverterProvider extends ChangeNotifier {
   Amount? get topAmount => _amounts[FieldType.top];
   Amount? get bottomAmount => _amounts[FieldType.bottom];
   Map<FieldType, Amount?> get amounts => _amounts;
+  Map<String, Currency> get allCurrencies => _allCurrencies;
 
   DateTime? dataTime;
   FieldType get selectedField => _selectedField;
