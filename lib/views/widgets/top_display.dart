@@ -8,6 +8,7 @@ import 'package:converter/views/widgets/amount_field.dart';
 import 'package:converter/views/widgets/circle_button/icon_button.dart';
 import 'package:converter/views/widgets/currency_dropdown.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class TopDisplay extends StatelessWidget {
@@ -24,6 +25,7 @@ class TopDisplay extends StatelessWidget {
 
     final amounts = providerWatch.amounts;
     final dataTime = providerWatch.dataTime;
+    final DateFormat formatter = DateFormat('yyyy/MM/dd HH:mm:ss');
 
     return Flexible(
       flex: 2,
@@ -64,7 +66,7 @@ class TopDisplay extends StatelessWidget {
               height: 60,
               child: Center(
                 child: Text(
-                  "${AppLocalizations.of(context)!.updateTime} ${dataTime.toString()}",
+                  "${AppLocalizations.of(context)!.updateTime} ${formatter.format(dataTime!)}",
                   style: Theme.of(context).textStyle.copyWith(fontSize: 14),
                 ),
               ),
