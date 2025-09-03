@@ -16,4 +16,16 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get updateTime => 'Donnée mise à jour le: ';
+
+  @override
+  String get searchCurrency => 'Chercher une devise...';
+
+  @override
+  String get noCurrency => 'Pas de devise disponible';
+
+  @override
+  String get cancel => 'Annuler';
+
+  @override
+  String get selectCurrency => 'Selectiond de device';
 }

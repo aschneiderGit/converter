@@ -115,6 +115,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Last updated the :'**
   String get updateTime;
+
+  /// No description provided for @searchCurrency.
+  ///
+  /// In en, this message translates to:
+  /// **'Search currency...'**
+  String get searchCurrency;
+
+  /// No description provided for @noCurrency.
+  ///
+  /// In en, this message translates to:
+  /// **'No currencies available'**
+  String get noCurrency;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @selectCurrency.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Currency'**
+  String get selectCurrency;
 }
 
 class _AppLocalizationsDelegate

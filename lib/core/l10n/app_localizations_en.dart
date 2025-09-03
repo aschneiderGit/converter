@@ -16,4 +16,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get updateTime => 'Last updated the :';
+
+  @override
+  String get searchCurrency => 'Search currency...';
+
+  @override
+  String get noCurrency => 'No currencies available';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get selectCurrency => 'Select Currency';
 }

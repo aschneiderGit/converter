@@ -1,6 +1,10 @@
 {
-    "@@locale": "en",
-    "titleApp": "Converter",
-    "appBar": "Start to convert here !",
-    "updateTime": "Last updated the :"
+  "@@locale": "en",
+  "titleApp": "Converter",
+  "appBar": "Start to convert here !",
+  "updateTime": "Last updated the :",
+  "searchCurrency": "Search currency...",
+  "noCurrency": "No currencies available",
+  "cancel": "Cancel",
+  "selectCurrency": "Select Currency"
 }
