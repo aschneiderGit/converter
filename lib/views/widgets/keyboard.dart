@@ -14,13 +14,13 @@ class Keyboard extends StatelessWidget {
       flex: 3,
       child: Container(
         margin: EdgeInsets.only(top: 16),
-        padding: const EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(8.0),
         child: Row(
           children: [
             Flexible(flex: 7, child: numberButtonGrid(context)),
             Flexible(
               flex: 2,
-              child: Padding(padding: const EdgeInsets.only(left: 8, top: 16), child: actionButtonGrid(context)),
+              child: Padding(padding: EdgeInsets.only(left: 8, top: 16), child: actionButtonGrid(context)),
             ),
           ],
         ),

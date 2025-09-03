@@ -10,6 +10,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Theme.of(context).background,
       appBar: AppBar(title: Text(AppLocalizations.of(context)!.appBar)),
       body: Column(children: [TopDisplay(), Keyboard()]),
