@@ -13,7 +13,12 @@ class Home extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       backgroundColor: Theme.of(context).background,
       appBar: AppBar(title: Text(AppLocalizations.of(context)!.appBar)),
-      body: Column(children: [TopDisplay(), Keyboard()]),
+      body: Column(
+        children: [
+          Flexible(flex: 2, child: TopDisplay()),
+          Flexible(flex: 3, child: Keyboard()),
+        ],
+      ),
     );
   }
 }

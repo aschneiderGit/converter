@@ -14,10 +14,8 @@ class AmountField extends StatelessWidget {
   Widget build(BuildContext context) {
     final provider = context.watch<ConverterProvider>();
 
-    // Value bound directly from provider
     final value = provider.amounts[position]?.value ?? '';
 
-    // Create controller each build (stateless)
     final controller = TextEditingController(text: value);
 
     final focusNode = FocusNode();

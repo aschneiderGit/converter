@@ -6,24 +6,21 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class Keyboard extends StatelessWidget {
-  const Keyboard({super.key, TextEditingController? activeController});
+  const Keyboard({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Flexible(
-      flex: 3,
-      child: Container(
-        margin: EdgeInsets.only(top: 16),
-        padding: EdgeInsets.all(8.0),
-        child: Row(
-          children: [
-            Flexible(flex: 7, child: numberButtonGrid(context)),
-            Flexible(
-              flex: 2,
-              child: Padding(padding: EdgeInsets.only(left: 8, top: 16), child: actionButtonGrid(context)),
-            ),
-          ],
-        ),
+    return Container(
+      margin: EdgeInsets.only(top: 16),
+      padding: EdgeInsets.all(8.0),
+      child: Row(
+        children: [
+          Flexible(flex: 7, child: numberButtonGrid(context)),
+          Flexible(
+            flex: 2,
+            child: Padding(padding: EdgeInsets.only(left: 8, top: 16), child: actionButtonGrid(context)),
+          ),
+        ],
       ),
     );
   }
@@ -35,10 +32,21 @@ class Keyboard extends StatelessWidget {
         secondary: true,
         handleOnPressed: () => context.read<ConverterProvider>().removeLastNumber(),
       ),
-      labelButton(label: 'AC', handleOnPressed: () => context.read<ConverterProvider>().eraseAmount()),
+      labelButton(
+        context: context,
+        label: 'AC',
+        handleOnPressed: () => context.read<ConverterProvider>().eraseAmount(),
+      ),
       iconButton(icon: Icons.settings, secondary: true),
     ];
-    return GridView.count(crossAxisCount: 1, crossAxisSpacing: 8, mainAxisSpacing: 8, children: [...actionColumn]);
+    return GridView.count(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      crossAxisCount: 1,
+      crossAxisSpacing: 8,
+      mainAxisSpacing: 8,
+      children: [...actionColumn],
+    );
   }
 
   GridView numberButtonGrid(BuildContext context) {
@@ -50,8 +58,15 @@ class Keyboard extends StatelessWidget {
       return (index + 1).toString();
     }).followedBy(['00', '0', '.']);
     Iterable<CircleButton> numberButtons = buttonsLabels.map(
-      (label) => labelButton(label: label, handleOnPressed: () => handleOnPressedNumber(label)),
+      (label) => labelButton(context: context, label: label, handleOnPressed: () => handleOnPressedNumber(label)),
     );
-    return GridView.count(crossAxisCount: 3, crossAxisSpacing: 8, mainAxisSpacing: 16, children: [...numberButtons]);
+    return GridView.count(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      crossAxisCount: 3,
+      crossAxisSpacing: 8,
+      mainAxisSpacing: 16,
+      children: [...numberButtons],
+    );
   }
 }

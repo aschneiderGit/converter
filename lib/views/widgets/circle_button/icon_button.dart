@@ -4,17 +4,14 @@ import 'package:flutter/material.dart';
 CircleButton iconButton({
   required IconData icon,
   VoidCallback? handleOnPressed,
-  double fontSize = 40,
+  double size = 64,
+  double iconSize = 48,
   bool secondary = false,
 }) {
-  String text = String.fromCharCode(icon.codePoint);
-
   return CircleButton(
-    label: text,
     handleOnPressed: handleOnPressed,
     secondary: secondary,
-    fontSize: fontSize,
-    fontFamily: icon.fontFamily,
-    fontPackage: icon.fontPackage,
+    size: size,
+    child: Icon(icon, size: iconSize, color: Colors.white),
   );
 }
