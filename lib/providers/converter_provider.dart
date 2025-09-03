@@ -71,8 +71,6 @@ class ConverterProvider extends ChangeNotifier {
 
   void changeCurrency(FieldType position, Currency? value) {
     _amounts[position]?.currency = value!;
-    // _amounts[FieldType.top]?.value = _amounts[FieldType.top]!.value;
-    //_amounts[FieldType.bottom]?.value = _amounts[FieldType.bottom]!.value;
     convert();
   }
 
