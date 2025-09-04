@@ -71,7 +71,7 @@ class CurrencyHelper {
           Map<String, dynamic> currency = currencies.first;
           return Currency(id: currency['id'], name: currency['name'], code: currency['code'], rate: currency['rate']);
         } else {
-          throw ('should only got one CUrrency per code ');
+          throw ('should only got one Currency per code ');
         }
       }
       throw ('no Currency found for the code: $currencyCode');

@@ -110,12 +110,6 @@ abstract class AppLocalizations {
   /// **'Start to convert here !'**
   String get appBar;
 
-  /// No description provided for @updateTime.
-  ///
-  /// In en, this message translates to:
-  /// **'Last updated the :'**
-  String get updateTime;
-
   /// No description provided for @searchCurrency.
   ///
   /// In en, this message translates to:
@@ -128,17 +122,59 @@ abstract class AppLocalizations {
   /// **'No currencies available'**
   String get noCurrency;
 
-  /// No description provided for @cancel.
-  ///
-  /// In en, this message translates to:
-  /// **'Cancel'**
-  String get cancel;
-
   /// No description provided for @selectCurrency.
   ///
   /// In en, this message translates to:
   /// **'Select Currency'**
   String get selectCurrency;
+
+  /// No description provided for @updateTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Data updated '**
+  String get updateTime;
+
+  /// No description provided for @updateTimeEnd.
+  ///
+  /// In en, this message translates to:
+  /// **'ago'**
+  String get updateTimeEnd;
+
+  /// No description provided for @minute.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 minute} other{{count} minutes}}'**
+  String minute(int count);
+
+  /// No description provided for @hour.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 hour} other{{count} hours}}'**
+  String hour(int count);
+
+  /// No description provided for @day.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 day} other{{count} days}}'**
+  String day(int count);
+
+  /// No description provided for @month.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 month} other{{count} months}}'**
+  String month(int count);
+
+  /// No description provided for @year.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 year} other{{count} years}}'**
+  String year(int count);
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
 }
 
 class _AppLocalizationsDelegate

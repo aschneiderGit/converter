@@ -15,17 +15,75 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appBar => 'Start to convert here !';
 
   @override
-  String get updateTime => 'Last updated the :';
-
-  @override
   String get searchCurrency => 'Search currency...';
 
   @override
   String get noCurrency => 'No currencies available';
 
   @override
-  String get cancel => 'Cancel';
+  String get selectCurrency => 'Select Currency';
 
   @override
-  String get selectCurrency => 'Select Currency';
+  String get updateTime => 'Data updated ';
+
+  @override
+  String get updateTimeEnd => 'ago';
+
+  @override
+  String minute(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count minutes',
+      one: '1 minute',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String hour(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count hours',
+      one: '1 hour',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String day(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count days',
+      one: '1 day',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String month(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count months',
+      one: '1 month',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String year(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count years',
+      one: '1 year',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get cancel => 'Cancel';
 }

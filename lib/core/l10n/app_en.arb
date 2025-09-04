@@ -2,9 +2,55 @@
   "@@locale": "en",
   "titleApp": "Converter",
   "appBar": "Start to convert here !",
-  "updateTime": "Last updated the :",
+
   "searchCurrency": "Search currency...",
   "noCurrency": "No currencies available",
-  "cancel": "Cancel",
-  "selectCurrency": "Select Currency"
+  "selectCurrency": "Select Currency",
+
+  "updateTime": "Data updated ",
+  "updateTimeEnd": "ago",
+
+  "minute": "{count, plural, =1{1 minute} other{{count} minutes}}",
+  "@minute": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "hour": "{count, plural, =1{1 hour} other{{count} hours}}",
+  "@hour": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "day": "{count, plural, =1{1 day} other{{count} days}}",
+  "@day": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "month": "{count, plural, =1{1 month} other{{count} months}}",
+  "@month": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "year": "{count, plural, =1{1 year} other{{count} years}}",
+  "@year": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "cancel": "Cancel"
+  
 }

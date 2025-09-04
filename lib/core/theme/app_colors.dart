@@ -8,7 +8,8 @@ class AppColors {
   static const Color background = Color.fromARGB(255, 185, 219, 236);
   static const Color backgroundVariant = Color.fromARGB(255, 139, 199, 230);
   static const Color surface = Color.fromARGB(255, 120, 184, 216);
-  static const Color error = Color(0xFFD32F2F);
+  static const Color error = Color.fromARGB(255, 209, 25, 25);
+  static const Color warning = Color.fromARGB(255, 238, 107, 0);
   static const Color onPrimary = Color(0xFFFFFFFF);
   static const Color onSecondary = Color(0xFFFFFFFF);
   static const Color onBackground = Color(0xFF000000);

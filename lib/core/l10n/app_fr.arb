@@ -1,10 +1,67 @@
+
 {
   "@@locale": "fr",
+
   "titleApp": "Convertisseur",
   "appBar": "Commencez à convertir ici !",
-  "updateTime": "Donnée mise à jour le: ",
+
   "searchCurrency": "Chercher une devise...",
   "noCurrency": "Pas de devise disponible",
-  "cancel": "Annuler",
-  "selectCurrency": "Selectiond de device"
+  "selectCurrency": "Selectiond de device",
+
+  "updateTime": "Donnée mise à jour il y a ",
+  "updateTimeEnd": "",
+
+  
+    "minute": "{count, plural, =1{1 minute} other{{count} minutes}}",
+  "@minute": {
+    "description": "Affiche un nombre de minutes avec le bon pluriel en français",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "hour": "{count, plural, =1{1 heure} other{{count} heures}}",
+  "@hour": {
+    "description": "Affiche un nombre d'heures avec le bon pluriel en français",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "day": "{count, plural, =1{1 jour} other{{count} jours}}",
+  "@day": {
+    "description": "Affiche un nombre de jours avec le bon pluriel en français",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "month": "{count, plural, =1{1 mois} other{{count} mois}}",
+  "@month": {
+    "description": "Affiche un nombre de mois avec le bon pluriel en français (même mot au singulier et au pluriel)",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "year": "{count, plural, =1{1 an} other{{count} ans}}",
+  "@year": {
+    "description": "Affiche un nombre d'années avec le bon pluriel en français",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  
+  "cancel": "Annuler" 
 }
