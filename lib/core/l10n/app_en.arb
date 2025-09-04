@@ -7,6 +7,9 @@
   "noCurrency": "No currencies available",
   "selectCurrency": "Select Currency",
 
+    "enterAmount": "Enter your ammount",
+
+
   "updateTime": "Data updated ",
   "updateTimeEnd": "ago",
 

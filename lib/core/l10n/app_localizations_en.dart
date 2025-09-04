@@ -24,6 +24,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get selectCurrency => 'Select Currency';
 
   @override
+  String get enterAmount => 'Enter your ammount';
+
+  @override
   String get updateTime => 'Data updated ';
 
   @override

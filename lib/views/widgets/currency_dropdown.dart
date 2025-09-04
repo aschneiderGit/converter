@@ -26,6 +26,8 @@ class _CurrencyDropdownState extends State<CurrencyDropdown> {
       builder: (context) {
         final searchController = TextEditingController();
         List<Currency> filtered = List.from(currencies);
+        final ThemeData t = Theme.of(context);
+        final AppLocalizations l = AppLocalizations.of(context)!;
 
         return StatefulBuilder(
           builder: (context, setState) {
@@ -56,9 +58,7 @@ class _CurrencyDropdownState extends State<CurrencyDropdown> {
                           child: TextButton(
                             child: Text(
                               AppLocalizations.of(context)!.cancel,
-                              style: Theme.of(
-                                context,
-                              ).textStyle.copyWith(color: AppColors.secondaryVariant, fontSize: 15),
+                              style: t.textStyle.copyWith(color: AppColors.secondaryVariant, fontSize: 15),
                             ),
                             onPressed: () {
                               Navigator.pop(context);
@@ -67,7 +67,7 @@ class _CurrencyDropdownState extends State<CurrencyDropdown> {
                         ),
                         Center(
                           child: Text(
-                            "Select Currency",
+                            l.selectCurrency,
                             style: Theme.of(context).textStyle.copyWith(fontSize: 20),
                             textAlign: TextAlign.center,
                           ),
@@ -97,7 +97,7 @@ class _CurrencyDropdownState extends State<CurrencyDropdown> {
                       itemBuilder: (context, index) {
                         final currency = filtered[index];
                         return ListTile(
-                          title: Text(currency.code, style: Theme.of(context).textStyle.copyWith(fontSize: 20)),
+                          title: Text(currency.code, style: t.textStyle.copyWith(fontSize: 20)),
                           subtitle: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
@@ -108,9 +108,7 @@ class _CurrencyDropdownState extends State<CurrencyDropdown> {
                                 padding: EdgeInsets.only(bottom: 8),
                                 child: Text(
                                   currency.name,
-                                  style: Theme.of(
-                                    context,
-                                  ).textStyle.copyWith(fontSize: 15, fontWeight: FontWeight.normal),
+                                  style: t.textStyle.copyWith(fontSize: 15, fontWeight: FontWeight.normal),
                                 ),
                               ),
                             ],
@@ -138,6 +136,8 @@ class _CurrencyDropdownState extends State<CurrencyDropdown> {
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<ConverterProvider>();
+    final ThemeData t = Theme.of(context);
+    final AppLocalizations l = AppLocalizations.of(context)!;
 
     if (provider.isLoading) {
       return Center(child: CircularProgressIndicator());
@@ -145,7 +145,7 @@ class _CurrencyDropdownState extends State<CurrencyDropdown> {
 
     final currencies = provider.allCurrencies.values.toList();
     if (currencies.isEmpty) {
-      return Text(AppLocalizations.of(context)!.noCurrency);
+      return Text(l.noCurrency);
     }
 
     final selected = widget.defaultCurrency ?? currencies.first;
@@ -153,16 +153,20 @@ class _CurrencyDropdownState extends State<CurrencyDropdown> {
     return GestureDetector(
       onTap: () => _openCurrencyPicker(context, currencies),
       child: Container(
-        padding: EdgeInsets.only(top: 16, bottom: 8),
-        decoration: BoxDecoration(
-          border: Border(bottom: BorderSide(color: AppColors.secondary, width: 2)),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(selected.code, style: Theme.of(context).textStyle.copyWith(fontSize: 20)),
-            Icon(Icons.arrow_drop_down, color: AppColors.onBackgroundVariant),
-          ],
+        padding: EdgeInsets.only(top: 16),
+        child: InputDecorator(
+          decoration: InputDecoration(
+            enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: AppColors.secondary, width: 1.5)),
+          ),
+          child: IntrinsicWidth(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(selected.code, style: t.textStyle.copyWith(fontSize: 25)),
+                Icon(Icons.arrow_drop_down, color: AppColors.onBackgroundVariant),
+              ],
+            ),
+          ),
         ),
       ),
     );

@@ -25,7 +25,6 @@ class Converter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //debugPaintSizeEnabled = true;
     return MaterialApp(
       title: 'Converter',
       localizationsDelegates: [

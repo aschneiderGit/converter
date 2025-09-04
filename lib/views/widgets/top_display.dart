@@ -45,19 +45,23 @@ class TopDisplay extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(width: 16),
+              SizedBox(width: 16),
               Flexible(
                 flex: 1,
                 child: Container(
-                  margin: const EdgeInsets.only(top: 32.0),
-                  child: iconButton(icon: Icons.cached, secondary: true, handleOnPressed: providerRead.toggleAmount),
+                  child: iconButton(
+                    icon: Icons.cached,
+                    secondary: true,
+                    size: 85,
+                    iconSize: 75,
+                    handleOnPressed: providerRead.toggleAmount,
+                  ),
                 ),
               ),
             ],
           ),
           Container(
             margin: const EdgeInsets.only(top: 32),
-            height: 60,
             child: Center(
               child: RichText(
                 text: TextSpan(
@@ -83,10 +87,9 @@ class TopDisplay extends StatelessWidget {
 
     return Row(
       children: [
-        Flexible(flex: 7, child: AmountField(position: position)),
-        const SizedBox(width: 24),
+        Flexible(flex: 70, child: AmountField(position: position)),
         Flexible(
-          flex: 3,
+          flex: 25,
           child: SizedBox(
             height: 77,
             child: CurrencyDropdown(defaultCurrency: amounts[position]?.currency, currencyChanged: changeCurrency),

@@ -128,6 +128,12 @@ abstract class AppLocalizations {
   /// **'Select Currency'**
   String get selectCurrency;
 
+  /// No description provided for @enterAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your ammount'**
+  String get enterAmount;
+
   /// No description provided for @updateTime.
   ///
   /// In en, this message translates to:

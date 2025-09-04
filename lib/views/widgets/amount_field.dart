@@ -1,3 +1,4 @@
+import 'package:converter/core/l10n/app_localizations.dart';
 import 'package:converter/core/theme/app_colors.dart';
 import 'package:converter/core/theme/app_text_style.dart';
 import 'package:converter/providers/converter_provider.dart';
@@ -13,6 +14,8 @@ class AmountField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<ConverterProvider>();
+    final ThemeData t = Theme.of(context);
+    final AppLocalizations l = AppLocalizations.of(context)!;
 
     final value = provider.amounts[position]?.value ?? '';
 
@@ -25,17 +28,20 @@ class AmountField extends StatelessWidget {
       }
     });
 
-    return TextField(
-      controller: controller,
-      focusNode: focusNode,
-      style: Theme.of(context).textStyle.copyWith(fontSize: 30),
-      keyboardType: TextInputType.none,
-      inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
-      decoration: InputDecoration(
-        enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Theme.of(context).secondary, width: 2)),
-        focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Theme.of(context).secondary, width: 2)),
-        labelText: 'Enter your amount',
-        labelStyle: Theme.of(context).textStyle,
+    return Padding(
+      padding: const EdgeInsets.only(right: 12),
+      child: TextField(
+        controller: controller,
+        focusNode: focusNode,
+        style: t.textStyle.copyWith(fontSize: 40),
+        keyboardType: TextInputType.none,
+        inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+        decoration: InputDecoration(
+          enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: t.secondary, width: 2)),
+          focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: t.secondary, width: 2)),
+          labelText: l.enterAmount,
+          labelStyle: t.textStyle,
+        ),
       ),
     );
   }

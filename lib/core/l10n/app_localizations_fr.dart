@@ -21,7 +21,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get noCurrency => 'Pas de devise disponible';
 
   @override
-  String get selectCurrency => 'Selectiond de device';
+  String get selectCurrency => 'Selection de device';
+
+  @override
+  String get enterAmount => 'Entrer votre somme';
 
   @override
   String get updateTime => 'Donnée mise à jour il y a ';

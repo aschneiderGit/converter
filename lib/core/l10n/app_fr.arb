@@ -7,7 +7,9 @@
 
   "searchCurrency": "Chercher une devise...",
   "noCurrency": "Pas de devise disponible",
-  "selectCurrency": "Selectiond de device",
+  "selectCurrency": "Selection de device",
+
+  "enterAmount": "Entrer votre somme",
 
   "updateTime": "Donnée mise à jour il y a ",
   "updateTimeEnd": "",
@@ -62,6 +64,6 @@
       }
     }
   },
-  
+
   "cancel": "Annuler" 
 }
