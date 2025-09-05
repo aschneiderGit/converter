@@ -16,26 +16,20 @@ class Home extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       backgroundColor: Theme.of(context).background,
       appBar: AppBar(title: Text(AppLocalizations.of(context)!.appBar)),
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          switch (deviceSize) {
-            case DeviceSize.small || DeviceSize.extraSmall:
-              return Column(
-                children: [
-                  Flexible(flex: 2, child: TopDisplay()),
-                  Flexible(flex: 3, child: Keyboard()),
-                ],
-              );
-            default:
-              return Row(
-                children: [
-                  Flexible(flex: 2, child: Keyboard()),
-                  Flexible(flex: 2, child: TopDisplay()),
-                ],
-              );
-          }
-        },
-      ),
+      body: switch (deviceSize) {
+        DeviceSize.small || DeviceSize.extraSmall => Column(
+          children: [
+            Flexible(flex: 2, child: TopDisplay()),
+            Flexible(flex: 3, child: Keyboard()),
+          ],
+        ),
+        _ => Row(
+          children: [
+            Flexible(flex: 2, child: Keyboard()),
+            Flexible(flex: 2, child: TopDisplay()),
+          ],
+        ),
+      },
     );
   }
 }

@@ -15,17 +15,9 @@ void main() async {
   await DatabaseHelper.instance.initDb();
 
   runApp(
-    LayoutBuilder(
-      builder: (context, constraints) {
-        DeviceSize deviceSize = getScreenSize(constraints);
-        return MultiProvider(
-          providers: [
-            ChangeNotifierProvider(create: (_) => ConverterProvider()),
-            Provider<DeviceSize>.value(value: deviceSize),
-          ],
-          child: Converter(),
-        );
-      },
+    MultiProvider(
+      providers: [ChangeNotifierProvider(create: (_) => ConverterProvider())],
+      child: Converter(),
     ),
   );
 }
@@ -35,20 +27,24 @@ class Converter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Converter',
-      localizationsDelegates: [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: [
-        Locale('en'), // English
-        Locale('fr'), // Spanish
-      ],
-      theme: mainTheme,
-      home: Home(),
+    final deviceSize = getScreenSize(context);
+    return Provider<DeviceSize>.value(
+      value: deviceSize,
+      child: MaterialApp(
+        title: 'Converter',
+        localizationsDelegates: [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: [
+          Locale('en'), // English
+          Locale('fr'), // Spanish
+        ],
+        theme: mainTheme,
+        home: Home(),
+      ),
     );
   }
 }
