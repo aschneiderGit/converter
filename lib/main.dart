@@ -1,4 +1,6 @@
+import 'package:converter/core/constants/deviceSize.dart';
 import 'package:converter/core/theme/main_theme.dart';
+import 'package:converter/core/utils/screen.dart';
 import 'package:converter/data/databases/database_helper.dart';
 import 'package:converter/providers/converter_provider.dart';
 import 'package:converter/views/home.dart';
@@ -13,9 +15,17 @@ void main() async {
   await DatabaseHelper.instance.initDb();
 
   runApp(
-    MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => ConverterProvider())],
-      child: Converter(),
+    LayoutBuilder(
+      builder: (context, constraints) {
+        DeviceSize deviceSize = getScreenSize(constraints);
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(create: (_) => ConverterProvider()),
+            Provider<DeviceSize>.value(value: deviceSize),
+          ],
+          child: Converter(),
+        );
+      },
     ),
   );
 }

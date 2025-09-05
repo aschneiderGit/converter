@@ -30,7 +30,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get updateTime => 'Data updated ';
 
   @override
-  String get updateTimeEnd => 'ago';
+  String get updateTimeEnd => ' ago';
 
   @override
   String minute(int count) {

@@ -52,8 +52,8 @@ class TopDisplay extends StatelessWidget {
                   child: iconButton(
                     icon: Icons.cached,
                     secondary: true,
-                    size: 85,
-                    iconSize: 75,
+                    size: 80,
+                    iconSize: 60,
                     handleOnPressed: providerRead.toggleAmount,
                   ),
                 ),
@@ -87,9 +87,9 @@ class TopDisplay extends StatelessWidget {
 
     return Row(
       children: [
-        Flexible(flex: 70, child: AmountField(position: position)),
+        Flexible(flex: 80, child: AmountField(position: position)),
         Flexible(
-          flex: 25,
+          flex: 22,
           child: SizedBox(
             height: 77,
             child: CurrencyDropdown(defaultCurrency: amounts[position]?.currency, currencyChanged: changeCurrency),

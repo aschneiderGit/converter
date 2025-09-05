@@ -143,7 +143,7 @@ abstract class AppLocalizations {
   /// No description provided for @updateTimeEnd.
   ///
   /// In en, this message translates to:
-  /// **'ago'**
+  /// **' ago'**
   String get updateTimeEnd;
 
   /// No description provided for @minute.

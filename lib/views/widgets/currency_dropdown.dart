@@ -162,7 +162,7 @@ class _CurrencyDropdownState extends State<CurrencyDropdown> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(selected.code, style: t.textStyle.copyWith(fontSize: 25)),
+                Text(selected.code, style: t.textStyle.copyWith(fontSize: 20)),
                 Icon(Icons.arrow_drop_down, color: AppColors.onBackgroundVariant),
               ],
             ),
