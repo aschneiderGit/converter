@@ -7,14 +7,15 @@ TextSpan getTimeAgo(BuildContext context, DateTime dt) {
   Duration durationDiff = DateTime.now().difference(dt);
   int diff = durationDiff.inHours;
   String text = AppLocalizations.of(context)!.hour(diff);
-  Color color = AppColors.onPrimary;
+  ThemeData t = Theme.of(context);
+  Color color = t.onPrimary;
   if (diff > 23) {
     diff = durationDiff.inDays;
     text = AppLocalizations.of(context)!.day(diff);
     if (diff > 14) {
-      color = AppColors.error;
+      color = t.error;
     } else if (diff > 5) {
-      color = AppColors.warning;
+      color = t.warning;
     }
     if (diff > 365) {
       diff = diff ~/ 365;

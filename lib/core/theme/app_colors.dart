@@ -33,4 +33,5 @@ extension ThemeDataExtension on ThemeData {
   Color get onBackgroundVariant => AppColors.onBackgroundVariant;
   Color get onSurface => AppColors.onSurface;
   Color get onError => AppColors.onError;
+  Color get warning => AppColors.warning;
 }

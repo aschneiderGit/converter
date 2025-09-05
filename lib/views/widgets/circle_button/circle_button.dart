@@ -11,9 +11,10 @@ class CircleButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData t = Theme.of(context);
     return Material(
       shape: CircleBorder(),
-      color: secondary ? AppColors.secondary : AppColors.primary,
+      color: secondary ? t.secondary : t.primary,
       child: InkWell(
         customBorder: const CircleBorder(),
         onTap: handleOnPressed,

@@ -19,9 +19,10 @@ class CurrencyDropdown extends StatefulWidget {
 
 class _CurrencyDropdownState extends State<CurrencyDropdown> {
   void _openCurrencyPicker(BuildContext context, List<Currency> currencies) {
+    ThemeData t = Theme.of(context);
     showModalBottomSheet(
       context: context,
-      backgroundColor: AppColors.surface,
+      backgroundColor: t.surface,
       isScrollControlled: true,
       builder: (context) {
         final searchController = TextEditingController();
@@ -49,7 +50,7 @@ class _CurrencyDropdownState extends State<CurrencyDropdown> {
                 children: [
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 12),
-                    decoration: BoxDecoration(color: AppColors.primaryVariant, borderRadius: BorderRadius.circular(16)),
+                    decoration: BoxDecoration(color: t.primaryVariant, borderRadius: BorderRadius.circular(16)),
                     child: Stack(
                       alignment: Alignment.center,
                       children: [
@@ -58,7 +59,7 @@ class _CurrencyDropdownState extends State<CurrencyDropdown> {
                           child: TextButton(
                             child: Text(
                               AppLocalizations.of(context)!.cancel,
-                              style: t.textStyle.copyWith(color: AppColors.secondaryVariant, fontSize: 15),
+                              style: t.textStyle.copyWith(color: t.secondaryVariant, fontSize: 15),
                             ),
                             onPressed: () {
                               Navigator.pop(context);
@@ -85,8 +86,8 @@ class _CurrencyDropdownState extends State<CurrencyDropdown> {
                         hintText: AppLocalizations.of(context)!.searchCurrency,
                         prefixIcon: Icon(Icons.search, color: Colors.white),
                         hintStyle: Theme.of(context).textStyle,
-                        enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: AppColors.secondary)),
-                        focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: AppColors.secondary)),
+                        enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: t.secondary)),
+                        focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: t.secondary)),
                         contentPadding: EdgeInsets.only(top: 8, bottom: 0),
                       ),
                     ),
@@ -103,7 +104,7 @@ class _CurrencyDropdownState extends State<CurrencyDropdown> {
                             children: [
                               Container(
                                 decoration: BoxDecoration(
-                                  border: Border(bottom: BorderSide(color: AppColors.secondary, width: 1)),
+                                  border: Border(bottom: BorderSide(color: t.secondary, width: 1)),
                                 ),
                                 padding: EdgeInsets.only(bottom: 8),
                                 child: Text(
@@ -156,14 +157,14 @@ class _CurrencyDropdownState extends State<CurrencyDropdown> {
         padding: EdgeInsets.only(top: 16),
         child: InputDecorator(
           decoration: InputDecoration(
-            enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: AppColors.secondary, width: 1.5)),
+            enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: t.secondary, width: 1.5)),
           ),
           child: IntrinsicWidth(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(selected.code, style: t.textStyle.copyWith(fontSize: 20)),
-                Icon(Icons.arrow_drop_down, color: AppColors.onBackgroundVariant),
+                Icon(Icons.arrow_drop_down, color: t.onBackgroundVariant),
               ],
             ),
           ),

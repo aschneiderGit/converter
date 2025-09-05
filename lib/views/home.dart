@@ -19,8 +19,8 @@ class Home extends StatelessWidget {
       body: switch (deviceSize) {
         DeviceSize.small || DeviceSize.extraSmall => Column(
           children: [
-            Flexible(flex: 2, child: TopDisplay()),
-            Flexible(flex: 3, child: Keyboard()),
+            Flexible(flex: 4, child: TopDisplay()),
+            Flexible(flex: 5, child: Keyboard()),
           ],
         ),
         _ => Row(
