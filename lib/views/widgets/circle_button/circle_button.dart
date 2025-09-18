@@ -16,7 +16,7 @@ class CircleButton extends StatelessWidget {
       shape: CircleBorder(),
       color: secondary ? t.secondary : t.primary,
       child: InkWell(
-        customBorder: const CircleBorder(),
+        customBorder: CircleBorder(),
         onTap: handleOnPressed,
         child: SizedBox(
           width: size,

@@ -12,6 +12,7 @@
 
   "updateTime": "Data updated ",
   "updateTimeEnd": " ago",
+  "attribution": "Rates By Exchange Rate API",
 
   "minute": "{count, plural, =1{1 minute} other{{count} minutes}}",
   "@minute": {

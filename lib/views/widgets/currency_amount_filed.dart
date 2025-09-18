@@ -38,7 +38,7 @@ class CurrencyAmountField extends StatelessWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.only(right: 12),
+      padding: EdgeInsets.only(right: 12),
       child: Column(
         children: [
           CurrencyDropdown(currencyChanged: changeCurrency, defaultCurrency: amounts[position]?.currency),

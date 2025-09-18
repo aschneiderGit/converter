@@ -13,6 +13,7 @@
 
   "updateTime": "Donnée mise à jour il y a ",
   "updateTimeEnd": "",
+  "attribution": "Taux reçu par Exchange Rate API",
 
   
     "minute": "{count, plural, =1{1 minute} other{{count} minutes}}",

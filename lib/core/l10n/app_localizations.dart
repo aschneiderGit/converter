@@ -146,6 +146,12 @@ abstract class AppLocalizations {
   /// **' ago'**
   String get updateTimeEnd;
 
+  /// No description provided for @attribution.
+  ///
+  /// In en, this message translates to:
+  /// **'Rates By Exchange Rate API'**
+  String get attribution;
+
   /// No description provided for @minute.
   ///
   /// In en, this message translates to:

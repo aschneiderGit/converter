@@ -49,7 +49,7 @@ class _CurrencyDropdownState extends State<CurrencyDropdown> {
               child: Column(
                 children: [
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    padding: EdgeInsets.symmetric(horizontal: 12),
                     decoration: BoxDecoration(color: t.primaryVariant, borderRadius: BorderRadius.circular(16)),
                     child: Stack(
                       alignment: Alignment.center,
@@ -77,7 +77,7 @@ class _CurrencyDropdownState extends State<CurrencyDropdown> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 8),
+                    padding: EdgeInsets.symmetric(horizontal: 32, vertical: 8),
                     child: TextField(
                       controller: searchController,
                       style: Theme.of(context).textStyle,

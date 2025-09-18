@@ -40,7 +40,7 @@ class Keyboard extends StatelessWidget {
     ];
     return GridView.count(
       shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
+      physics: NeverScrollableScrollPhysics(),
       crossAxisCount: 1,
       crossAxisSpacing: 8,
       mainAxisSpacing: 8,
@@ -66,7 +66,7 @@ class Keyboard extends StatelessWidget {
     );
     return GridView.count(
       shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
+      physics: NeverScrollableScrollPhysics(),
       crossAxisCount: 3,
       crossAxisSpacing: 8,
       mainAxisSpacing: 8,

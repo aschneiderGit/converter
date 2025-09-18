@@ -33,6 +33,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get updateTimeEnd => '';
 
   @override
+  String get attribution => 'Taux reçu par Exchange Rate API';
+
+  @override
   String minute(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

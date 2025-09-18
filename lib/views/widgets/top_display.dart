@@ -26,7 +26,7 @@ class TopDisplay extends StatelessWidget {
     final dataTime = providerWatch.setting.dataTime;
 
     return Container(
-      padding: const EdgeInsets.only(left: 12.0, top: 32, right: 12),
+      padding: EdgeInsets.only(left: 12.0, top: 32, right: 12),
       color: t.primary,
       child: Column(
         children: [
@@ -37,7 +37,7 @@ class TopDisplay extends StatelessWidget {
                 child: Column(
                   children: [
                     CurrencyAmountField(context: context, position: FieldType.top, amounts: amounts),
-                    const SizedBox(height: 32),
+                    SizedBox(height: 32),
                     CurrencyAmountField(context: context, position: FieldType.bottom, amounts: amounts),
                   ],
                 ),
@@ -58,18 +58,28 @@ class TopDisplay extends StatelessWidget {
             ],
           ),
           Container(
-            margin: const EdgeInsets.only(top: 32),
-            child: Center(
-              child: RichText(
-                text: TextSpan(
-                  text: l.updateTime,
-                  style: t.textStyle.copyWith(fontSize: 16),
-                  children: <TextSpan>[
-                    getTimeAgo(context, dataTime),
-                    TextSpan(text: l.updateTimeEnd, style: t.textStyle.copyWith(fontSize: 14)),
-                  ],
+            margin: EdgeInsets.only(top: 32),
+            child: Row(
+              mainAxisSize: MainAxisSize.min, // only as wide as content
+              children: [
+                RichText(
+                  text: TextSpan(
+                    text: l.updateTime,
+                    style: t.textStyle.copyWith(fontSize: 16),
+                    children: <TextSpan>[
+                      getTimeAgo(context, dataTime),
+                      TextSpan(text: l.updateTimeEnd, style: t.textStyle.copyWith(fontSize: 16)),
+                    ],
+                  ),
                 ),
-              ),
+                SizedBox(width: 4),
+                Tooltip(
+                  message: 'UTC: ${dataTime.toString()}\n${l.attribution}',
+                  showDuration: Duration(seconds: 5),
+                  triggerMode: TooltipTriggerMode.tap,
+                  child: Icon(Icons.info_outline_rounded, size: 20, color: t.onPrimary),
+                ),
+              ],
             ),
           ),
         ],
