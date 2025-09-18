@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:converter/core/constants/currencies.dart';
 import 'package:converter/data/databases/database_helper.dart';
 import 'package:converter/data/models/currency.dart';
@@ -8,38 +11,46 @@ class CurrencyHelper {
   final DatabaseHelper _dbHelper = DatabaseHelper();
 
   Future<void> initializeCurrency() async {
-    Map<String, dynamic> data = await ExchangeRateService().getLastestRate();
-    Map<String, dynamic> latestRate = data["rates"];
-    int dataTime = data["data_time"];
-    Map<String, Currency> allCurrencies = await getAllCurrency();
-    List<Currency> currencyToAdd = [];
-    List<Currency> currencyToUpdate = [];
-    for (String code in latestRate.keys) {
-      if (allCurrencies[code] == null) {
-        currencyToAdd.add(
-          Currency(code: code, name: initCurrencies[code]!["name"]!, rate: latestRate[code].toDouble()),
-        );
-      } else if (allCurrencies[code]?.rate != latestRate[code]) {
-        Currency? dbCurrency = allCurrencies[code];
-        dbCurrency?.rate = latestRate[code].toDouble();
-        currencyToUpdate.add(dbCurrency!);
-      }
-    }
-
-    Database db = await _dbHelper.db;
-
     try {
-      for (Currency currency in currencyToAdd) {
-        await db.insert(tableCurrencies, currency.toMap());
-        print("add ${currency.code} in the db");
+      Map<String, dynamic> data = await ExchangeRateService().getLastestRate();
+      Map<String, dynamic> latestRate = data["rates"];
+      int dataTime = data["data_time"];
+      Map<String, Currency> allCurrencies = await getAllCurrency();
+      List<Currency> currencyToAdd = [];
+      List<Currency> currencyToUpdate = [];
+      for (String code in latestRate.keys) {
+        if (allCurrencies[code] == null) {
+          currencyToAdd.add(
+            Currency(code: code, name: initCurrencies[code]!["name"]!, rate: latestRate[code].toDouble()),
+          );
+        } else if (allCurrencies[code]?.rate != latestRate[code]) {
+          Currency? dbCurrency = allCurrencies[code];
+          dbCurrency?.rate = latestRate[code].toDouble();
+          currencyToUpdate.add(dbCurrency!);
+        }
       }
-      print("total currencies add ${currencyToAdd.length} ");
-      for (Currency currency in currencyToUpdate) {
-        await db.update(tableCurrencies, currency.toMap(), where: 'id = ?', whereArgs: [currency.id]);
-        print("update the rate of ${currency.code} in the db");
+
+      Database db = await _dbHelper.db;
+
+      try {
+        for (Currency currency in currencyToAdd) {
+          await db.insert(tableCurrencies, currency.toMap());
+          print("add ${currency.code} in the db");
+        }
+        print("total currencies add ${currencyToAdd.length} ");
+        for (Currency currency in currencyToUpdate) {
+          await db.update(tableCurrencies, currency.toMap(), where: 'id = ?', whereArgs: [currency.id]);
+          print("update the rate of ${currency.code} in the db");
+        }
+        print("total currencies update ${currencyToUpdate.length} ");
+        await db.update(tableSettings, {"data_time": dataTime});
+      } catch (e) {
+        throw ('Exception details:\n $e');
       }
-      print("total currencies update ${currencyToUpdate.length} ");
-      await db.update(tableSettings, {"data_time": dataTime});
+    } on SocketException {
+      print("No internet connection. Loading from cache...");
+    } on TimeoutException {
+      print("Request timed out. Loading from cache...");
     } catch (e) {
       throw ('Exception details:\n $e');
     }
