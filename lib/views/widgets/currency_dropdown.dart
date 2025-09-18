@@ -154,20 +154,14 @@ class _CurrencyDropdownState extends State<CurrencyDropdown> {
     return GestureDetector(
       onTap: () => _openCurrencyPicker(context, currencies),
       child: Container(
-        padding: EdgeInsets.only(top: 16),
-        child: InputDecorator(
-          decoration: InputDecoration(
-            enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: t.secondary, width: 1.5)),
-          ),
-          child: IntrinsicWidth(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(selected.code, style: t.textStyle.copyWith(fontSize: 20)),
-                Icon(Icons.arrow_drop_down, color: t.onBackgroundVariant),
-              ],
-            ),
-          ),
+        padding: EdgeInsets.symmetric(horizontal: 8),
+        decoration: BoxDecoration(color: t.primaryVariant, borderRadius: BorderRadius.circular(16)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(selected.code, style: t.textStyle.copyWith(color: t.secondary)),
+            Icon(Icons.arrow_right, color: t.onBackgroundVariant),
+          ],
         ),
       ),
     );

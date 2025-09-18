@@ -18,9 +18,11 @@ class Amount {
 
   Amount convert(Currency toCurrency) {
     RegExp regex = RegExp(r'([.]*0)(?!.*\d)');
-    return Amount(
-      value: (valueAsDouble * (toCurrency.rate / currency.rate)).toString().replaceAll(regex, ''),
-      currency: toCurrency,
-    );
+    return valueAsDouble == 0.0
+        ? Amount(value: '', currency: toCurrency)
+        : Amount(
+            value: (valueAsDouble * (toCurrency.rate / currency.rate)).toString().replaceAll(regex, ''),
+            currency: toCurrency,
+          );
   }
 }
