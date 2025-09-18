@@ -23,7 +23,7 @@ class TopDisplay extends StatelessWidget {
     }
 
     final amounts = providerWatch.amounts;
-    final dataTime = providerWatch.dataTime;
+    final dataTime = providerWatch.setting.dataTime;
 
     return Container(
       padding: const EdgeInsets.only(left: 12.0, top: 32, right: 12),
@@ -65,7 +65,7 @@ class TopDisplay extends StatelessWidget {
                   text: l.updateTime,
                   style: t.textStyle.copyWith(fontSize: 16),
                   children: <TextSpan>[
-                    getTimeAgo(context, dataTime!),
+                    getTimeAgo(context, dataTime),
                     TextSpan(text: l.updateTimeEnd, style: t.textStyle.copyWith(fontSize: 14)),
                   ],
                 ),

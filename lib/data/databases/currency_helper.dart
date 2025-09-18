@@ -48,7 +48,7 @@ class CurrencyHelper {
   Future<Map<String, Currency>> getAllCurrency() async {
     try {
       Database db = await _dbHelper.db;
-      final List<Map<String, dynamic>> maps = await db.query(tableCurrencies);
+      final List<Map<String, dynamic>> maps = await db.query(tableCurrencies, orderBy: 'name');
 
       final Map<String, Currency> currencies = {for (var row in maps) row['code']: Currency.fromMap(row)};
 
@@ -58,23 +58,23 @@ class CurrencyHelper {
     }
   }
 
-  Future<Currency> getCurrencyByCode(String currencyCode) async {
+  Future<Currency> getCurrencyById(int currencyId) async {
     try {
       Database db = await _dbHelper.db;
       final List<Map<String, dynamic>> currencies = await db.query(
         tableCurrencies,
-        where: 'code = ?',
-        whereArgs: [currencyCode],
+        where: 'id = ?',
+        whereArgs: [currencyId],
       );
       if (currencies.isNotEmpty) {
         if (currencies.length == 1) {
           Map<String, dynamic> currency = currencies.first;
-          return Currency(id: currency['id'], name: currency['name'], code: currency['code'], rate: currency['rate']);
+          return Currency.fromMap(currency);
         } else {
           throw ('should only got one Currency per code ');
         }
       }
-      throw ('no Currency found for the code: $currencyCode');
+      throw ('no Currency found for the id: $currencyId');
     } catch (e) {
       throw ('Exception details:\n $e');
     }

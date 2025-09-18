@@ -2,6 +2,7 @@ import 'package:converter/data/databases/currency_helper.dart';
 import 'package:converter/data/databases/database_helper.dart';
 import 'package:converter/data/models/amount.dart';
 import 'package:converter/data/models/currency.dart';
+import 'package:converter/data/models/settings.dart';
 import 'package:flutter/material.dart';
 
 enum FieldType { top, bottom }
@@ -16,7 +17,7 @@ class ConverterProvider extends ChangeNotifier {
   Map<FieldType, Amount?> get amounts => _amounts;
   Map<String, Currency> get allCurrencies => _allCurrencies;
 
-  DateTime? dataTime;
+  late Settings setting;
   FieldType get selectedField => _selectedField;
 
   bool _isLoading = true;
@@ -30,14 +31,17 @@ class ConverterProvider extends ChangeNotifier {
     await CurrencyHelper().initializeCurrency();
     await fetchCurrencies();
     initializeAmount();
-    await loadData();
+    await loadSettings();
 
     _isLoading = false;
     notifyListeners();
   }
 
-  Future<void> loadData() async {
-    dataTime = await DatabaseHelper().getDataTime();
+  Future<void> loadSettings() async {
+    setting = await DatabaseHelper().getSettings();
+    amounts[FieldType.top]?.currency = await CurrencyHelper().getCurrencyById(setting.lastTopCurrencyId);
+    amounts[FieldType.bottom]?.currency = await CurrencyHelper().getCurrencyById(setting.lastBottomCurrencyId);
+
     notifyListeners();
   }
 
@@ -69,8 +73,9 @@ class ConverterProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void changeCurrency(FieldType position, Currency? value) {
+  void changeCurrency(FieldType position, Currency? value) async {
     _amounts[position]?.currency = value!;
+    saveCurrencySelected();
     convert();
   }
 
@@ -79,7 +84,14 @@ class ConverterProvider extends ChangeNotifier {
     var currencyBot = _amounts[FieldType.bottom]?.currency;
     _amounts[FieldType.bottom]?.currency = currencyTop!;
     _amounts[FieldType.top]?.currency = currencyBot!;
+    saveCurrencySelected();
     convert();
+  }
+
+  Future<void> saveCurrencySelected() async {
+    setting.lastTopCurrencyId = _amounts[FieldType.top]!.currency.id!;
+    setting.lastBottomCurrencyId = _amounts[FieldType.bottom]!.currency.id!;
+    await DatabaseHelper().setSettings(setting);
   }
 
   void convert() {

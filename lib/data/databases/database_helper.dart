@@ -1,9 +1,11 @@
+import 'package:converter/data/databases/database_migration.dart';
+import 'package:converter/data/models/settings.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 final String tableCurrencies = 'currencies';
 final String tableSettings = 'settings';
-final int dbVersion = 1;
+final int dbVersion = 2;
 
 enum AppLanguage { fr, eng }
 
@@ -26,7 +28,54 @@ class DatabaseHelper {
     print("Initializing database...");
     String databasesPath = await getDatabasesPath();
     String path = join(databasesPath, 'converter.db');
-    return await openDatabase(path, version: dbVersion, onCreate: _onCreate);
+    return await openDatabase(
+      path,
+      version: dbVersion,
+      onCreate: (Database db, int newVersion) async {
+        for (int version = 0; version < newVersion; version++) {
+          await _performDbByVersion(db, version + 1);
+        }
+      },
+      onUpgrade: (Database db, int oldVersion, int newVersion) async {
+        for (int version = oldVersion; version < newVersion; version++) {
+          await _performDbByVersion(db, version + 1);
+        }
+      },
+    );
+  }
+
+  Future<Settings> getSettings() async {
+    try {
+      Database db = _database!;
+      List<Map<String, dynamic>> setting = await db.query(tableSettings);
+      return Settings.fromMap(setting.first);
+    } catch (e) {
+      throw ('Exception details:\n $e');
+    }
+  }
+
+  Future<void> setSettings(Settings s) async {
+    try {
+      Database db = _database!;
+      await db.update(tableSettings, {
+        "last_top_currency_id": s.lastTopCurrencyId,
+        "last_bottom_currency_id": s.lastBottomCurrencyId,
+        "language": s.language,
+      });
+    } catch (e) {
+      throw ('Exception details:\n $e');
+    }
+  }
+
+  _performDbByVersion(Database db, version) async {
+    switch (version) {
+      case 1:
+        await _onCreate(db, version);
+        break;
+      case 2:
+        await createCurrencySelectionHistoryInSettings(db);
+        break;
+    }
   }
 
   Future _onCreate(Database db, int version) async {
@@ -63,17 +112,6 @@ class DatabaseHelper {
       print("Converter tables created.");
     } catch (e) {
       throw ('Failed the onCreate Database\n details:\n $e');
-    }
-  }
-
-  Future<DateTime> getDataTime() async {
-    try {
-      Database db = _database!;
-      final List<Map<String, dynamic>> unixDataTime = await db.query(tableSettings, columns: ["data_time"]);
-      DateTime dataTime = DateTime.fromMillisecondsSinceEpoch(unixDataTime.first["data_time"] * 1000, isUtc: true);
-      return dataTime;
-    } catch (e) {
-      throw ('Exception details:\n $e');
     }
   }
 }
