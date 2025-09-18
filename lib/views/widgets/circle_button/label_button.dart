@@ -14,6 +14,6 @@ CircleButton labelButton({
     handleOnPressed: handleOnPressed,
     secondary: secondary,
     size: size,
-    child: Text(label, style: Theme.of(context).textStyle.copyWith(fontSize: 30)),
+    child: Text(label, style: Theme.of(context).textStyle.copyWith(fontSize: fontSize)),
   );
 }

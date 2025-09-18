@@ -11,11 +11,12 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //debugPaintSizeEnabled = true;
     final deviceSize = context.watch<DeviceSize>();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Theme.of(context).background,
-      appBar: AppBar(title: Text(AppLocalizations.of(context)!.appBar)),
+      appBar: AppBar(title: Text(AppLocalizations.of(context)!.appBar), toolbarHeight: 45),
       body: switch (deviceSize) {
         DeviceSize.small || DeviceSize.extraSmall => Column(
           children: [

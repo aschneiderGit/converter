@@ -40,20 +40,23 @@ class CurrencyAmountField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(right: 12),
       child: Column(
-        spacing: -8,
         children: [
           CurrencyDropdown(currencyChanged: changeCurrency, defaultCurrency: amounts[position]?.currency),
-          TextField(
-            controller: controller,
-            focusNode: focusNode,
-            style: t.textStyle.copyWith(fontSize: 40),
-            keyboardType: TextInputType.none,
-            inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
-            decoration: InputDecoration(
-              enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: t.secondary, width: 2)),
-              focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: t.secondary, width: 2)),
-              hintText: l.enterAmount,
-              hintStyle: t.textStyle.copyWith(fontSize: 20),
+          Transform.translate(
+            offset: Offset(0, -8),
+            child: TextField(
+              controller: controller,
+              focusNode: focusNode,
+              style: t.textStyle.copyWith(fontSize: 40),
+              keyboardType: TextInputType.none,
+              inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+              decoration: InputDecoration(
+                enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: t.secondary, width: 2)),
+                focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: t.secondary, width: 2)),
+                hintText: l.enterAmount,
+                contentPadding: EdgeInsets.zero,
+                hintStyle: t.textStyle.copyWith(fontSize: 20),
+              ),
             ),
           ),
         ],

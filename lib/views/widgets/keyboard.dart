@@ -11,8 +11,7 @@ class Keyboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 16),
-      padding: EdgeInsets.all(8.0),
+      padding: EdgeInsets.only(top: 16, left: 8, right: 8, bottom: 8),
       child: Row(
         children: [
           Flexible(flex: 7, child: numberButtonGrid(context)),
@@ -58,14 +57,19 @@ class Keyboard extends StatelessWidget {
       return (index + 1).toString();
     }).followedBy(['00', '0', '.']);
     Iterable<CircleButton> numberButtons = buttonsLabels.map(
-      (label) => labelButton(context: context, label: label, handleOnPressed: () => handleOnPressedNumber(label)),
+      (label) => labelButton(
+        context: context,
+        label: label,
+        fontSize: 30,
+        handleOnPressed: () => handleOnPressedNumber(label),
+      ),
     );
     return GridView.count(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       crossAxisCount: 3,
       crossAxisSpacing: 8,
-      mainAxisSpacing: 16,
+      mainAxisSpacing: 8,
       children: [...numberButtons],
     );
   }
