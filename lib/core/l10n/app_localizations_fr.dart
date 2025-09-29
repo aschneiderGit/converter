@@ -15,6 +15,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get appBar => 'Commencez à convertir ici !';
 
   @override
+  String get icon => '🇫🇷';
+
+  @override
   String get searchCurrency => 'Chercher une devise...';
 
   @override

@@ -1,9 +1,9 @@
 
 {
   "@@locale": "fr",
-
   "titleApp": "Convertisseur",
   "appBar": "Commencez à convertir ici !",
+  "icon": "🇫🇷",
 
   "searchCurrency": "Chercher une devise...",
   "noCurrency": "Pas de devise disponible",

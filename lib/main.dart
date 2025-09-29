@@ -38,10 +38,7 @@ class Converter extends StatelessWidget {
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
-        supportedLocales: [
-          Locale('en'), // English
-          Locale('fr'), // Spanish
-        ],
+        supportedLocales: [Locale('en'), Locale('fr')],
         theme: mainTheme,
         home: Home(),
       ),

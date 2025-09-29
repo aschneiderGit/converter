@@ -1,3 +1,4 @@
+import 'package:converter/core/utils/language.dart';
 import 'package:converter/data/databases/currency_helper.dart';
 import 'package:converter/data/databases/database_helper.dart';
 import 'package:converter/data/models/amount.dart';
@@ -92,6 +93,12 @@ class ConverterProvider extends ChangeNotifier {
     setting.lastTopCurrencyId = _amounts[FieldType.top]!.currency.id!;
     setting.lastBottomCurrencyId = _amounts[FieldType.bottom]!.currency.id!;
     await DatabaseHelper().setSettings(setting);
+  }
+
+  Future<void> switchLanguage(BuildContext context) async {
+    setting.language = getNextLocale(context).languageCode;
+    await DatabaseHelper().setSettings(setting);
+    notifyListeners();
   }
 
   void convert() {

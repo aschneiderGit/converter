@@ -2,6 +2,7 @@
   "@@locale": "en",
   "titleApp": "Converter",
   "appBar": "Start to convert here !",
+  "icon": "🇬🇧",
 
   "searchCurrency": "Search currency...",
   "noCurrency": "No currencies available",

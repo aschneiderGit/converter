@@ -110,6 +110,12 @@ abstract class AppLocalizations {
   /// **'Start to convert here !'**
   String get appBar;
 
+  /// No description provided for @icon.
+  ///
+  /// In en, this message translates to:
+  /// **'🇬🇧'**
+  String get icon;
+
   /// No description provided for @searchCurrency.
   ///
   /// In en, this message translates to:

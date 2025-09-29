@@ -1,3 +1,4 @@
+import 'package:converter/core/l10n/app_localizations.dart';
 import 'package:converter/providers/converter_provider.dart';
 import 'package:converter/views/widgets/circle_button/circle_button.dart';
 import 'package:converter/views/widgets/circle_button/icon_button.dart';
@@ -25,6 +26,7 @@ class Keyboard extends StatelessWidget {
   }
 
   GridView actionButtonGrid(BuildContext context) {
+    final AppLocalizations l = AppLocalizations.of(context)!;
     List<CircleButton> actionColumn = [
       iconButton(
         icon: Icons.arrow_back,
@@ -36,7 +38,12 @@ class Keyboard extends StatelessWidget {
         label: 'AC',
         handleOnPressed: () => context.read<ConverterProvider>().eraseAmount(),
       ),
-      iconButton(icon: Icons.settings, secondary: true),
+      labelButton(
+        context: context,
+        label: l.icon,
+        handleOnPressed: () => context.read<ConverterProvider>().switchLanguage(context),
+        secondary: true,
+      ),
     ];
     return GridView.count(
       shrinkWrap: true,

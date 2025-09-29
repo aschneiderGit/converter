@@ -15,6 +15,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appBar => 'Start to convert here !';
 
   @override
+  String get icon => '🇬🇧';
+
+  @override
   String get searchCurrency => 'Search currency...';
 
   @override

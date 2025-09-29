@@ -2,7 +2,7 @@ class Settings {
   final int? id;
   int lastTopCurrencyId;
   int lastBottomCurrencyId;
-  final String language;
+  String language;
   final DateTime dataTime;
 
   Settings({
@@ -11,7 +11,6 @@ class Settings {
     required this.lastBottomCurrencyId,
     required this.language,
     required this.dataTime,
-    last_,
   });
 
   Map<String, dynamic> toMap() {

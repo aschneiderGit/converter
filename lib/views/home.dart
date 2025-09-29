@@ -1,6 +1,7 @@
 import 'package:converter/core/constants/deviceSize.dart';
 import 'package:converter/core/l10n/app_localizations.dart';
 import 'package:converter/core/theme/app_colors.dart';
+import 'package:converter/providers/converter_provider.dart';
 import 'package:converter/views/widgets/keyboard.dart';
 import 'package:converter/views/widgets/top_display.dart';
 import 'package:flutter/material.dart';
@@ -12,25 +13,36 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //debugPaintSizeEnabled = true;
+    final provider = context.watch<ConverterProvider>();
     final deviceSize = context.watch<DeviceSize>();
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: Theme.of(context).background,
-      appBar: AppBar(title: Text(AppLocalizations.of(context)!.appBar), toolbarHeight: 45),
-      body: switch (deviceSize) {
-        DeviceSize.small || DeviceSize.extraSmall => Column(
-          children: [
-            Flexible(flex: 4, child: TopDisplay()),
-            Flexible(flex: 5, child: Keyboard()),
-          ],
+
+    if (provider.isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+    return Localizations.override(
+      context: context,
+      locale: Locale(provider.setting.language),
+      child: Builder(
+        builder: (localCtx) => Scaffold(
+          resizeToAvoidBottomInset: false,
+          backgroundColor: Theme.of(localCtx).background,
+          appBar: AppBar(title: Text(AppLocalizations.of(localCtx)!.appBar), toolbarHeight: 45),
+          body: switch (deviceSize) {
+            DeviceSize.small || DeviceSize.extraSmall => Column(
+              children: [
+                Flexible(flex: 4, child: TopDisplay()),
+                Flexible(flex: 5, child: Keyboard()),
+              ],
+            ),
+            _ => Row(
+              children: [
+                Flexible(flex: 2, child: Keyboard()),
+                Flexible(flex: 2, child: TopDisplay()),
+              ],
+            ),
+          },
         ),
-        _ => Row(
-          children: [
-            Flexible(flex: 2, child: Keyboard()),
-            Flexible(flex: 2, child: TopDisplay()),
-          ],
-        ),
-      },
+      ),
     );
   }
 }
