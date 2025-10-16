@@ -1,9 +1,10 @@
 import 'package:converter/core/constants/deviceSize.dart';
 import 'package:converter/core/l10n/app_localizations.dart';
 import 'package:converter/core/theme/app_colors.dart';
+import 'package:converter/core/utils/screen.dart';
 import 'package:converter/providers/converter_provider.dart';
+import 'package:converter/views/widgets/convert_display.dart';
 import 'package:converter/views/widgets/keyboard.dart';
-import 'package:converter/views/widgets/top_display.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -26,18 +27,24 @@ class Home extends StatelessWidget {
         builder: (localCtx) => Scaffold(
           resizeToAvoidBottomInset: false,
           backgroundColor: Theme.of(localCtx).background,
-          appBar: AppBar(title: Text(AppLocalizations.of(localCtx)!.appBar), toolbarHeight: 45),
+          appBar: AppBar(
+            title: Padding(
+              padding: EdgeInsets.only(bottom: 8), // adjust as needed
+              child: Text(AppLocalizations.of(localCtx)!.appBar),
+            ),
+            toolbarHeight: getToolBarSize(context),
+          ),
           body: switch (deviceSize) {
             DeviceSize.small || DeviceSize.extraSmall => Column(
               children: [
-                Flexible(flex: 4, child: TopDisplay()),
+                Flexible(flex: 4, child: ConvertDisplay()),
                 Flexible(flex: 5, child: Keyboard()),
               ],
             ),
             _ => Row(
               children: [
-                Flexible(flex: 2, child: Keyboard()),
-                Flexible(flex: 2, child: TopDisplay()),
+                Flexible(flex: 6, child: Keyboard()),
+                Flexible(flex: 5, child: ConvertDisplay()),
               ],
             ),
           },
