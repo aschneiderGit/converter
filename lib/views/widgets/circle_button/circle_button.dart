@@ -1,3 +1,4 @@
+import 'package:converter/core/constants/deviceSize.dart';
 import 'package:converter/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -12,11 +13,16 @@ class CircleButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeData t = Theme.of(context);
+    final isAtLeastMediumScreen = MediaQuery.of(context).size.width > SMALL;
+    final ShapeBorder shape = isAtLeastMediumScreen
+        ? RoundedRectangleBorder(borderRadius: BorderRadius.circular(1000))
+        : const CircleBorder();
+
     return Material(
-      shape: CircleBorder(),
+      shape: shape,
       color: secondary ? t.secondary : t.primary,
       child: InkWell(
-        customBorder: CircleBorder(),
+        customBorder: shape,
         onTap: handleOnPressed,
         child: SizedBox(
           width: size,
