@@ -26,3 +26,16 @@ DeviceSize getScreenSize(BuildContext context) {
       return DeviceSize.large;
   }
 }
+
+getGridChildRatioFromConstraints(int crossAxisCount, double mainAxisSpacing, int childrenCount, constraints) {
+  final int columns = crossAxisCount;
+  final int rows = childrenCount ~/ crossAxisCount;
+
+  final double width = constraints.maxWidth;
+  final double height = constraints.maxHeight - mainAxisSpacing * (rows - 1);
+
+  final double cellWidth = width / columns;
+  final double cellHeight = height / rows;
+
+  return (cellWidth / cellHeight);
+}

@@ -43,7 +43,7 @@ class Home extends StatelessWidget {
             ),
             _ => Row(
               children: [
-                Flexible(flex: 6, child: Keyboard()),
+                Flexible(flex: 6, child: Keyboard(inRow: true)),
                 Flexible(flex: 5, child: ConvertDisplay()),
               ],
             ),

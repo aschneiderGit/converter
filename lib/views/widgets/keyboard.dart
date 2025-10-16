@@ -1,33 +1,47 @@
 import 'package:converter/core/l10n/app_localizations.dart';
+import 'package:converter/core/utils/screen.dart';
 import 'package:converter/providers/converter_provider.dart';
-import 'package:converter/views/widgets/circle_button/circle_button.dart';
 import 'package:converter/views/widgets/circle_button/icon_button.dart';
 import 'package:converter/views/widgets/circle_button/label_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class Keyboard extends StatelessWidget {
-  const Keyboard({super.key});
+  final bool inRow;
+  const Keyboard({super.key, this.inRow = false});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: 16, left: 8, right: 8, bottom: 8),
+      padding: EdgeInsets.all(8),
       child: Row(
         children: [
-          Flexible(flex: 7, child: numberButtonGrid(context)),
           Flexible(
-            flex: 2,
-            child: Padding(padding: EdgeInsets.only(left: 8, top: 16), child: actionButtonGrid(context)),
+            flex: inRow ? 5 : 7,
+            child: LayoutBuilder(
+              builder: (context, numberConstraints) {
+                return numberButtonGrid(context, numberConstraints, inRow);
+              },
+            ),
+          ),
+          const SizedBox(width: 8),
+          Flexible(
+            flex: inRow ? 1 : 2,
+            child: LayoutBuilder(
+              builder: (context, actionConstraints) {
+                return actionButtonGrid(context, actionConstraints, inRow);
+              },
+            ),
           ),
         ],
       ),
     );
   }
 
-  GridView actionButtonGrid(BuildContext context) {
+  GridView actionButtonGrid(BuildContext context, actionConstraints, inRow) {
     final AppLocalizations l = AppLocalizations.of(context)!;
-    List<CircleButton> actionColumn = [
+
+    final actionColumn = [
       iconButton(
         icon: Icons.arrow_back,
         secondary: true,
@@ -45,39 +59,58 @@ class Keyboard extends StatelessWidget {
         secondary: true,
       ),
     ];
+
+    final crossAxisCount = 1;
+    final double mainAxisSpacing = inRow ? 8 : 12;
+
     return GridView.count(
-      shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      crossAxisCount: 1,
-      crossAxisSpacing: 8,
-      mainAxisSpacing: 8,
-      children: [...actionColumn],
+      shrinkWrap: !inRow,
+      physics: const NeverScrollableScrollPhysics(),
+      crossAxisCount: crossAxisCount,
+      crossAxisSpacing: 0,
+      mainAxisSpacing: mainAxisSpacing,
+      childAspectRatio: inRow
+          ? getGridChildRatioFromConstraints(crossAxisCount, mainAxisSpacing, actionColumn.length, actionConstraints)
+          : 1,
+      padding: EdgeInsets.zero,
+      children: actionColumn,
     );
   }
+}
 
-  GridView numberButtonGrid(BuildContext context) {
-    void handleOnPressedNumber(String number) {
-      context.read<ConverterProvider>().addNumber(number);
-    }
-
-    Iterable<String> buttonsLabels = Iterable.generate(9, (index) {
-      return (index + 1).toString();
-    }).followedBy(['00', '0', '.']);
-    Iterable<CircleButton> numberButtons = buttonsLabels.map(
-      (label) => labelButton(
-        context: context,
-        label: label,
-        fontSize: 30,
-        handleOnPressed: () => handleOnPressedNumber(label),
-      ),
-    );
-    return GridView.count(
-      shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      crossAxisCount: 3,
-      crossAxisSpacing: 8,
-      mainAxisSpacing: 8,
-      children: [...numberButtons],
-    );
+GridView numberButtonGrid(BuildContext context, numberConstraints, inRow) {
+  void handleOnPressedNumber(String number) {
+    context.read<ConverterProvider>().addNumber(number);
   }
+
+  final buttonsLabels = Iterable.generate(9, (i) => '${i + 1}').followedBy(['00', '0', '.']);
+
+  final numberButtons = buttonsLabels
+      .map(
+        (label) => labelButton(
+          context: context,
+          label: label,
+          fontSize: 30,
+          handleOnPressed: () => handleOnPressedNumber(label),
+        ),
+      )
+      .toList();
+
+  final crossAxisCount = 3;
+  final double mainAxisSpacing = 8;
+
+  return GridView.count(
+    physics: const NeverScrollableScrollPhysics(),
+    crossAxisCount: crossAxisCount,
+    crossAxisSpacing: 4,
+    mainAxisSpacing: mainAxisSpacing,
+    childAspectRatio: getGridChildRatioFromConstraints(
+      crossAxisCount,
+      mainAxisSpacing,
+      numberButtons.length,
+      numberConstraints,
+    ),
+    padding: EdgeInsets.zero,
+    children: numberButtons,
+  );
 }
