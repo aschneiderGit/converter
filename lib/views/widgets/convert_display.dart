@@ -10,7 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ConvertDisplay extends StatelessWidget {
-  const ConvertDisplay({super.key});
+  final bool inRow;
+  const ConvertDisplay({super.key, this.inRow = false});
 
   @override
   Widget build(BuildContext context) {
@@ -26,42 +27,44 @@ class ConvertDisplay extends StatelessWidget {
     final amounts = providerWatch.amounts;
     final dataTime = providerWatch.setting.dataTime;
     final deviceSize = context.watch<DeviceSize>();
-    final double topMargin = deviceSize == DeviceSize.small || deviceSize == DeviceSize.extraSmall ? 32 : 16;
 
     return Container(
-      padding: EdgeInsets.only(left: 12.0, top: topMargin, right: 12),
+      padding: EdgeInsets.only(top: 24),
       color: t.primary,
       child: Column(
         children: [
           Row(
-            children: [
-              Flexible(
-                flex: 6,
-                child: Column(
-                  children: [
-                    CurrencyAmountField(context: context, position: FieldType.top, amounts: amounts),
-                    SizedBox(height: topMargin),
-                    CurrencyAmountField(context: context, position: FieldType.bottom, amounts: amounts),
-                  ],
-                ),
-              ),
-              SizedBox(width: 16),
-              Flexible(
-                flex: 2,
-                child: Container(
-                  child: iconButton(
-                    icon: Icons.cached,
-                    secondary: true,
-                    size: 60,
-                    iconSize: 60,
-                    handleOnPressed: providerRead.toggleAmount,
+            children: () {
+              final childrenArray = [
+                Flexible(
+                  flex: 6,
+                  child: Column(
+                    children: [
+                      CurrencyAmountField(context: context, position: FieldType.top, amounts: amounts),
+                      SizedBox(height: 16),
+                      CurrencyAmountField(context: context, position: FieldType.bottom, amounts: amounts),
+                    ],
                   ),
                 ),
-              ),
-            ],
+                Flexible(
+                  flex: 2,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: iconButton(
+                      icon: Icons.cached,
+                      secondary: true,
+                      size: 75,
+                      iconSize: 60,
+                      handleOnPressed: providerRead.toggleAmount,
+                    ),
+                  ),
+                ),
+              ];
+              return inRow ? childrenArray.reversed.toList() : childrenArray;
+            }(),
           ),
           Container(
-            margin: EdgeInsets.only(top: topMargin),
+            margin: EdgeInsets.only(top: inRow ? 16 : 32),
             child: Row(
               mainAxisSize: MainAxisSize.min, // only as wide as content
               children: [

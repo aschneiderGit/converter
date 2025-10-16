@@ -38,7 +38,7 @@ class CurrencyAmountField extends StatelessWidget {
     }
 
     return Padding(
-      padding: EdgeInsets.only(right: 12),
+      padding: EdgeInsets.only(left: 8),
       child: Column(
         children: [
           CurrencyDropdown(currencyChanged: changeCurrency, defaultCurrency: amounts[position]?.currency),
@@ -47,7 +47,7 @@ class CurrencyAmountField extends StatelessWidget {
             child: TextField(
               controller: controller,
               focusNode: focusNode,
-              style: t.textStyle.copyWith(fontSize: 40),
+              style: t.textStyle.copyWith(fontSize: 45),
               keyboardType: TextInputType.none,
               inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
               decoration: InputDecoration(
