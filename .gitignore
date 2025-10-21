@@ -46,3 +46,5 @@ app.*.map.json
 
 # VS Code
 /.vscode
+converter
+converter.pub

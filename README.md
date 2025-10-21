@@ -1,16 +1,22 @@
-# converter
+# Converter
 
-A new Flutter project.
+A **Flutter** application that allows users to convert currencies **offline**.  
+The app retrieves fresh exchange rates from a free API (no authentication required) and stores them locally using **SQLite** for offline access.
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## Features
 
-A few resources to get you started if this is your first Flutter project:
+- **Currency conversion** with real-time rates
+- **Offline mode** — conversions work without internet
+- **Automatic data refresh** — exchange rates are refreshed once per day
+- **Local database** using **SQLite** for storing exchange rates
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+---
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## How It Works
+
+1. On first launch, the app fetches exchange rates from [ExchangeRate API Free](https://www.exchangerate-api.com/).
+2. The data is saved in a local **SQLite** database.
+3. When offline, conversions use the stored rates.
+4. Once per day, the app refreshes rates automatically if a connection is available.
