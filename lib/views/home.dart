@@ -53,9 +53,10 @@ class _Home extends State<Home> {
     //debugPaintSizeEnabled = true;
     final provider = context.watch<ConverterProvider>();
     final deviceSize = context.watch<DeviceSize>();
+    final ThemeData t = Theme.of(context);
 
     if (provider.isLoading) {
-      return const Center(child: CircularProgressIndicator());
+      return Center(child: CircularProgressIndicator(color: t.primaryColor));
     }
 
     return Localizations.override(
