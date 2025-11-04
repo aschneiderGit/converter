@@ -10,7 +10,7 @@ import 'package:sqflite/sqflite.dart';
 class CurrencyHelper {
   final DatabaseHelper _dbHelper = DatabaseHelper();
 
-  Future<void> initializeCurrency() async {
+  Future<bool> initializeCurrency() async {
     try {
       Map<String, dynamic> data = await ExchangeRateService().getLastestRate();
       Map<String, dynamic> latestRate = data["rates"];
@@ -20,9 +20,13 @@ class CurrencyHelper {
       List<Currency> currencyToUpdate = [];
       for (String code in latestRate.keys) {
         if (allCurrencies[code] == null) {
-          currencyToAdd.add(
-            Currency(code: code, name: initCurrencies[code]!["name"]!, rate: latestRate[code].toDouble()),
-          );
+          if (initCurrencies[code] != null) {
+            currencyToAdd.add(
+              Currency(code: code, name: initCurrencies[code]!["name"]!, rate: latestRate[code].toDouble()),
+            );
+          } else {
+            print(code + ' missing in the initCurrencies file');
+          }
         } else if (allCurrencies[code]?.rate != latestRate[code]) {
           Currency? dbCurrency = allCurrencies[code];
           dbCurrency?.rate = latestRate[code].toDouble();
@@ -44,13 +48,16 @@ class CurrencyHelper {
         }
         print("total currencies update ${currencyToUpdate.length} ");
         await db.update(tableSettings, {"data_time": dataTime});
+        return true;
       } catch (e) {
         throw ('Exception details:\n $e');
       }
     } on SocketException {
       print("No internet connection. Loading from cache...");
+      return false;
     } on TimeoutException {
       print("Request timed out. Loading from cache...");
+      return false;
     } catch (e) {
       throw ('Exception details:\n $e');
     }
