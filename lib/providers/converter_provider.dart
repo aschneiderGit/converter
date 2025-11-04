@@ -23,15 +23,22 @@ class ConverterProvider extends ChangeNotifier {
 
   bool _isLoading = true;
   bool get isLoading => _isLoading;
+  bool online = false;
+  bool notInstanciate = false;
 
   ConverterProvider() {
-    _init();
+    init();
   }
 
-  Future<void> _init() async {
-    await CurrencyHelper().initializeCurrency();
+  Future<void> init() async {
+    notInstanciate = false;
+    _isLoading = true;
+    online = false;
+    online = await CurrencyHelper().initializeCurrency();
     await fetchCurrencies();
-    initializeAmount();
+    if (!notInstanciate) {
+      initializeAmount();
+    }
     await loadSettings();
 
     _isLoading = false;
@@ -112,7 +119,11 @@ class ConverterProvider extends ChangeNotifier {
   Future<void> fetchCurrencies() async {
     try {
       final data = await CurrencyHelper().getAllCurrency();
-      _allCurrencies = data;
+      if (data.isEmpty) {
+        notInstanciate = true;
+      } else {
+        _allCurrencies = data;
+      }
     } catch (e) {
       throw ('Exception details:\n $e');
     } finally {

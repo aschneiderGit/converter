@@ -1,4 +1,4 @@
-import 'package:converter/core/constants/deviceSize.dart';
+import 'package:converter/core/constants/device_size.dart';
 import 'package:flutter/material.dart';
 
 getScreenHeight(BuildContext context) {
@@ -16,11 +16,11 @@ double getToolBarSize(BuildContext context) {
 
 DeviceSize getScreenSize(BuildContext context) {
   switch (MediaQuery.of(context).size.width) {
-    case < SMALL:
+    case < small:
       return DeviceSize.extraSmall;
-    case < MEDIUM:
+    case < medium:
       return DeviceSize.small;
-    case < LARGE:
+    case < large:
       return DeviceSize.medium;
     default:
       return DeviceSize.large;

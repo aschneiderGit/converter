@@ -1,4 +1,3 @@
-import 'package:converter/core/constants/deviceSize.dart';
 import 'package:converter/core/l10n/app_localizations.dart';
 import 'package:converter/core/theme/app_colors.dart';
 import 'package:converter/core/theme/app_text_style.dart';
@@ -26,7 +25,6 @@ class ConvertDisplay extends StatelessWidget {
 
     final amounts = providerWatch.amounts;
     final dataTime = providerWatch.setting.dataTime;
-    final deviceSize = context.watch<DeviceSize>();
 
     return Container(
       padding: EdgeInsets.only(top: 24),

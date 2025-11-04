@@ -1,0 +1,1 @@
+enum AlertDialogEndpoint { ok, cancel }

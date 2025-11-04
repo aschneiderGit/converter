@@ -1,4 +1,4 @@
-import 'package:converter/core/constants/deviceSize.dart';
+import 'package:converter/core/constants/device_size.dart';
 import 'package:converter/core/theme/main_theme.dart';
 import 'package:converter/core/utils/screen.dart';
 import 'package:converter/data/databases/database_helper.dart';
