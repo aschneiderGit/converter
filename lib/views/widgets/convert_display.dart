@@ -2,6 +2,7 @@ import 'package:converter/core/l10n/app_localizations.dart';
 import 'package:converter/core/theme/app_colors.dart';
 import 'package:converter/core/theme/app_text_style.dart';
 import 'package:converter/core/utils/time.dart';
+import 'package:converter/data/services/exchange_rate.dart';
 import 'package:converter/providers/converter_provider.dart';
 import 'package:converter/views/widgets/alert_dialog_widget.dart';
 import 'package:converter/views/widgets/animated_icon_widget.dart';
@@ -76,16 +77,41 @@ class _ConvertDisplayState extends State<ConvertDisplay> {
                 GestureDetector(
                   onTap: () async {
                     final res = await providerWatch.refresh();
-                    if (!res && mounted) {
-                      showDialog(
-                        // ignore: use_build_context_synchronously
-                        context: context,
-                        builder: (_) => AlertDialogWidget(
-                          title: "Can't access to the Exchangerate API",
-                          message: 'Check your connection internet, or the Exchangerate API status',
-                          showCancel: false,
-                        ),
-                      );
+                    if (mounted) {
+                      switch (res) {
+                        case ResultOfGettingRates.offline:
+                          showDialog(
+                            // ignore: use_build_context_synchronously
+                            context: context,
+                            builder: (_) => AlertDialogWidget(
+                              title: "Can't access to the Exchangerate API",
+                              message: 'Check your connection internet, or the Exchangerate API status',
+                              showCancel: false,
+                            ),
+                          );
+                        case ResultOfGettingRates.updated:
+                          // ignore: use_build_context_synchronously
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text("Data updated"),
+                              duration: Duration(milliseconds: 1500),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                              behavior: SnackBarBehavior.floating,
+                              margin: EdgeInsets.only(bottom: 10, left: 25, right: 25),
+                            ),
+                          );
+                        case ResultOfGettingRates.upToDate:
+                          // ignore: use_build_context_synchronously
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text("Data already up to date (it refresh only every 24h)"),
+                              duration: Duration(milliseconds: 1500),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                              behavior: SnackBarBehavior.floating,
+                              margin: EdgeInsets.only(bottom: 10, left: 25, right: 25),
+                            ),
+                          );
+                      }
                     }
                   },
                   child: AnimatedIconWidget(

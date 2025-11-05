@@ -6,6 +6,7 @@ import 'package:converter/data/databases/database_helper.dart';
 import 'package:converter/data/models/amount.dart';
 import 'package:converter/data/models/currency.dart';
 import 'package:converter/data/models/settings.dart';
+import 'package:converter/data/services/exchange_rate.dart';
 import 'package:flutter/material.dart';
 
 enum FieldType { top, bottom }
@@ -41,7 +42,8 @@ class ConverterProvider extends ChangeNotifier {
     _isLoading = true;
     _online = false;
     notifyListeners();
-    _online = await CurrencyHelper().initializeCurrency();
+    ResultOfGettingRates res = await CurrencyHelper().initializeCurrency();
+    _online = res != ResultOfGettingRates.offline;
     await fetchCurrenciesFromDB();
     if (!_notInstanciate) {
       initializeAmount();
@@ -52,19 +54,22 @@ class ConverterProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> refresh() async {
+  Future<ResultOfGettingRates> refresh() async {
     _refreshing = true;
     notifyListeners();
-    await Future.delayed(Duration(seconds: 2));
-    _online = await CurrencyHelper().initializeCurrency();
-    await Future.delayed(Duration(seconds: 2));
-    if (!_online) return _online;
+    await Future.delayed(Duration(seconds: 1));
+    ResultOfGettingRates res = await CurrencyHelper().initializeCurrency();
+    res != ResultOfGettingRates.offline;
+    if (res == ResultOfGettingRates.offline || res == ResultOfGettingRates.upToDate) {
+      _refreshing = false;
+      notifyListeners();
+      return res;
+    }
     await fetchCurrenciesFromDB();
     await loadSettings();
     _refreshing = false;
     notifyListeners();
-
-    return _online;
+    return res;
   }
 
   Future<void> loadSettings() async {

@@ -4,17 +4,22 @@ import 'dart:io';
 import 'package:converter/core/constants/currencies.dart';
 import 'package:converter/data/databases/database_helper.dart';
 import 'package:converter/data/models/currency.dart';
+import 'package:converter/data/models/settings.dart';
 import 'package:converter/data/services/exchange_rate.dart';
 import 'package:sqflite/sqflite.dart';
 
 class CurrencyHelper {
   final DatabaseHelper _dbHelper = DatabaseHelper();
 
-  Future<bool> initializeCurrency() async {
+  Future<ResultOfGettingRates> initializeCurrency() async {
     try {
       Map<String, dynamic> data = await ExchangeRateService().getLastestRate();
-      Map<String, dynamic> latestRate = data["rates"];
       int dataTime = data["data_time"];
+      Settings settings = await _dbHelper.getSettings();
+      if (DateTime.fromMillisecondsSinceEpoch(dataTime * 1000, isUtc: true) == settings.dataTime) {
+        return ResultOfGettingRates.upToDate;
+      }
+      Map<String, dynamic> latestRate = data["rates"];
       Map<String, Currency> allCurrencies = await getAllCurrency();
       List<Currency> currencyToAdd = [];
       List<Currency> currencyToUpdate = [];
@@ -48,16 +53,16 @@ class CurrencyHelper {
         }
         print("total currencies update ${currencyToUpdate.length} ");
         await db.update(tableSettings, {"data_time": dataTime});
-        return true;
+        return ResultOfGettingRates.updated;
       } catch (e) {
         throw ('Exception details:\n $e');
       }
     } on SocketException {
       print("No internet connection. Loading from cache...");
-      return false;
+      return ResultOfGettingRates.offline;
     } on TimeoutException {
       print("Request timed out. Loading from cache...");
-      return false;
+      return ResultOfGettingRates.offline;
     } catch (e) {
       throw ('Exception details:\n $e');
     }
