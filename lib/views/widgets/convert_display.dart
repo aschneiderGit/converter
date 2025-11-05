@@ -3,15 +3,22 @@ import 'package:converter/core/theme/app_colors.dart';
 import 'package:converter/core/theme/app_text_style.dart';
 import 'package:converter/core/utils/time.dart';
 import 'package:converter/providers/converter_provider.dart';
+import 'package:converter/views/widgets/alert_dialog_widget.dart';
+import 'package:converter/views/widgets/animated_icon_widget.dart';
 import 'package:converter/views/widgets/circle_button/icon_button.dart';
 import 'package:converter/views/widgets/currency_amount_filed.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ConvertDisplay extends StatelessWidget {
+class ConvertDisplay extends StatefulWidget {
   final bool inRow;
   const ConvertDisplay({super.key, this.inRow = false});
 
+  @override
+  State<ConvertDisplay> createState() => _ConvertDisplayState();
+}
+
+class _ConvertDisplayState extends State<ConvertDisplay> {
   @override
   Widget build(BuildContext context) {
     final providerWatch = context.watch<ConverterProvider>();
@@ -49,7 +56,7 @@ class ConvertDisplay extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.only(left: 8),
                     child: iconButton(
-                      icon: Icons.cached,
+                      icon: Icons.swap_vert,
                       secondary: true,
                       size: 75,
                       iconSize: 60,
@@ -58,14 +65,38 @@ class ConvertDisplay extends StatelessWidget {
                   ),
                 ),
               ];
-              return inRow ? childrenArray.reversed.toList() : childrenArray;
+              return widget.inRow ? childrenArray.reversed.toList() : childrenArray;
             }(),
           ),
           Container(
-            margin: EdgeInsets.only(top: inRow ? 16 : 32),
+            margin: EdgeInsets.only(top: widget.inRow ? 16 : 32),
             child: Row(
               mainAxisSize: MainAxisSize.min, // only as wide as content
               children: [
+                GestureDetector(
+                  onTap: () async {
+                    final res = await providerWatch.refresh();
+                    if (!res && mounted) {
+                      showDialog(
+                        // ignore: use_build_context_synchronously
+                        context: context,
+                        builder: (_) => AlertDialogWidget(
+                          title: "Can't access to the Exchangerate API",
+                          message: 'Check your connection internet, or the Exchangerate API status',
+                          showCancel: false,
+                        ),
+                      );
+                    }
+                  },
+                  child: AnimatedIconWidget(
+                    icon: Icons.cached,
+                    size: 35,
+                    color: t.secondary,
+                    condition: providerWatch.refreshing,
+                    animatedBuilder: (animation, child) => RotationTransition(turns: animation, child: child),
+                  ),
+                ),
+                SizedBox(width: 4),
                 RichText(
                   text: TextSpan(
                     text: l.updateTime,

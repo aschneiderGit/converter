@@ -15,8 +15,8 @@ class AlertDialogWidget extends StatelessWidget {
     required this.title,
     required this.message,
     this.showCancel = false,
-    this.okText = 'Text',
-    this.cancelText = 'Text',
+    this.okText = 'OK',
+    this.cancelText = 'Cancel',
   });
 
   @override

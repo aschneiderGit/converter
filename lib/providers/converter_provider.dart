@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:converter/core/utils/language.dart';
 import 'package:converter/data/databases/currency_helper.dart';
 import 'package:converter/data/databases/database_helper.dart';
@@ -22,27 +24,47 @@ class ConverterProvider extends ChangeNotifier {
   FieldType get selectedField => _selectedField;
 
   bool _isLoading = true;
+  bool _refreshing = false;
+  bool _online = false;
+  bool _notInstanciate = false;
   bool get isLoading => _isLoading;
-  bool online = false;
-  bool notInstanciate = false;
+  bool get refreshing => _refreshing;
+  bool get online => _online;
+  bool get notInstanciate => _notInstanciate;
 
   ConverterProvider() {
     init();
   }
 
   Future<void> init() async {
-    notInstanciate = false;
+    _notInstanciate = false;
     _isLoading = true;
-    online = false;
-    online = await CurrencyHelper().initializeCurrency();
-    await fetchCurrencies();
-    if (!notInstanciate) {
+    _online = false;
+    notifyListeners();
+    _online = await CurrencyHelper().initializeCurrency();
+    await fetchCurrenciesFromDB();
+    if (!_notInstanciate) {
       initializeAmount();
     }
     await loadSettings();
 
     _isLoading = false;
     notifyListeners();
+  }
+
+  Future<bool> refresh() async {
+    _refreshing = true;
+    notifyListeners();
+    await Future.delayed(Duration(seconds: 2));
+    _online = await CurrencyHelper().initializeCurrency();
+    await Future.delayed(Duration(seconds: 2));
+    if (!_online) return _online;
+    await fetchCurrenciesFromDB();
+    await loadSettings();
+    _refreshing = false;
+    notifyListeners();
+
+    return _online;
   }
 
   Future<void> loadSettings() async {
@@ -116,11 +138,11 @@ class ConverterProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> fetchCurrencies() async {
+  Future<void> fetchCurrenciesFromDB() async {
     try {
       final data = await CurrencyHelper().getAllCurrency();
       if (data.isEmpty) {
-        notInstanciate = true;
+        _notInstanciate = true;
       } else {
         _allCurrencies = data;
       }
