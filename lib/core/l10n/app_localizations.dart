@@ -116,6 +116,18 @@ abstract class AppLocalizations {
   /// **'🇬🇧'**
   String get icon;
 
+  /// No description provided for @noConnectionAtInitTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Need internet connection'**
+  String get noConnectionAtInitTitle;
+
+  /// No description provided for @noConnectionAtInitMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'For your first usage of the app you need an internet connection to fetch the initial value of the converter currency'**
+  String get noConnectionAtInitMessage;
+
   /// No description provided for @searchCurrency.
   ///
   /// In en, this message translates to:
@@ -139,6 +151,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Enter your ammount'**
   String get enterAmount;
+
+  /// No description provided for @canAcessDataTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Can\'t access to the Exchangerate API'**
+  String get canAcessDataTitle;
+
+  /// No description provided for @canAcessDataMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Check your connection internet, or the Exchangerate API status'**
+  String get canAcessDataMessage;
+
+  /// No description provided for @dataUpToDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Data already up to date (it refresh only every 24h)'**
+  String get dataUpToDate;
+
+  /// No description provided for @dataUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Data updated '**
+  String get dataUpdated;
 
   /// No description provided for @updateTime.
   ///

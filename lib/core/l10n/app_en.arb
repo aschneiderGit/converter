@@ -4,13 +4,19 @@
   "appBar": "Start to convert here !",
   "icon": "🇬🇧",
 
+  "noConnectionAtInitTitle": "Need internet connection",
+  "noConnectionAtInitMessage": "For your first usage of the app you need an internet connection to fetch the initial value of the converter currency",
+
   "searchCurrency": "Search currency...",
   "noCurrency": "No currencies available",
   "selectCurrency": "Select Currency",
 
-    "enterAmount": "Enter your ammount",
+  "enterAmount": "Enter your ammount",
 
-
+  "canAcessDataTitle": "Can't access to the Exchangerate API",
+  "canAcessDataMessage": "Check your connection internet, or the Exchangerate API status",
+  "dataUpToDate": "Data already up to date (it refresh only every 24h)",
+  "dataUpdated": "Data updated ",
   "updateTime": "Data updated ",
   "updateTimeEnd": " ago",
   "attribution": "Rates By Exchange Rate API",

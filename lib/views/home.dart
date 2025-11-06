@@ -27,6 +27,7 @@ class _Home extends State<Home> {
 
     if (!provider.isLoading && provider.notInstanciate && !provider.online) {
       Future.microtask(() {
+        if (!mounted) return;
         showDialog<AlertDialogEndpoint>(
           context: context,
           builder: (_) => AlertDialogWidget(

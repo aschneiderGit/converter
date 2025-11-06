@@ -5,16 +5,22 @@
   "appBar": "Commencez à convertir ici !",
   "icon": "🇫🇷",
 
+  "noConnectionAtInitTitle": "Connection internet nécessaire",
+  "noConnectionAtInitMessage": "Au premier lancement de l'app, vous avez besoin d'être connecté à internet pour pouvoir charger les taux initiaux",
+
   "searchCurrency": "Chercher une devise...",
   "noCurrency": "Pas de devise disponible",
   "selectCurrency": "Selection de device",
 
   "enterAmount": "Entrer votre somme",
 
-  "updateTime": "Donnée mise à jour il y a ",
+  "canAcessDataTitle": "Exchangerate API n'est pas acessible",
+  "canAcessDataMessage": "Vérifier votre connection internet, ou le status de l'api Exchangerate",
+  "dataUpdated": "Données mise à jour",
+  "dataUpToDate": "Données déjà à jour (elles s'actualisent toute les 24h seulement)",
+  "updateTime": "Données mise à jour il y a ",
   "updateTimeEnd": "",
   "attribution": "Taux reçu par Exchange Rate API",
-
   
     "minute": "{count, plural, =1{1 minute} other{{count} minutes}}",
   "@minute": {
@@ -25,7 +31,6 @@
       }
     }
   },
-
   "hour": "{count, plural, =1{1 heure} other{{count} heures}}",
   "@hour": {
     "description": "Affiche un nombre d'heures avec le bon pluriel en français",
@@ -35,7 +40,6 @@
       }
     }
   },
-
   "day": "{count, plural, =1{1 jour} other{{count} jours}}",
   "@day": {
     "description": "Affiche un nombre de jours avec le bon pluriel en français",
@@ -45,7 +49,6 @@
       }
     }
   },
-
   "month": "{count, plural, =1{1 mois} other{{count} mois}}",
   "@month": {
     "description": "Affiche un nombre de mois avec le bon pluriel en français (même mot au singulier et au pluriel)",
@@ -55,7 +58,6 @@
       }
     }
   },
-
   "year": "{count, plural, =1{1 an} other{{count} ans}}",
   "@year": {
     "description": "Affiche un nombre d'années avec le bon pluriel en français",

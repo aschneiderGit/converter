@@ -18,6 +18,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get icon => '🇫🇷';
 
   @override
+  String get noConnectionAtInitTitle => 'Connection internet nécessaire';
+
+  @override
+  String get noConnectionAtInitMessage =>
+      'Au premier lancement de l\'app, vous avez besoin d\'être connecté à internet pour pouvoir charger les taux initiaux';
+
+  @override
   String get searchCurrency => 'Chercher une devise...';
 
   @override
@@ -30,7 +37,21 @@ class AppLocalizationsFr extends AppLocalizations {
   String get enterAmount => 'Entrer votre somme';
 
   @override
-  String get updateTime => 'Donnée mise à jour il y a ';
+  String get canAcessDataTitle => 'Exchangerate API n\'est pas acessible';
+
+  @override
+  String get canAcessDataMessage =>
+      'Vérifier votre connection internet, ou le status de l\'api Exchangerate';
+
+  @override
+  String get dataUpToDate =>
+      'Données déjà à jour (elles s\'actualisent toute les 24h seulement)';
+
+  @override
+  String get dataUpdated => 'Données mise à jour';
+
+  @override
+  String get updateTime => 'Données mise à jour il y a ';
 
   @override
   String get updateTimeEnd => '';

@@ -18,6 +18,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get icon => '🇬🇧';
 
   @override
+  String get noConnectionAtInitTitle => 'Need internet connection';
+
+  @override
+  String get noConnectionAtInitMessage =>
+      'For your first usage of the app you need an internet connection to fetch the initial value of the converter currency';
+
+  @override
   String get searchCurrency => 'Search currency...';
 
   @override
@@ -28,6 +35,20 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get enterAmount => 'Enter your ammount';
+
+  @override
+  String get canAcessDataTitle => 'Can\'t access to the Exchangerate API';
+
+  @override
+  String get canAcessDataMessage =>
+      'Check your connection internet, or the Exchangerate API status';
+
+  @override
+  String get dataUpToDate =>
+      'Data already up to date (it refresh only every 24h)';
+
+  @override
+  String get dataUpdated => 'Data updated ';
 
   @override
   String get updateTime => 'Data updated ';

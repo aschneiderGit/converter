@@ -84,8 +84,8 @@ class _ConvertDisplayState extends State<ConvertDisplay> {
                             // ignore: use_build_context_synchronously
                             context: context,
                             builder: (_) => AlertDialogWidget(
-                              title: "Can't access to the Exchangerate API",
-                              message: 'Check your connection internet, or the Exchangerate API status',
+                              title: l.canAcessDataTitle,
+                              message: l.canAcessDataMessage,
                               showCancel: false,
                             ),
                           );
@@ -93,7 +93,7 @@ class _ConvertDisplayState extends State<ConvertDisplay> {
                           // ignore: use_build_context_synchronously
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content: Text("Data updated"),
+                              content: Text(l.dataUpdated),
                               duration: Duration(milliseconds: 1500),
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                               behavior: SnackBarBehavior.floating,
@@ -104,7 +104,7 @@ class _ConvertDisplayState extends State<ConvertDisplay> {
                           // ignore: use_build_context_synchronously
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content: Text("Data already up to date (it refresh only every 24h)"),
+                              content: Text(l.dataUpToDate),
                               duration: Duration(milliseconds: 1500),
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                               behavior: SnackBarBehavior.floating,
