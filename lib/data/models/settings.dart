@@ -13,16 +13,6 @@ class Settings {
     required this.dataTime,
   });
 
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'last_top_currency_id': lastTopCurrencyId,
-      'last_bottom_currency_id': lastBottomCurrencyId,
-      'language': language,
-      'data_time': dataTime,
-    };
-  }
-
   factory Settings.fromMap(Map<String, dynamic> map) {
     final dateTime = map['data_time'] ?? 0;
     return Settings(
