@@ -9,7 +9,10 @@ TextSpan getTimeAgo(BuildContext context, DateTime dt) {
   String text = AppLocalizations.of(context)!.hour(diff);
   ThemeData t = Theme.of(context);
   Color color = t.onPrimary;
-  if (diff > 23) {
+  if (diff == 0) {
+    diff = durationDiff.inMinutes;
+    text = AppLocalizations.of(context)!.minute(diff);
+  } else if (diff > 23) {
     diff = durationDiff.inDays;
     text = AppLocalizations.of(context)!.day(diff);
     if (diff > 14) {
@@ -23,13 +26,6 @@ TextSpan getTimeAgo(BuildContext context, DateTime dt) {
     } else if (diff > 30) {
       diff = diff ~/ 30;
       text = AppLocalizations.of(context)!.month(diff);
-    } else if (diff < 0) {
-      diff = durationDiff.inHours;
-      text = AppLocalizations.of(context)!.hour(diff);
-      if (diff < 0) {
-        diff = durationDiff.inMinutes;
-        text = AppLocalizations.of(context)!.minute(diff);
-      }
     }
   }
 

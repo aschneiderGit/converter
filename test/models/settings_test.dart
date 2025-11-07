@@ -1,7 +1,7 @@
 import 'package:test/test.dart';
 import 'package:converter/data/models/Settings.dart';
 
-import '../utils/date_time_test.dart';
+import '../utils_test/date_time_test.dart';
 
 void main() {
   test('settings toMap behaviour', () {
