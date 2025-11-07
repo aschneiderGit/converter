@@ -1,9 +1,6 @@
 import 'package:test/test.dart';
 import 'package:converter/data/models/currency.dart';
-
-import 'package:test/test.dart';
 import 'package:converter/data/models/amount.dart';
-import 'package:converter/data/models/currency.dart';
 
 void main() {
   group('Amount', () {
