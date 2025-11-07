@@ -10,9 +10,8 @@ import 'package:provider/provider.dart';
 
 import 'core/l10n/app_localizations.dart';
 // TO DO
-// pull to refresh
 // test
-//fix ui currency selction in landscape
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

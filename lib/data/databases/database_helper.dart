@@ -46,7 +46,7 @@ class DatabaseHelper {
 
   Future<Settings> getSettings() async {
     try {
-      Database db = _database!;
+      final db = await this.db;
       List<Map<String, dynamic>> setting = await db.query(tableSettings);
       return Settings.fromMap(setting.first);
     } catch (e) {
