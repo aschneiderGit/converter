@@ -11,7 +11,7 @@
   "noCurrency": "No currencies available",
   "selectCurrency": "Select Currency",
 
-  "enterAmount": "Enter your ammount",
+  "enterAmount": "Enter your amount",
 
   "canAcessDataTitle": "Can't access to the Exchangerate API",
   "canAcessDataMessage": "Check your connection internet, or the Exchangerate API status",

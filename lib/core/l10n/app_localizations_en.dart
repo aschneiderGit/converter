@@ -34,7 +34,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get selectCurrency => 'Select Currency';
 
   @override
-  String get enterAmount => 'Enter your ammount';
+  String get enterAmount => 'Enter your amount';
 
   @override
   String get canAcessDataTitle => 'Can\'t access to the Exchangerate API';

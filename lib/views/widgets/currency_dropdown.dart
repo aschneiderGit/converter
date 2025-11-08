@@ -19,7 +19,7 @@ class CurrencyDropdown extends StatefulWidget {
 }
 
 class _CurrencyDropdownState extends State<CurrencyDropdown> {
-  void _openCurrencyPicker(BuildContext context, List<Currency> currencies, bool isSmallDevice) {
+  void _openCurrencyPicker(BuildContext context, List<Currency> currencies, bool isSmallDevice, String language) {
     ThemeData t = Theme.of(context);
     final searchController = TextEditingController();
     List<Currency> filtered = List.from(currencies);
@@ -32,107 +32,111 @@ class _CurrencyDropdownState extends State<CurrencyDropdown> {
       useSafeArea: isSmallDevice,
       builder: (context) {
         final ThemeData t = Theme.of(context);
-        final AppLocalizations l = AppLocalizations.of(context)!;
 
-        return StatefulBuilder(
-          builder: (context, setState) {
-            void filterCurrencies(String query) {
-              setState(() {
-                filtered = currencies
-                    .where(
-                      (c) =>
-                          c.code.toLowerCase().contains(query.toLowerCase()) ||
-                          (c.name.toLowerCase().contains(query.toLowerCase())),
-                    )
-                    .toList();
-              });
-            }
+        return Localizations.override(
+          context: context,
+          locale: Locale(language),
+          child: StatefulBuilder(
+            builder: (context, setState) {
+              final AppLocalizations l = AppLocalizations.of(context)!;
+              void filterCurrencies(String query) {
+                setState(() {
+                  filtered = currencies
+                      .where(
+                        (c) =>
+                            c.code.toLowerCase().contains(query.toLowerCase()) ||
+                            (c.name.toLowerCase().contains(query.toLowerCase())),
+                      )
+                      .toList();
+                });
+              }
 
-            return FractionallySizedBox(
-              heightFactor: 0.95,
-              child: SizedBox(
-                height: getScreenHeight(context),
-                child: Column(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 12),
-                      decoration: BoxDecoration(color: t.primaryVariant, borderRadius: BorderRadius.circular(16)),
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: TextButton(
-                              child: Text(
-                                AppLocalizations.of(context)!.cancel,
-                                style: t.textStyle.copyWith(color: t.secondaryVariant, fontSize: 15),
+              return FractionallySizedBox(
+                heightFactor: 0.95,
+                child: SizedBox(
+                  height: getScreenHeight(context),
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 12),
+                        decoration: BoxDecoration(color: t.primaryVariant, borderRadius: BorderRadius.circular(16)),
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: TextButton(
+                                child: Text(
+                                  AppLocalizations.of(context)!.cancel,
+                                  style: t.textStyle.copyWith(color: t.secondaryVariant, fontSize: 15),
+                                ),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
                               ),
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
                             ),
-                          ),
-                          Center(
-                            child: Text(
-                              l.selectCurrency,
-                              style: Theme.of(context).textStyle.copyWith(fontSize: 20),
-                              textAlign: TextAlign.center,
+                            Center(
+                              child: Text(
+                                l.selectCurrency,
+                                style: Theme.of(context).textStyle.copyWith(fontSize: 20),
+                                textAlign: TextAlign.center,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 32, vertical: 8),
-                      child: TextField(
-                        controller: searchController,
-                        style: Theme.of(context).textStyle,
-                        onChanged: filterCurrencies,
-                        decoration: InputDecoration(
-                          hintText: AppLocalizations.of(context)!.searchCurrency,
-                          prefixIcon: Icon(Icons.search, color: Colors.white),
-                          hintStyle: Theme.of(context).textStyle,
-                          enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: t.secondary)),
-                          focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: t.secondary)),
-                          contentPadding: EdgeInsets.only(top: 8, bottom: 0),
+                          ],
                         ),
                       ),
-                    ),
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: filtered.length,
-                        itemBuilder: (context, index) {
-                          final currency = filtered[index];
-                          return ListTile(
-                            title: Text(currency.code, style: t.textStyle.copyWith(fontSize: 20)),
-                            subtitle: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                    border: Border(bottom: BorderSide(color: t.secondary, width: 1)),
-                                  ),
-                                  padding: EdgeInsets.only(bottom: 8),
-                                  child: Text(
-                                    currency.name,
-                                    style: t.textStyle.copyWith(fontSize: 15, fontWeight: FontWeight.normal),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            onTap: () {
-                              widget.currencyChanged(currency);
-                              Navigator.pop(context);
-                            },
-                          );
-                        },
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 32, vertical: 8),
+                        child: TextField(
+                          controller: searchController,
+                          style: Theme.of(context).textStyle,
+                          onChanged: filterCurrencies,
+                          decoration: InputDecoration(
+                            hintText: AppLocalizations.of(context)!.searchCurrency,
+                            prefixIcon: Icon(Icons.search, color: Colors.white),
+                            hintStyle: Theme.of(context).textStyle,
+                            enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: t.secondary)),
+                            focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: t.secondary)),
+                            contentPadding: EdgeInsets.only(top: 8, bottom: 0),
+                          ),
+                        ),
                       ),
-                    ),
-                  ],
+                      Expanded(
+                        child: ListView.builder(
+                          itemCount: filtered.length,
+                          itemBuilder: (context, index) {
+                            final currency = filtered[index];
+                            return ListTile(
+                              title: Text(currency.code, style: t.textStyle.copyWith(fontSize: 20)),
+                              subtitle: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      border: Border(bottom: BorderSide(color: t.secondary, width: 1)),
+                                    ),
+                                    padding: EdgeInsets.only(bottom: 8),
+                                    child: Text(
+                                      currency.name,
+                                      style: t.textStyle.copyWith(fontSize: 15, fontWeight: FontWeight.normal),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              onTap: () {
+                                widget.currencyChanged(currency);
+                                Navigator.pop(context);
+                              },
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         );
       },
     );
@@ -158,7 +162,7 @@ class _CurrencyDropdownState extends State<CurrencyDropdown> {
     final selected = widget.defaultCurrency ?? currencies.first;
 
     return GestureDetector(
-      onTap: () => _openCurrencyPicker(context, currencies, isSmallDevice),
+      onTap: () => _openCurrencyPicker(context, currencies, isSmallDevice, provider.setting.language),
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 8),
         decoration: BoxDecoration(color: t.primaryVariant, borderRadius: BorderRadius.circular(16)),

@@ -149,7 +149,7 @@ abstract class AppLocalizations {
   /// No description provided for @enterAmount.
   ///
   /// In en, this message translates to:
-  /// **'Enter your ammount'**
+  /// **'Enter your amount'**
   String get enterAmount;
 
   /// No description provided for @canAcessDataTitle.
