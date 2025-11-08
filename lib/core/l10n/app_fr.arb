@@ -7,6 +7,8 @@
 
   "noConnectionAtInitTitle": "Connection internet nécessaire",
   "noConnectionAtInitMessage": "Au premier lancement de l'app, vous avez besoin d'être connecté à internet pour pouvoir charger les taux initiaux",
+  "refecht": "Réessayer de charger les données",
+  "quitApp": "Quitter l'application",
 
   "searchCurrency": "Chercher une devise...",
   "noCurrency": "Pas de devise disponible",

@@ -128,6 +128,18 @@ abstract class AppLocalizations {
   /// **'For your first usage of the app you need an internet connection to fetch the initial value of the converter currency'**
   String get noConnectionAtInitMessage;
 
+  /// No description provided for @refecht.
+  ///
+  /// In en, this message translates to:
+  /// **'Try to refetch data'**
+  String get refecht;
+
+  /// No description provided for @quitApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Quit the app'**
+  String get quitApp;
+
   /// No description provided for @searchCurrency.
   ///
   /// In en, this message translates to:

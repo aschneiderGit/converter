@@ -25,6 +25,12 @@ class AppLocalizationsEn extends AppLocalizations {
       'For your first usage of the app you need an internet connection to fetch the initial value of the converter currency';
 
   @override
+  String get refecht => 'Try to refetch data';
+
+  @override
+  String get quitApp => 'Quit the app';
+
+  @override
   String get searchCurrency => 'Search currency...';
 
   @override

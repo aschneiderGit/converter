@@ -25,6 +25,12 @@ class AppLocalizationsFr extends AppLocalizations {
       'Au premier lancement de l\'app, vous avez besoin d\'être connecté à internet pour pouvoir charger les taux initiaux';
 
   @override
+  String get refecht => 'Réessayer de charger les données';
+
+  @override
+  String get quitApp => 'Quitter l\'application';
+
+  @override
   String get searchCurrency => 'Chercher une devise...';
 
   @override

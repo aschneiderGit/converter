@@ -6,6 +6,8 @@
 
   "noConnectionAtInitTitle": "Need internet connection",
   "noConnectionAtInitMessage": "For your first usage of the app you need an internet connection to fetch the initial value of the converter currency",
+  "refecht": "Try to refetch data",
+  "quitApp": "Quit the app",
 
   "searchCurrency": "Search currency...",
   "noCurrency": "No currencies available",

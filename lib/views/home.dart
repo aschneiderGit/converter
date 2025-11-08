@@ -30,14 +30,16 @@ class _Home extends State<Home> {
         if (!mounted) return;
         showDialog<AlertDialogEndpoint>(
           context: context,
-          builder: (_) => AlertDialogWidget(
-            title: 'Need internet connection',
-            message:
-                'For your first usage of the app you need an internet connection to fetch the initial value of the converter currency',
-            showCancel: true,
-            okText: 'Try to refetch data',
-            cancelText: 'Quit the app',
-          ),
+          builder: (context) {
+            final AppLocalizations l = AppLocalizations.of(context)!;
+            return AlertDialogWidget(
+              title: l.noConnectionAtInitTitle,
+              message: l.noConnectionAtInitMessage,
+              showCancel: true,
+              okText: l.refecht,
+              cancelText: l.quitApp,
+            );
+          },
         ).then((res) {
           if (res == AlertDialogEndpoint.ok) {
             provider.init();
