@@ -53,17 +53,11 @@ jobs:
           echo "version=$VERSION" >> $GITHUB_ENV
           echo "App version: $VERSION"
 
-      - name: Create GitHub Release
-        id: create_release
+      - name: Create GitHub Release and Upload APK
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{ env.version }}
+        tag_name: ${{ env.version }}
+        files: build/app/outputs/flutter-apk/app-release.apk
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Upload APK to Release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: build/app/outputs/flutter-apk/app-release.apk
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
