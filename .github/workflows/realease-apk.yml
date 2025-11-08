@@ -7,9 +7,9 @@ name: Release APK
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   build:
@@ -21,17 +21,17 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
-          flutter-version-file: pubspec.yaml # path to pubspec.yaml
+          flutter-version: 3.32.8
 
       - name: Install dependencies
         run: dart pub get
 
       - name: Analyze project source
         run: flutter analyze
-        
+
       - name: Run tests
         run: flutter test
-      
+
       - name: Build release APK
         run: flutter build apk --release
 
