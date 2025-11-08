@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import 'package:converter/data/models/Settings.dart';
+import 'package:converter/data/models/settings.dart';
 
 import '../helpers/date_time.dart';
 
