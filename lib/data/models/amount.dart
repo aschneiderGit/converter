@@ -17,12 +17,10 @@ class Amount {
   }
 
   Amount convert(Currency toCurrency) {
-    RegExp regex = RegExp(r'([.]*0)(?!.*\d)');
-    return valueAsDouble == 0.0
-        ? Amount(value: '', currency: toCurrency)
-        : Amount(
-            value: (valueAsDouble * (toCurrency.rate / currency.rate)).toString().replaceAll(regex, ''),
-            currency: toCurrency,
-          );
+    RegExp regex = RegExp(r'([.]*0)(?!.*\d)'); //remove useles 0
+    String res = valueAsDouble == 0.0
+        ? ''
+        : (valueAsDouble * (toCurrency.rate / currency.rate)).toStringAsFixed(3).replaceAll(regex, '');
+    return Amount(value: res, currency: toCurrency);
   }
 }
