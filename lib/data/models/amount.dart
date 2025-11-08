@@ -17,7 +17,7 @@ class Amount {
   }
 
   Amount convert(Currency toCurrency) {
-    RegExp regex = RegExp(r'([.]*0)(?!.*\d)'); //remove useles 0
+    RegExp regex = RegExp(r'(\.?0+)(?!.*\d)'); //remove useless 0
     String res = valueAsDouble == 0.0
         ? ''
         : (valueAsDouble * (toCurrency.rate / currency.rate)).toStringAsFixed(3).replaceAll(regex, '');
