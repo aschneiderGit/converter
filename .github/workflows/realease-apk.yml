@@ -1,8 +1,3 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
 name: Release APK
 
 on:
@@ -21,8 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Cache Flutter Pub dependencies
-        uses: actions/cache@v3
+      - uses: actions/cache@v3
         with:
           path: |
             ~/.pub-cache
@@ -34,8 +28,7 @@ jobs:
           channel: stable
           flutter-version: 3.32.8
 
-      - name: Install dependencies
-        run: dart pub get
+      - run: dart pub get
 
       - name: Analyze project source
         run: flutter analyze --no-fatal-infos --no-fatal-warnings
@@ -43,21 +36,37 @@ jobs:
       - name: Run tests
         run: flutter test
 
-      - name: Build release APK
-        run: flutter build apk --release
-
-      - name: Get app version
-        id: get_version
+      - id: version
         run: |
-          VERSION=$(grep '^version:' pubspec.yaml | awk '{print $2}')
-          echo "version=$VERSION" >> $GITHUB_ENV
-          echo "App version: $VERSION"
+          APP_VERSION=$(grep '^version:' pubspec.yaml | awk '{print $2}')
+          echo "app_version=$APP_VERSION" >> $GITHUB_ENV
+          echo "App version: $APP_VERSION"
 
-      - name: Create GitHub Release and Upload APK
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: ${{ env.version }}
-          files: build/app/outputs/flutter-apk/app-release.apk
-        env: 
+      - id: last_release
+        run: |
+          LAST_RELEASE=$(gh release list --limit 1 --json tagName -q '.[0].tagName' || echo "none")
+          echo "last_release=$LAST_RELEASE" >> $GITHUB_ENV
+          echo "App latest release: $LAST_RELEASE"
+        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Build release APK if version changed
+        if: ${{ env.app_version != env.last_release }}
+        run: flutter build apk --release
+
+      - name: Use existing APK if version same
+        if: ${{ env.app_version == env.last_release }}
+        run: |
+          echo "Version unchanged ($app_version) — reusing previous APK."
+          mkdir -p build/app/outputs/flutter-apk
+          gh release download "$app_version" -p "*.apk" -D build/app/outputs/flutter-apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create or update GitHub release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ env.app_version }}
+          files: build/app/outputs/flutter-apk/app-release.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
