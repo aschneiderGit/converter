@@ -10,8 +10,9 @@ import 'package:provider/provider.dart';
 
 import 'core/l10n/app_localizations.dart';
 // TO DO
+// localization missing
+// height responsivity
 // test
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
