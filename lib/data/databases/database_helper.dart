@@ -1,5 +1,7 @@
+import 'package:converter/core/utils/print.dart';
 import 'package:converter/data/databases/database_migration.dart';
 import 'package:converter/data/models/settings.dart';
+import 'package:flutter/foundation.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -25,7 +27,9 @@ class DatabaseHelper {
   }
 
   Future<Database> initDb() async {
-    print("Initializing database...");
+    if (kDebugMode) {
+      printOnDebug("Initializing database...");
+    }
     String databasesPath = await getDatabasesPath();
     String path = join(databasesPath, 'converter.db');
     return await openDatabase(
@@ -80,7 +84,9 @@ class DatabaseHelper {
 
   Future _onCreate(Database db, int version) async {
     try {
-      print("Creating $tableCurrencies table...");
+      if (kDebugMode) {
+        printOnDebug("Creating $tableCurrencies table...");
+      }
       await db.execute('''
       CREATE TABLE $tableCurrencies (
       id INTEGER PRIMARY KEY,
@@ -89,7 +95,7 @@ class DatabaseHelper {
       rate REAL NOT NULL
       )
       ''');
-      print("Creating $tableSettings table...");
+      printOnDebug("Creating $tableSettings table...");
       await db.execute('''
       CREATE TABLE $tableSettings (
       id INTEGER PRIMARY KEY,
@@ -109,7 +115,7 @@ class DatabaseHelper {
           SELECT RAISE(FAIL, 'only one row!');
       END;
       ''');
-      print("Converter tables created.");
+      printOnDebug("Converter tables created.");
     } catch (e) {
       throw ('Failed the onCreate Database\n details:\n $e');
     }
