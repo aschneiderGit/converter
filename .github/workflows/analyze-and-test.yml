@@ -2,7 +2,7 @@ name: Release APK
 
 on:
   pull_request:
-    branches: ["main"]
+    branches: ["pre-release"]
 
 jobs:
   build:
