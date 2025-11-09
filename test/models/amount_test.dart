@@ -39,5 +39,21 @@ void main() {
       expect(convertedEmpty.currency.code, equals('USD'));
       expect(convertedEmpty.valueAsDouble, equals(0.0));
     });
+
+    test('convert return only 3 digit after decimal', () {
+      final amount = Amount(value: '1', currency: eur);
+      final abc = Currency(id: 2, code: 'ABC', name: 'alpha', rate: 1.1111111111);
+      final converted = amount.convert(abc);
+
+      expect(converted.value, equals('1.111'));
+    });
+
+    test('convert remove useless 0 after decimal', () {
+      final amount = Amount(value: '1', currency: eur);
+      final xyz = Currency(id: 2, code: 'XYZ', name: 'end', rate: 1.2003);
+      final converted = amount.convert(xyz);
+
+      expect(converted.value, equals('1.2'));
+    });
   });
 }
