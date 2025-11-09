@@ -1,9 +1,10 @@
+import 'package:converter/core/utils/print.dart';
 import 'package:converter/data/databases/database_helper.dart';
 import 'package:sqflite/sqflite.dart';
 
 createCurrencySelectionHistoryInSettings(Database db) async {
   try {
-    print("add currency history column in $tableSettings table...");
+    printOnDebug("add currency history column in $tableSettings table...");
     await db.execute('''
   ALTER TABLE $tableSettings
   ADD COLUMN last_top_currency_id INTEGER NOT NULL DEFAULT 1;
