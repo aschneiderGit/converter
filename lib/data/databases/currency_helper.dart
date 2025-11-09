@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:converter/core/constants/currencies.dart';
+import 'package:converter/core/utils/print.dart';
 import 'package:converter/data/databases/database_helper.dart';
 import 'package:converter/data/models/currency.dart';
 import 'package:converter/data/models/settings.dart';
@@ -30,7 +31,7 @@ class CurrencyHelper {
               Currency(code: code, name: initCurrencies[code]!["name"]!, rate: latestRate[code].toDouble()),
             );
           } else {
-            print(code + ' missing in the initCurrencies file');
+            printOnDebug('$code missing in the initCurrencies file');
           }
         } else if (allCurrencies[code]?.rate != latestRate[code]) {
           Currency? dbCurrency = allCurrencies[code];
@@ -44,24 +45,24 @@ class CurrencyHelper {
       try {
         for (Currency currency in currencyToAdd) {
           await db.insert(tableCurrencies, currency.toMap());
-          print("add ${currency.code} in the db");
+          printOnDebug("add ${currency.code} in the db");
         }
-        print("total currencies add ${currencyToAdd.length} ");
+        printOnDebug("total currencies add ${currencyToAdd.length} ");
         for (Currency currency in currencyToUpdate) {
           await db.update(tableCurrencies, currency.toMap(), where: 'id = ?', whereArgs: [currency.id]);
-          print("update the rate of ${currency.code} in the db");
+          printOnDebug("update the rate of ${currency.code} in the db");
         }
-        print("total currencies update ${currencyToUpdate.length} ");
+        printOnDebug("total currencies update ${currencyToUpdate.length} ");
         await db.update(tableSettings, {"data_time": dataTime});
         return ResultOfGettingRates.updated;
       } catch (e) {
         throw ('Exception details:\n $e');
       }
     } on SocketException {
-      print("No internet connection. Loading from cache...");
+      printOnDebug("No internet connection. Loading from cache...");
       return ResultOfGettingRates.offline;
     } on TimeoutException {
-      print("Request timed out. Loading from cache...");
+      printOnDebug("Request timed out. Loading from cache...");
       return ResultOfGettingRates.offline;
     } catch (e) {
       throw ('Exception details:\n $e');
