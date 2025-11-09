@@ -1,4 +1,4 @@
-name: Release APK
+name: Analyze and test
 
 on:
   pull_request:
