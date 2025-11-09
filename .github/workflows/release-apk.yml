@@ -1,7 +1,8 @@
 name: Release APK
 
 on:
-  push:
+  pull_request:
+    types: [closed]
     branches: ["main"]
 
 permissions:
@@ -9,6 +10,7 @@ permissions:
 
 jobs:
   build:
+    if: github.event.pull_request.merged == true # Only run if PR was merged
     runs-on: ubuntu-latest
 
     steps:
@@ -73,5 +75,8 @@ jobs:
         with:
           tag_name: ${{ env.app_version }}
           files: build/app/outputs/flutter-apk/app-release.apk
+          release_name: Release ${{ env.app_version }}
+          body: ${{ github.event.pull_request.body }}
+
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
