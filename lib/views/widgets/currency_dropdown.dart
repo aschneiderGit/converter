@@ -90,6 +90,7 @@ class _CurrencyDropdownState extends State<CurrencyDropdown> {
                         child: TextField(
                           controller: searchController,
                           style: Theme.of(context).textStyle,
+                          autofocus: true,
                           onChanged: filterCurrencies,
                           decoration: InputDecoration(
                             hintText: AppLocalizations.of(context)!.searchCurrency,
