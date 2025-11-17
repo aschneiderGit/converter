@@ -65,31 +65,35 @@ class _Home extends State<Home> {
     return Localizations.override(
       context: context,
       locale: Locale(provider.setting.language),
-      child: Builder(
-        builder: (localCtx) => Scaffold(
-          resizeToAvoidBottomInset: false,
-          backgroundColor: Theme.of(localCtx).background,
-          appBar: AppBar(
-            title: Padding(
-              padding: EdgeInsets.only(bottom: 8), // adjust as needed
-              child: Text(AppLocalizations.of(localCtx)!.appBar),
+      child: SafeArea(
+        top: false,
+        bottom: true,
+        child: Builder(
+          builder: (localCtx) => Scaffold(
+            resizeToAvoidBottomInset: false,
+            backgroundColor: Theme.of(localCtx).background,
+            appBar: AppBar(
+              title: Padding(
+                padding: EdgeInsets.only(bottom: 8), // adjust as needed
+                child: Text(AppLocalizations.of(localCtx)!.appBar),
+              ),
+              toolbarHeight: getToolBarSize(context),
             ),
-            toolbarHeight: getToolBarSize(context),
+            body: switch (deviceSize) {
+              DeviceSize.small || DeviceSize.extraSmall => Column(
+                children: [
+                  Flexible(flex: 4, child: ConvertDisplay()),
+                  Flexible(flex: 5, child: Keyboard()),
+                ],
+              ),
+              _ => Row(
+                children: [
+                  Flexible(flex: 5, child: ConvertDisplay(inRow: true)),
+                  Flexible(flex: 6, child: Keyboard(inRow: true)),
+                ],
+              ),
+            },
           ),
-          body: switch (deviceSize) {
-            DeviceSize.small || DeviceSize.extraSmall => Column(
-              children: [
-                Flexible(flex: 4, child: ConvertDisplay()),
-                Flexible(flex: 5, child: Keyboard()),
-              ],
-            ),
-            _ => Row(
-              children: [
-                Flexible(flex: 5, child: ConvertDisplay(inRow: true)),
-                Flexible(flex: 6, child: Keyboard(inRow: true)),
-              ],
-            ),
-          },
         ),
       ),
     );
