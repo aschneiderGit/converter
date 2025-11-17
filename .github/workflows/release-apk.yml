@@ -10,6 +10,10 @@ permissions:
 
 jobs:
   build:
+    env:
+      last_release: ""
+      app_version: ""
+
     if: github.event.pull_request.merged == true # Only run if PR was merged
     runs-on: ubuntu-latest
 
