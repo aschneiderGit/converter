@@ -5,7 +5,6 @@ import 'package:converter/data/databases/database_helper.dart';
 import 'package:converter/providers/converter_provider.dart';
 import 'package:converter/views/home.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
