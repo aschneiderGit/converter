@@ -33,6 +33,7 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
+/windows/
 
 # Symbolication related
 app.*.symbols
@@ -49,3 +50,4 @@ app.*.map.json
 /.vscode
 converter
 converter.pub
+
