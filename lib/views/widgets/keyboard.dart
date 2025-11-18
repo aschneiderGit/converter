@@ -71,7 +71,14 @@ class Keyboard extends StatelessWidget {
       mainAxisSpacing: mainAxisSpacing,
       childAspectRatio: inRow
           ? getGridChildRatioFromConstraints(crossAxisCount, mainAxisSpacing, actionColumn.length, actionConstraints)
-          : 1,
+          : getGridChildRatioDefaultWithMaxHeight(
+              1,
+              crossAxisCount,
+              mainAxisSpacing,
+              actionColumn.length,
+              actionConstraints,
+              heightPadding: 0.2,
+            ),
       padding: EdgeInsets.zero,
       children: actionColumn,
     );

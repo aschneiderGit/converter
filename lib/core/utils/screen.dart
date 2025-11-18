@@ -39,3 +39,26 @@ getGridChildRatioFromConstraints(int crossAxisCount, double mainAxisSpacing, int
 
   return (cellWidth / cellHeight);
 }
+
+getGridChildRatioDefaultWithMaxHeight(
+  double defaultRatio,
+  int crossAxisCount,
+  double mainAxisSpacing,
+  int childrenCount,
+  constraints, {
+  double heightPadding = 0.0,
+}) {
+  final int columns = crossAxisCount;
+  final int rows = childrenCount ~/ crossAxisCount;
+
+  final double width = constraints.maxWidth;
+  final double height = constraints.maxHeight - mainAxisSpacing * (rows - 1) - constraints.maxWidth * heightPadding;
+  final double cellWidth = width / columns;
+  final double cellHeight = height / rows;
+
+  if (cellWidth * rows < height) {
+    return defaultRatio;
+  } else {
+    return (cellWidth / cellHeight);
+  }
+}
