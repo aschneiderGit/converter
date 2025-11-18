@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:converter/core/constants/device_size.dart';
 import 'package:converter/core/theme/main_theme.dart';
 import 'package:converter/core/utils/screen.dart';
-import 'package:converter/data/databases/database_helper.dart';
 import 'package:converter/providers/converter_provider.dart';
 import 'package:converter/views/home.dart';
 import 'package:flutter/material.dart';
