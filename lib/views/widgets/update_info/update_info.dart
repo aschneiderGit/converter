@@ -25,48 +25,49 @@ class _UpdateInfoState extends State<UpdateInfo> {
 
     final dataTime = providerWatch.setting.dataTime;
 
+    void getSnackBar(res) {
+      if (mounted) {
+        switch (res) {
+          case ResultOfGettingRates.offline:
+            showDialog(
+              // ignore: use_build_context_synchronously
+              context: context,
+              builder: (_) =>
+                  AlertDialogWidget(title: l.canAcessDataTitle, message: l.canAcessDataMessage, showCancel: false),
+            );
+          case ResultOfGettingRates.updated:
+            // ignore: use_build_context_synchronously
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(l.dataUpdated),
+                duration: Duration(milliseconds: 1500),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                behavior: SnackBarBehavior.floating,
+                margin: EdgeInsets.only(bottom: 10, left: 25, right: 25),
+              ),
+            );
+          case ResultOfGettingRates.upToDate:
+            // ignore: use_build_context_synchronously
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(l.dataUpToDate),
+                duration: Duration(milliseconds: 1500),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                behavior: SnackBarBehavior.floating,
+                margin: EdgeInsets.only(bottom: 10, left: 25, right: 25),
+              ),
+            );
+        }
+      }
+    }
+
     return Row(
       mainAxisSize: MainAxisSize.min, // only as wide as content
       children: [
         GestureDetector(
           onTap: () async {
             final res = await providerWatch.refresh();
-            if (mounted) {
-              switch (res) {
-                case ResultOfGettingRates.offline:
-                  showDialog(
-                    // ignore: use_build_context_synchronously
-                    context: context,
-                    builder: (_) => AlertDialogWidget(
-                      title: l.canAcessDataTitle,
-                      message: l.canAcessDataMessage,
-                      showCancel: false,
-                    ),
-                  );
-                case ResultOfGettingRates.updated:
-                  // ignore: use_build_context_synchronously
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(l.dataUpdated),
-                      duration: Duration(milliseconds: 1500),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                      behavior: SnackBarBehavior.floating,
-                      margin: EdgeInsets.only(bottom: 10, left: 25, right: 25),
-                    ),
-                  );
-                case ResultOfGettingRates.upToDate:
-                  // ignore: use_build_context_synchronously
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(l.dataUpToDate),
-                      duration: Duration(milliseconds: 1500),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                      behavior: SnackBarBehavior.floating,
-                      margin: EdgeInsets.only(bottom: 10, left: 25, right: 25),
-                    ),
-                  );
-              }
-            }
+            getSnackBar(res);
           },
           child: AnimatedIconWidget(
             icon: Icons.cached,
