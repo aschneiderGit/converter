@@ -64,6 +64,9 @@ class CurrencyHelper {
     } on TimeoutException {
       printOnDebug("Request timed out. Loading from cache...");
       return ResultOfGettingRates.offline;
+    } on HttpException {
+      printOnDebug("API unavailable. Loading from cache...");
+      return ResultOfGettingRates.offline;
     } catch (e) {
       throw ('Exception details:\n $e');
     }

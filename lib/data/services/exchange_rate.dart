@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 
@@ -18,7 +19,7 @@ class ExchangeRateService {
       var data = jsonDecode(response.body) as Map<String, dynamic>;
       return {"rates": data["rates"], "data_time": data["time_last_update_unix"]};
     } else {
-      throw Exception("Failed to load rates: {response.statusCode}");
+      throw HttpException("Failed to load rates: ${response.statusCode}");
     }
   }
 }

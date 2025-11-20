@@ -1,22 +1,24 @@
+import 'dart:io';
+
 import 'package:converter/core/constants/device_size.dart';
 import 'package:converter/core/theme/main_theme.dart';
 import 'package:converter/core/utils/screen.dart';
-import 'package:converter/data/databases/database_helper.dart';
 import 'package:converter/providers/converter_provider.dart';
 import 'package:converter/views/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
-
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'core/l10n/app_localizations.dart';
-// TO DO
-// localization missing
-// height responsivity
-// test
+import 'package:flutter/foundation.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await DatabaseHelper.instance.initDb();
+
+  if (!kIsWeb && (Platform.isWindows || Platform.isLinux || Platform.isMacOS)) {
+    sqfliteFfiInit();
+    databaseFactory = databaseFactoryFfi;
+  }
 
   runApp(
     MultiProvider(
