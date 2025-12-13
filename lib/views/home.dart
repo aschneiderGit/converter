@@ -51,6 +51,25 @@ class _Home extends State<Home> {
     }
   }
 
+  Widget lanscapeOrPortraitBody(deviceSize) {
+    switch (deviceSize) {
+      case DeviceSize.small || DeviceSize.extraSmall:
+        return Column(
+          children: [
+            Flexible(flex: 4, child: ConvertDisplay()),
+            Flexible(flex: 5, child: Keyboard()),
+          ],
+        );
+      default:
+        return Row(
+          children: [
+            Flexible(flex: 5, child: ConvertDisplay(inRow: true)),
+            Flexible(flex: 6, child: Keyboard(inRow: true)),
+          ],
+        );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     //debugPaintSizeEnabled = true;
@@ -79,20 +98,7 @@ class _Home extends State<Home> {
               ),
               toolbarHeight: getToolBarSize(context),
             ),
-            body: switch (deviceSize) {
-              DeviceSize.small || DeviceSize.extraSmall => Column(
-                children: [
-                  Flexible(flex: 4, child: ConvertDisplay()),
-                  Flexible(flex: 5, child: Keyboard()),
-                ],
-              ),
-              _ => Row(
-                children: [
-                  Flexible(flex: 5, child: ConvertDisplay(inRow: true)),
-                  Flexible(flex: 6, child: Keyboard(inRow: true)),
-                ],
-              ),
-            },
+            body: lanscapeOrPortraitBody(deviceSize),
           ),
         ),
       ),

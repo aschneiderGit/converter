@@ -1,6 +1,8 @@
 import 'package:converter/core/constants/device_size.dart';
 import 'package:flutter/material.dart';
 
+const double smallScreenToolBarSize = 35;
+const double toolBarSize = 25;
 getScreenHeight(BuildContext context) {
   return MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top - kToolbarHeight;
 }
@@ -8,9 +10,9 @@ getScreenHeight(BuildContext context) {
 double getToolBarSize(BuildContext context) {
   switch (getScreenSize(context)) {
     case DeviceSize.small || DeviceSize.extraSmall:
-      return 35;
+      return smallScreenToolBarSize;
     default:
-      return 25;
+      return toolBarSize;
   }
 }
 
