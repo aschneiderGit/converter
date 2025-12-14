@@ -1,105 +1,135 @@
-name: Release APK
-
+name: Release Multi-Platform
 on:
   pull_request:
     types: [closed]
     branches: ["main"]
-
 permissions:
   contents: write
-
 jobs:
-  build:
-    env:
-      last_release: ""
-      app_version: ""
-
-    if: github.event.pull_request.merged == true # Only run if PR was merged
+  build-android:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
-
+    outputs:
+      app_version: ${{ steps.version.outputs.app_version }}
+      last_release: ${{ steps.last_release.outputs.last_release }}
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/cache@v3
         with:
           path: |
             ~/.pub-cache
             ${{ github.workspace }}/.dart_tool
           key: ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.yaml') }}
-
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
           flutter-version: 3.32.8
-
       - run: dart pub get
-
       - name: Analyze project source
         run: flutter analyze --no-fatal-infos --no-fatal-warnings
-
       - name: Run tests
         run: flutter test
-
       - id: version
         run: |
           APP_VERSION=$(grep '^version:' pubspec.yaml | awk '{print $2}')
-          echo "app_version=$APP_VERSION" >> $GITHUB_ENV
+          echo "app_version=$APP_VERSION" >> $GITHUB_OUTPUT
           echo "App version: $APP_VERSION"
-
       - id: last_release
         run: |
           LAST_RELEASE=$(gh release list --limit 1 --json tagName -q '.[0].tagName' || echo "none")
-          echo "last_release=$LAST_RELEASE" >> $GITHUB_ENV
+          echo "last_release=$LAST_RELEASE" >> $GITHUB_OUTPUT
           echo "App latest release: $LAST_RELEASE"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build release APK if version changed
+        if: ${{ steps.version.outputs.app_version != steps.last_release.outputs.last_release }}
+        run: |
+          flutter build apk --release
+          mv build/app/outputs/flutter-apk/app-release.apk \
+             build/app/outputs/flutter-apk/converter-android-${{ steps.version.outputs.app_version }}.apk
+      - name: Use existing APK if version same
+        if: ${{ steps.version.outputs.app_version == steps.last_release.outputs.last_release }}
+        run: |
+          echo "Version unchanged — reusing previous APK."
+          mkdir -p build/app/outputs/flutter-apk
+          gh release download "${{ steps.version.outputs.app_version }}" -p "converter-android-*.apk" -D build/app/outputs/flutter-apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: android-apk
+          path: build/app/outputs/flutter-apk/converter-android-${{ steps.version.outputs.app_version }}.apk
+          if-no-files-found: error
 
+  build-windows:
+    if: github.event.pull_request.merged == true
+    runs-on: windows-latest
+    needs: build-android
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.pub-cache
+            ${{ github.workspace }}/.dart_tool
+          key: ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.yaml') }}
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: 3.32.8
+      - run: dart pub get
+      - name: Build release Windows if version changed
+        if: ${{ needs.build-android.outputs.app_version != needs.build-android.outputs.last_release }}
+        run: flutter build windows --release
+      - name: Create Windows ZIP archive if version changed
+        if: ${{ needs.build-android.outputs.app_version != needs.build-android.outputs.last_release }}
+        run: |
+          cd build/windows/x64/runner/Release
+          Compress-Archive -Path * -DestinationPath ../../../../../converter-windows-${{ needs.build-android.outputs.app_version }}.zip
+        shell: pwsh
+      - name: Use existing Windows ZIP if version same
+        if: ${{ needs.build-android.outputs.app_version == needs.build-android.outputs.last_release }}
+        run: |
+          echo "Version unchanged — reusing previous Windows build."
+          gh release download "${{ needs.build-android.outputs.app_version }}" -p "*-windows-*.zip"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload Windows artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: windows-zip
+          path: converter-windows-${{ needs.build-android.outputs.app_version }}.zip
+          if-no-files-found: error
+
+  create-release:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    needs: [build-android, build-windows]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download Android artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: android-apk
+      - name: Download Windows artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: windows-zip
       - name: Create or update tag
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git tag -f ${{ env.app_version }}
-          git push origin ${{ env.app_version }} --force
-
-      - name: Build release APK if version changed
-        if: ${{ env.app_version != env.last_release }}
-        run: |
-          flutter build apk --release
-          mv build/app/outputs/flutter-apk/app-release.apk build/app/outputs/flutter-apk/converter-${{ env.app_version }}.apk
-
-      - name: Use existing APK if version same
-        if: ${{ env.app_version == env.last_release }}
-        run: |
-          echo "Version unchanged ($app_version) — reusing previous APK."
-          mkdir -p build/app/outputs/flutter-apk
-          gh release download "$app_version" -p "*.apk" -D build/app/outputs/flutter-apk
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Build release Windows if version changed
-        if: ${{ env.app_version != env.last_release }}
-        run: flutter build windows --release
-      - name: Create Windows ZIP archive if version changed
-        if: ${{ env.app_version != env.last_release }}
-        run: |
-          cd build/windows/x64/runner/Release
-          zip -r ../../../../../converter-windows-${{ env.app_version }}.zip .
-          cd ../../../../../
-      - name: Use existing Windows ZIP if version same
-        if: ${{ env.app_version == env.last_release }}
-        run: |
-          echo "Version unchanged ($app_version) — reusing previous Windows build."
-          gh release download "$app_version" -p "*-windows-*.zip"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          git tag -f ${{ needs.build-android.outputs.app_version }}
+          git push origin ${{ needs.build-android.outputs.app_version }} --force
       - name: Create or update GitHub release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{ env.app_version }}
+          tag_name: ${{ needs.build-android.outputs.app_version }}
           files: |
-            build/app/outputs/flutter-apk/converter-${{ env.app_version }}.apk
-            converter-windows-${{ env.app_version }}.zip
-          release_name: Release ${{ env.app_version }}
+            converter-android-${{ needs.build-android.outputs.app_version }}.apk
+            converter-windows-${{ needs.build-android.outputs.app_version }}.zip
+          release_name: Release ${{ needs.build-android.outputs.app_version }}
           body: ${{ github.event.pull_request.body }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
