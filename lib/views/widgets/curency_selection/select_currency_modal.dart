@@ -1,7 +1,6 @@
 import 'package:converter/core/l10n/app_localizations.dart';
 import 'package:converter/core/theme/app_colors.dart';
 import 'package:converter/core/theme/app_text_style.dart';
-import 'package:converter/core/utils/print.dart';
 import 'package:converter/core/utils/screen.dart';
 import 'package:converter/data/models/currency.dart';
 import 'package:converter/views/widgets/curency_selection/currency_dropdown.dart';
@@ -24,19 +23,12 @@ class SelectCurrencyModal extends StatefulWidget {
 }
 
 class _SelectCurrencyModalState extends State<SelectCurrencyModal> {
-  late List<Currency> filtered;
-
-  @override
-  void initState() {
-    super.initState();
-    filtered = List.from(widget.currencies);
-  }
-
   @override
   Widget build(BuildContext context) {
     final ThemeData t = Theme.of(context);
     final AppLocalizations l = AppLocalizations.of(context)!;
 
+    List<Currency> filtered = List.from(widget.currencies);
     void filterCurrencies(String query) {
       setState(() {
         filtered = widget.currencies
