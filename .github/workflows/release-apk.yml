@@ -63,7 +63,9 @@ jobs:
 
       - name: Build release APK if version changed
         if: ${{ env.app_version != env.last_release }}
-        run: flutter build apk --release
+        run: |
+          flutter build apk --release
+          mv build/app/outputs/flutter-apk/app-release.apk build/app/outputs/flutter-apk/converter-${{ env.app_version }}.apk
 
       - name: Use existing APK if version same
         if: ${{ env.app_version == env.last_release }}
@@ -74,13 +76,30 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Build release Windows if version changed
+        if: ${{ env.app_version != env.last_release }}
+        run: flutter build windows --release
+      - name: Create Windows ZIP archive if version changed
+        if: ${{ env.app_version != env.last_release }}
+        run: |
+          cd build/windows/x64/runner/Release
+          zip -r ../../../../../converter-windows-${{ env.app_version }}.zip .
+          cd ../../../../../
+      - name: Use existing Windows ZIP if version same
+        if: ${{ env.app_version == env.last_release }}
+        run: |
+          echo "Version unchanged ($app_version) — reusing previous Windows build."
+          gh release download "$app_version" -p "*-windows-*.zip"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Create or update GitHub release
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ env.app_version }}
-          files: build/app/outputs/flutter-apk/app-release.apk
+          files: |
+            build/app/outputs/flutter-apk/converter-${{ env.app_version }}.apk
+            converter-windows-${{ env.app_version }}.zip
           release_name: Release ${{ env.app_version }}
           body: ${{ github.event.pull_request.body }}
-
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
