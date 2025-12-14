@@ -3,6 +3,8 @@ import 'package:converter/core/theme/app_colors.dart';
 import 'package:converter/core/theme/app_text_style.dart';
 import 'package:flutter/material.dart';
 
+const int warningDays = 5;
+const int dangerDays = 14;
 TextSpan getTimeAgo(BuildContext context, DateTime dt) {
   Duration durationDiff = DateTime.now().difference(dt);
   int diff = durationDiff.inHours;
@@ -15,9 +17,9 @@ TextSpan getTimeAgo(BuildContext context, DateTime dt) {
   } else if (diff > 23) {
     diff = durationDiff.inDays;
     text = AppLocalizations.of(context)!.day(diff);
-    if (diff > 14) {
+    if (diff > dangerDays) {
       color = t.error;
-    } else if (diff > 5) {
+    } else if (diff > warningDays) {
       color = t.warning;
     }
     if (diff > 365) {
