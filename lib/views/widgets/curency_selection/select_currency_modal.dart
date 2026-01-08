@@ -23,23 +23,30 @@ class SelectCurrencyModal extends StatefulWidget {
 }
 
 class _SelectCurrencyModalState extends State<SelectCurrencyModal> {
+  late List<Currency> filtered;
+
+  @override
+  void initState() {
+    super.initState();
+    filtered = List.from(widget.currencies);
+  }
+
+  void filterCurrencies(String query) {
+    setState(() {
+      filtered = widget.currencies
+          .where(
+            (c) =>
+                c.code.toLowerCase().contains(query.toLowerCase()) ||
+                c.name.toLowerCase().contains(query.toLowerCase()),
+          )
+          .toList();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final ThemeData t = Theme.of(context);
     final AppLocalizations l = AppLocalizations.of(context)!;
-
-    List<Currency> filtered = List.from(widget.currencies);
-    void filterCurrencies(String query) {
-      setState(() {
-        filtered = widget.currencies
-            .where(
-              (c) =>
-                  c.code.toLowerCase().contains(query.toLowerCase()) ||
-                  (c.name.toLowerCase().contains(query.toLowerCase())),
-            )
-            .toList();
-      });
-    }
 
     return FractionallySizedBox(
       heightFactor: 0.95,
